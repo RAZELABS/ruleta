@@ -1,0 +1,16 @@
+//! formularios:
+<x-form action="{{ route('password.update') }}" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <x-inputs.text-input name="nombre" label="Nombre" placeholder="Introduce tu nombress" required />
+
+        <x-inputs.email-input name="email" label="Correo Electrónico" placeholder="correo@ejemplo.com" required />
+
+        <x-inputs.select-input name="opcion" label="Selecciona una opción" :options="['1' => 'Opción 1', '2' => 'Opción 2', '3' => 'Opción 3']" required />
+
+        <x-inputs.number-input name="edad" label="Edad" min="0" max="120" placeholder="0 - 120" />
+
+        <x-inputs.password-input name="password" label="Contraseña" placeholder="Introduce tu contraseña" required />
+
+        <!-- Agrega más inputs según necesites -->
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </x-form>

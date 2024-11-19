@@ -1,0 +1,34 @@
+/* frontend 1.0 */
+
+.hola-mundo{
+    color:#333
+}
+.sidebar, .sidebar-content {
+    background: var(--primary);
+    transition: margin-left .35s ease-in-out, left .35s ease-in-out, margin-right .35s ease-in-out, right .35s ease-in-out;
+}
+.sidebar-link:hover, .sidebar-link:hover i, .sidebar-link:hover svg {
+    color: rgba(233, 236, 239, .75);
+}
+
+.sidebar-link:hover {
+    background: var(--secondary);
+    border-left-color: transparent;
+}
+.sidebar-link, a.sidebar-link {
+    background: var(--primary);
+    border-left: 3px solid transparent;
+    color: rgba(233, 236, 239, .5);
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+    padding: .625rem 1.625rem;
+    position: relative;
+    text-decoration: none;
+    transition: background .1s ease-in-out;
+}
+.sidebar-item.active .sidebar-link:hover, .sidebar-item.active>.sidebar-link {
+    background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%, transparent);
+    border-left-color: #3b7ddd;
+    color: #e9ecef;
+}
