@@ -3,7 +3,7 @@
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <strong>Desarrollado por</strong></a> - <a class="text-primary" href="https://www.raze.pe/"
+                    <strong>Programado por</strong></a> - <a class="text-primary" href="https://www.raze.pe/"
                         target="_blank"><strong>RAZE</strong> &copy;</a>
                 </p>
             </div>

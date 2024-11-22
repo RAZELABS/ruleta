@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Admin\CotizacionesController;
+
 use App\Http\Controllers\RolesPermissions\PermissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +50,9 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('adm
     //?USERS
     Route::resource('users', UserController::class);
     //? COTIZACIONES
-    Route::resource('cotizaciones', \App\Http\Controllers\Admin\CotizacionesController::class);
+    Route::resource('cotizaciones', CotizacionesController::class);
+    //? CLIENTES
+    Route::resource('cliente', \App\Http\Controllers\Admin\ClientesController::class);
     // Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
     // Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
     // Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
