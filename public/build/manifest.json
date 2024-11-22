@@ -1,0 +1,17 @@
+{
+  "resources/js/backend.js": {
+    "file": "assets/backend/backend.js",
+    "name": "backend",
+    "src": "resources/js/backend.js",
+    "isEntry": true,
+    "css": [
+      "assets/backend/backend.css"
+    ]
+  },
+  "resources/js/frontend.js": {
+    "file": "assets/frontend/frontend.js",
+    "name": "frontend",
+    "src": "resources/js/frontend.js",
+    "isEntry": true
+  }
+}
