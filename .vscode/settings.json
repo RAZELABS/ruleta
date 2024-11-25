@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "raze_cms",
+            "username": "root",
+            "name": "raze_cms",
+            "password": ""
+        }
+    ],
+    "blade.format.enable": true
+}

@@ -41,14 +41,6 @@ class Cliente extends Model
     ];
 
     /**
-     * Relación con el modelo Rubro
-     */
-    public function rubro()
-    {
-        return $this->belongsTo(Rubro::class, 'rubro_id');
-    }
-
-    /**
      * Método accesor para el estado (activo/inactivo)
      */
     public function getEstadoLabelAttribute()

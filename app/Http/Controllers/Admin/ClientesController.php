@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CotizacionesController extends Controller
+class ClientesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-
-        return view('admin.cotizaciones.index');
+        return view('admin.clientes.index');
     }
 
     /**
@@ -21,7 +18,7 @@ class CotizacionesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
