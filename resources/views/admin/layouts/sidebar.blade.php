@@ -20,11 +20,7 @@
 
             <!-- Agrega más enlaces según tus necesidades -->
 
-            <li class="sidebar-item {{ request()->routeIs('admin.cotizaciones.index') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('admin.cotizaciones.index') }}">
-                    <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cotizaciones</span>
-                </a>
-            </li>
+           
 
         </ul>
     </div>
