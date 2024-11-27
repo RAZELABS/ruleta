@@ -18,9 +18,13 @@
                 </a>
             </li>
 
-            <!-- Agrega más enlaces según tus necesidades -->
+            <li class="sidebar-item {{ request()->routeIs('admin.configuraciones') ? 'active' : ''}}">
+                <a class="sidebar-link" href="{{ route('admin.configuraciones') }}">
+                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Configuraciones</span>
+                </a>
+            </li>
 
-           
+            <!-- Agrega más enlaces según tus necesidades -->
 
         </ul>
     </div>
