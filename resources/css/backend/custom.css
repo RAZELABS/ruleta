@@ -97,3 +97,18 @@
   .featured-box:hover {
     box-shadow: inset 0 0 0 5px var(--carbonDark) !important;
   }
+
+  /* footer */
+  footer.footer {
+    background: #fff;
+    direction: ltr;
+    padding: .4rem .875rem;
+}
+  .footer{
+    background-color: var(--primary) !important;
+}
+.text-muted{
+
+      color: var(--fabtxt2) !important;
+
+  }

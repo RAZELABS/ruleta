@@ -11,6 +11,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\CotizacionesController;
 use App\Http\Controllers\Admin\ConfiguracionesController;
 use App\Http\Controllers\Admin\ParametrosController;
+use App\Http\Controllers\Admin\DetalleController;
+use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\MatrizdiaController;
 
 
 use App\Http\Controllers\RolesPermissions\PermissionController;
@@ -31,6 +34,7 @@ Route::resource('permissions', PermissionController::class);
 Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/configuraciones', [ConfiguracionesController::class, 'index'])->name('configuraciones');
+    Route::get('/detalle', [DetalleController::class, 'index'])->name('detalle');
     //?profile
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -38,6 +42,8 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('adm
     //?USERS
     Route::resource('users', UserController::class);
     Route::resource('parametros', ParametrosController::class);
+    Route::resource('tienda', TiendaController::class);
+    Route::resource('matrizdia', MatrizdiaController::class);
 
 });
 
