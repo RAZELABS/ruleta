@@ -17,5 +17,5 @@ Theme Version:	10.2.0
 			}
 		});
 	});
-	
+
 }).apply( this, [ jQuery ]);
