@@ -20,7 +20,8 @@
 
             <li class="sidebar-item {{ request()->routeIs('admin.configuraciones') ? 'active' : ''}}">
                 <a class="sidebar-link" href="{{ route('admin.configuraciones') }}">
-                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Configuraciones</span>
+                    <i class="fa-solid fa-mound"></i> <span class="align-middle">Configuraciones</span>
+
                 </a>
             </li>
 
