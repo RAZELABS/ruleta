@@ -14,8 +14,12 @@ class ParametrosController extends Controller
     public function index()
     {
         $parametros = Parametros::all();
+        $parametros = Parametros::select('id','flag','valor','descripcion')->get();
+        $parametrosData = $parametros->map(function($parametro) {
+            return [$parametro->id, $parametro->flag, $parametro->valor, $parametro->descripcion];
+        });
 
-        return view("admin.parametros.index");
+            return view("admin.parametros.index", compact("parametrosData"));
     }
 
     /**
