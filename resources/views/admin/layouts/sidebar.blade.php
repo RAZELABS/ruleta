@@ -18,6 +18,24 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ request()->routeIs('admin.detalle') ? 'active' : ''}}">
+                <a class="sidebar-link" href="{{ route('admin.detalle') }}">
+                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Consulta jugadas</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item {{ request()->routeIs('admin.tienda.index') ? 'active' : ''}}">
+                <a class="sidebar-link" href="{{ route('admin.tienda.index') }}">
+                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Consulta tiendas</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item {{ request()->routeIs('admin.matrizdia.index') ? 'active' : ''}}">
+                <a class="sidebar-link" href="{{ route('admin.matrizdia.index') }}">
+                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Probabilidades diarias</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->routeIs('admin.configuraciones') ? 'active' : ''}}">
                 <a class="sidebar-link" href="{{ route('admin.configuraciones') }}">
                 <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Configuraciones</span>
