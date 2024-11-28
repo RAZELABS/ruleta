@@ -11,7 +11,7 @@
         @foreach ($datos as $row)
             <tr>
                 @foreach ($row as $cell)
-                    <td class="{{ $columnsClass[$i] }}">{{ $cell }}</td>
+                    <td class="{{ $columnsClass[$i] ?? '' }}">{{ $cell }}</td>
                 @endforeach
             </tr>
             @php $i++ @endphp
@@ -19,5 +19,5 @@
     </tbody>
 </table>
 <p>
-    {{ $columnsClass[$i] }}
+    {{ $columnsClass[$i] ?? ''}}
 </p>
