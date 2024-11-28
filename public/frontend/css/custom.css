@@ -1,3 +1,22 @@
+.body{
+    background:url('/frontend/img/bg/saga.jpg') !important;
+    background-size:cover !important;
+    ba
+}
+
+
 .owl-carousel.nav-dark.nav-style-1 .owl-nav .owl-next, .owl-carousel.nav-dark.nav-style-1 .owl-nav .owl-prev {
     color: #ffffff !important;
+}
+
+
+.owl-carousel.stage-margin .owl-stage-outer {
+    margin-left: 31px !important;
+    margin-right: 39px !important;
+}
+.custom-carousel-1 .owl-carousel {
+    padding: 11px 0 0 3px;
+}
+.owl-stage-outer{
+    border-radius: 30px !important;
 }

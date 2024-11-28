@@ -1,6 +1,13 @@
-:root
-{
-    --primary:#102731 !important;
-    --secondary:#0b3c5d !important;
-    --tertiary:#328cc1 !important;
+:root {
+    --primary: #343E49 !important;
+    --secondary: #AAD500 !important;
+    --tertiary: #ff6201 !important;
+    --quaternary: #495867 !important;
+    --fab-enfasis: #f00f44 !important;
+    --fab-gradient: linear-gradient(90deg, #668F00 0%, #8FCA00 100%);
+    --fabtxt: #343E49;
+    --fab-bg: #FAFAFA;
+    --header-logo-background: transparent;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
