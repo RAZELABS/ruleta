@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\ParametrosController;
 use App\Http\Controllers\Admin\DetalleController;
 use App\Http\Controllers\Admin\TiendaController;
 use App\Http\Controllers\Admin\MatrizdiaController;
+use App\Http\Controllers\Admin\MatriztiendaController;
+use App\Http\Controllers\Admin\MatrizturnoController;
 
 
 use App\Http\Controllers\RolesPermissions\PermissionController;
@@ -44,6 +46,8 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('adm
     Route::resource('parametros', ParametrosController::class);
     Route::resource('tienda', TiendaController::class);
     Route::resource('matrizdia', MatrizdiaController::class);
+    Route::resource('matriztienda', MatriztiendaController::class);
+    Route::resource('matrizturno', MatrizturnoController::class);
 
 });
 

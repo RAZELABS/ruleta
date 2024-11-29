@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-    public function index(): View{
+    public function index()
+    {
         return view('admin.role-permission.permission.index');
 
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    }
     public function create(){
 
     }

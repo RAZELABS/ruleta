@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Matriz_tienda;
+use App\Models\Matriz_turno;
 
-class MatriztiendaController extends Controller
+class MatrizturnoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $matriztiendas = Matriz_tienda::with('tienda')->select('id','id_tienda','peso_tienda')->get();
-        $matriz_tiendaData = $matriztiendas->map(function($matriz_tienda) {
-            return [$matriz_tienda->id, $matriz_tienda->tienda->nombre, $matriz_tienda->peso_tienda];
+        $matrizturnos = Matriz_turno::select('id','turno','inicio','fin','peso_turno')->get();
+        $matriz_turnoData = $matrizturnos->map(function($matriz_turno) {
+            return [$matriz_turno->id, $matriz_turno->turno, $matriz_turno->inicio, $matriz_turno->fin, $matriz_turno->peso_turno];
         });
-            //dd($matriz_tiendaData);
-            return view("admin.matriztienda.index", compact("matriz_tiendaData"));
+            //dd($matriz_turnoData);
+            return view("admin.matrizturno.index", compact("matriz_turnoData"));
     }
 
     /**

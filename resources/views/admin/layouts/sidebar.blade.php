@@ -24,15 +24,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ request()->routeIs('admin.matrizdia.index') ? 'active' : ''}}">
-                <a class="sidebar-link" href="{{ route('admin.matrizdia.index') }}">
-                    <i class="fa-solid fa-filter-circle-dollar"></i> <span class="align-middle">Probabilidades diarias</span>
-                </a>
-            </li>
-
             <li class="sidebar-item {{ request()->routeIs('admin.configuraciones') ? 'active' : ''}}">
                 <a class="sidebar-link" href="{{ route('admin.configuraciones') }}">
-                    <i class="fa-solid fa-mound"></i> <span class="align-middle">Configuraciones</span>
+                    <i class="fa-solid fa-gear"></i> <span class="align-middle">Configuraciones</span>
 
                 </a>
             </li>

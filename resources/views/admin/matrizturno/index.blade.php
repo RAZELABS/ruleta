@@ -6,7 +6,7 @@
             <div class="p-4 col-12 bg-white">
                 {{-- {{ $usersData }} --}}
                 <div class="p-4">
-                    <x-data-table idTable='TABLE_1' :columns="['ID', 'Fecha', 'Peso (%)']" :columnsClass="['', '', '']" :datos=$matriz_diaData />
+                    <x-data-table idTable='TABLE_1' :columns="['ID', 'Turno','Inicio','Fin', 'Peso (%)']" :columnsClass="['', '', '', '', '']" :datos=$matriz_turnoData />
                 </div>
             </div>
 
