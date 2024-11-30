@@ -38,6 +38,7 @@
 
 <body>
     <div class="body">
+        <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo">
         @include('frontend.layouts.header')
         <div role="main" class="main">
 

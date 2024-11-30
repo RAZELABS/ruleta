@@ -4,7 +4,12 @@
     --tertiary: #ff6201 !important;
     --quaternary: #495867 !important;
     --fab-enfasis: #f00f44 !important;
+    --fab-verde-1: #668F00 !important;
+    --fab-verde-2: #004527 !important;
+    --fab-verde-3: #35783C !important;
     --fab-gradient: linear-gradient(90deg, #668F00 0%, #8FCA00 100%);
+    --fab-gradient2: rounded-gradient;
+    --fab-gradient2: rounded-gradient(90deg, #004527 30%, #35783C 80%);
     --fabtxt: #343E49;
     --fabtxt2: #FAFAFA;
     --fab-bg: #FAFAFA;

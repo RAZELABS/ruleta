@@ -1,13 +1,45 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Para evitar scroll indeseado */
+    background: radial-gradient(circle, rgba(53,120,60,1) 0%, rgba(0,69,39,1) 70%) !important;
+    position: relative; /* Necesario para posicionar el logo como hijo absoluto */
+
+}
+
 .body{
-    background:url('/frontend/img/bg/saga.jpg') !important;
-    background-size:cover !important;
+    background: transparent;
+}
+.logo {
+    position: absolute;
+    top: 50%; /* Centrar verticalmente */
+    left: 0;
+    width: 100%;
+    max-width: 1920px;
+    height: auto;
+    transform: translateY(-100%); /* Ajustar el logo para que esté perfectamente centrado verticalmente */
+    opacity: 0.06; /* Hacer que el logo sea un poco transparente */
+    animation: float 20s linear infinite; /* Animación suave en bucle */
+}
+
+/* Animación para mover el logo horizontalmente */
+@keyframes float {
+    0% {
+        transform: translateY(-50%) translateX(-10%);
+    }
+    50% {
+        transform: translateY(-50%) translateX(10%);
+    }
+    100% {
+        transform: translateY(-50%) translateX(-10%);
+    }
 }
 
 
 .owl-carousel.nav-dark.nav-style-1 .owl-nav .owl-next, .owl-carousel.nav-dark.nav-style-1 .owl-nav .owl-prev {
     color: #ffffff !important;
 }
-
 
 .owl-carousel.stage-margin .owl-stage-outer {
     margin-left: 31px !important;
