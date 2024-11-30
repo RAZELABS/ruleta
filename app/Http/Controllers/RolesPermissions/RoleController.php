@@ -5,18 +5,19 @@ namespace  App\Http\Controllers\RolesPermissions;
 use Illuminate\Support\Facades\ DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:view role', ['only' => ['index']]);
-    //     $this->middleware('permission:create role', ['only' => ['create','store','addPermissionToRole','givePermissionToRole']]);
-    //     $this->middleware('permission:update role', ['only' => ['update','edit']]);
-    //     $this->middleware('permission:delete role', ['only' => ['destroy']]);
-    // }
+    //  public function __construct()
+    //  {
+    //      $this->middleware('permission:view role', ['only' => ['index']]);
+    //      $this->middleware('permission:create role', ['only' => ['create','store','addPermissionToRole','givePermissionToRole']]);
+    //      $this->middleware('permission:update role', ['only' => ['update','edit']]);
+    //      $this->middleware('permission:delete role', ['only' => ['destroy']]);
+    //  }
 
     public function index()
     {

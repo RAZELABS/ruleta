@@ -98,7 +98,7 @@
                 <div class="col-6 col-md-3">
                     <div class="featured-boxes  m-0 ">
                         <div class="featured-box my-2 b-radius-20 ">
-                            <a href="{{ route('role-permission.role.index') }}" class="text-decoration-none">
+                            <a href="{{ route('roles.index') }}" class="text-decoration-none">
                                 <span class="p-1 text-center d-block">
                                     <span class="text-secondary display-5"><i class="fa-solid fa-person-circle-check"></i></span>
                                     <span class="font-weight-bold    d-block text-secondary">Roles</span>
@@ -110,7 +110,7 @@
                 <div class="col-6 col-md-3">
                     <div class="featured-boxes  m-0 ">
                         <div class="featured-box my-2 b-radius-20 ">
-                            <a href="{{ route('role-permission.permission.index') }}" class="text-decoration-none">
+                            <a href="{{ route('permissions.index') }}" class="text-decoration-none">
                                 <span class="p-1 text-center d-block">
                                     <span class="text-secondary display-5"><i class="fa-solid fa-unlock-keyhole"></i></span>
                                     <span class="font-weight-bold    d-block text-secondary">Permisos</span>
