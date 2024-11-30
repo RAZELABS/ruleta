@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Matriz_tienda;
 
 class MatriztiendaController extends Controller
 {
@@ -12,7 +13,12 @@ class MatriztiendaController extends Controller
      */
     public function index()
     {
-        //
+        $matriztiendas = Matriz_tienda::with('tienda')->select('id','id_tienda','peso_tienda')->get();
+        $matriz_tiendaData = $matriztiendas->map(function($matriz_tienda) {
+            return [$matriz_tienda->id, $matriz_tienda->tienda->nombre, $matriz_tienda->peso_tienda];
+        });
+            //dd($matriz_tiendaData);
+            return view("admin.matriztienda.index", compact("matriz_tiendaData"));
     }
 
     /**

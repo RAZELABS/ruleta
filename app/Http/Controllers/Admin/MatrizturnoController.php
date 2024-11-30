@@ -4,33 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Matriz_turno;
 
-class UserController extends Controller
+class MatrizturnoController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:view user', ['only' => ['index']]);
-    //     $this->middleware('permission:create user', ['only' => ['create','store']]);
-    //     $this->middleware('permission:update user', ['only' => ['update','edit']]);
-    //     $this->middleware('permission:delete user', ['only' => ['destroy']]);
-    // }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all(['id','dni','id_tienda', 'name', 'email', 'created_at', 'updated_at']);
-
-        // Convertir la colección en un array para el componente
-        $usersData = $users->map(function ($user) {
-            return [$user->id, $user->dni,$user->tienda->nombre, $user->name, $user->email, $user->created_at, $user->updated_at];
-        })->toArray();
-        //dd($usersData);
-        return view('admin.user.index', compact('usersData'));
-
+        $matrizturnos = Matriz_turno::select('id','turno','inicio','fin','peso_turno')->get();
+        $matriz_turnoData = $matrizturnos->map(function($matriz_turno) {
+            return [$matriz_turno->id, $matriz_turno->turno, $matriz_turno->inicio, $matriz_turno->fin, $matriz_turno->peso_turno];
+        });
+            //dd($matriz_turnoData);
+            return view("admin.matrizturno.index", compact("matriz_turnoData"));
     }
 
     /**

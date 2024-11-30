@@ -14,9 +14,12 @@ use App\Http\Controllers\Admin\ParametrosController;
 use App\Http\Controllers\Admin\DetalleController;
 use App\Http\Controllers\Admin\TiendaController;
 use App\Http\Controllers\Admin\MatrizdiaController;
+use App\Http\Controllers\Admin\MatriztiendaController;
+use App\Http\Controllers\Admin\MatrizturnoController;
 
-
+use App\Http\Controllers\RolesPermissions\RoleController;
 use App\Http\Controllers\RolesPermissions\PermissionController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,9 +32,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('permissions', PermissionController::class);
-
-Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/configuraciones', [ConfiguracionesController::class, 'index'])->name('configuraciones');
     Route::get('/detalle', [DetalleController::class, 'index'])->name('detalle');
@@ -44,9 +45,20 @@ Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('adm
     Route::resource('parametros', ParametrosController::class);
     Route::resource('tienda', TiendaController::class);
     Route::resource('matrizdia', MatrizdiaController::class);
+    Route::resource('matriztienda', MatriztiendaController::class);
+    Route::resource('matrizturno', MatrizturnoController::class);
 
 });
+Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
+     //?ROLES
+     Route::get('permissions/{permissionId}/delete', [PermissionController::class, 'destroy']);
+     Route::resource('permissions', PermissionController::class);
 
+     Route::get('roles/{roleId}/delete', [RoleController::class, 'destroy']);
+     Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
+     Route::put('roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionToRole']);
+     Route::resource('roles', RoleController::class);
+});
 
 
 require __DIR__ . '/auth.php';
