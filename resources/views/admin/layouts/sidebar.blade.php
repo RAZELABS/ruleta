@@ -23,14 +23,14 @@
                     <i class="fa-solid fa-gift"></i> <span class="align-middle">Consulta jugadas</span>
                 </a>
             </li>
-
+            @role('admin|superadmin')
             <li class="sidebar-item {{ request()->routeIs('admin.configuraciones') ? 'active' : ''}}">
                 <a class="sidebar-link" href="{{ route('admin.configuraciones') }}">
                     <i class="fa-solid fa-gear"></i> <span class="align-middle">Configuraciones</span>
 
                 </a>
             </li>
-
+            @endrole
             <!-- Agrega más enlaces según tus necesidades -->
 
         </ul>

@@ -6,7 +6,7 @@
             <div class="p-4 col-12 bg-white">
                 {{-- {{ $usersData }} --}}
                 <div class="p-4">
-                    <x-data-table idTable='TABLE_1' :columns="['ID', 'Nombre', 'Email', 'Creado', 'Actualizado']" :columnsClass="['bg-warning', '', '', '', 'lol']" :datos=$usersData />
+                    <x-data-table idTable='TABLE_1' :columns="['ID','DNI','Tienda', 'Nombre', 'Email', 'Creado', 'Actualizado']" :columnsClass="['','','', '', '', '', '']" :datos=$usersData />
                 </div>
             </div>
 
@@ -18,8 +18,6 @@
         var routeConfigurations = {
             'TABLE_1': {
                 'botones': 'Bfrtip',
-                'colFecha': [3, 4],
-                'colFechaSimple': [3],
                 'ordenar': [0, "asc"],
             },
         }
