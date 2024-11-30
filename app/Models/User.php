@@ -19,6 +19,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'dni',
+        'id_tienda',
         'name',
         'email',
         'password',
@@ -45,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function tienda()
+    {
+        return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
+            // ->where('id', 'id_tienda');
     }
 }
