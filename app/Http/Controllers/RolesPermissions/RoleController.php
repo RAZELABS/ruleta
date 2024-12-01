@@ -2,7 +2,7 @@
 
 namespace  App\Http\Controllers\RolesPermissions;
 
-use Illuminate\Support\Facades\ DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
