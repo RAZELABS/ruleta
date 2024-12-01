@@ -20,9 +20,7 @@
         y empieza a ganar!
     </p>
 
-    <x-form action="" method="POST" id="form" enctype="multipart/form-data" onsubmit="getEditorContent();">
-
-
+    <x-form action="{{route('verificar')}}" method="POST" id="form">
 
         <x-inputs.text-input
         name="dni"

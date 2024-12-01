@@ -35,16 +35,6 @@ return new class extends Migration
                 'password' => '$2y$12$2QxPjkadY14.R7RQ/tGJuOmBp0uPmWaZ3oJHUNTDRK6Q/ge5sfVw6',
                 'created_at' => '2024-10-13 06:32:37',
                 'updated_at' => '2024-11-19 22:51:48'
-            ],
-            [
-                'id' => 5,
-                'dni' => '08016696',
-                'id_tienda' => 1,
-                'name' => 'Rosa Aquino',
-                'email' => 'raquinoolivos@gmail.com',
-                'password' => '$2y$12$2QxPjkadY14.R7RQ/tGJuOmBp0uPmWaZ3oJHUNTDRK6Q/ge5sfVw6',
-                'created_at' => '2024-10-13 06:32:37',
-                'updated_at' => '2024-11-19 22:51:48'
             ]
         ]);
     }
