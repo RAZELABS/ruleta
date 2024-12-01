@@ -13,7 +13,14 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             required: true,
             minlength: 3,
             maxlength: 100,
-            pattern: /^[a-zA-Z\s]+$/ // Solo letras y espacios
+            pattern: /^[a-zA-Z\s]+$/ //
+        },
+        // Solo digitos para el campo name (no se permiten letras nio espacios)
+        dni: {
+            hasNumber: true,
+            required: true,
+            minlength: 8,
+            maxlength: 8,
         },
         // Campo de email que acepta letras, números, y los caracteres @._-
         email: {
@@ -56,6 +63,8 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             min: 1,
             max: 100
         },
+
+
         // Teléfono con formato ddd ddd ddd
         tel: {
             required: true,
@@ -87,6 +96,12 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             minlength: "Debe tener al menos 3 caracteres.",
             maxlength: "Debe tener menos de 100 caracteres.",
             pattern: "Solo se permiten letras y espacios."
+        },
+        dni: {
+            hasNumber: "solo se permiten numeros",
+            required: "Este campo es obligatorio.",
+            minlength: "Debe tener al menos 8 digitos.",
+            maxlength: "Debe tener 8 digitos.",
         },
         email: {
             required: "El correo electrónico es obligatorio.",

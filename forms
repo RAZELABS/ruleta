@@ -1,0 +1,39 @@
+<x-form action="" method="POST" id="form"
+                        enctype="multipart/form-data" onsubmit="getEditorContent();">
+
+                        <x-inputs.select-input label="Cliente" name="cliente_id" :options="$clientes" type="grouped"
+                            required="true" class="col-12 col-md-6" />
+
+                        <x-inputs.email-input name="email" label="Correo Electrónico" class="col-12 col-md-6"
+                            placeholder="correo@ejemplo.com" required />
+
+                        <x-inputs.text-input name="asunto" label="Asunto / Titulo"
+                            placeholder="Introduce el asunto del email" required class="col-12 col-md-6" />
+
+                        <x-inputs.file-input name="cotizacion" class="col-12 col-md-6"
+                            label="Cotizacion (csv,txt,xlx,xls,xlsx,pdf / max:2mb)" required="true" />
+
+                        <x-inputs.number-input name="monto" label="Monto" min="1" max="999999999" step="0.1"
+                            placeholder="Monto de cotización" class="col-12 col-md-6" required="true" />
+
+                        <x-inputs.select-input label="Divisa" name="divisa_id" :options="$divisas" type="grouped"
+                            required="true" class="col-12 col-md-6" />
+
+                        <input type="hidden" name="mensaje" id="editor_content">
+
+                        <div class="mb-3 col-12 h-100">
+                            <label class="form-label">Mensaje email</label>
+                            <div class="form-control" id="editor"></div>
+                        </div>
+                        <div class="mb-3 col-12">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            @if (session('message') === 'true')
+                            <x-alerts.swal-notification icon="success" title="Exito"
+                                text="el correo se ha enviado correctamente." timer="3000" />
+                            @endif
+                            @if (session('error'))
+                            <x-alerts.swal-notification icon="success" title="Exito" text="Error enviando el email."
+                                timer="3000" />
+                            @endif
+                        </div>
+                    </x-form>
