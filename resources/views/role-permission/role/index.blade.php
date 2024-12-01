@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('admin.layouts.app')
+
+@section('content')
 
     <div class="container mt-5">
         <a href="{{ url('roles') }}" class="btn btn-primary mx-1">Roles</a>
@@ -66,4 +68,4 @@
         </div>
     </div>
 
-</x-app-layout>
+@endsection

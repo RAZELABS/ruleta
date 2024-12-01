@@ -29,7 +29,7 @@
     transition: background .1s ease-in-out;
 }
 .sidebar-item.active .sidebar-link:hover, .sidebar-item.active>.sidebar-link {
-    background: linear-gradient(90deg, var(--primary) 0%, var(--quaternary) 100%, transparent);
+    background: var(--fab-gradient2);
     border-left-color: #3b7ddd;
     color: #e9ecef;
 }
