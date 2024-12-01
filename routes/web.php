@@ -44,24 +44,27 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //?USERS
     Route::resource('parametros', ParametrosController::class);
+    //? TIENDAS
+    Route::get('/generar-qrs', [TiendaController::class, 'generarQrs'])->name('generar.qrs');
     Route::resource('tienda', TiendaController::class);
+    //? MATRIZ
     Route::resource('matrizdia', MatrizdiaController::class);
     Route::resource('matriztienda', MatriztiendaController::class);
     Route::resource('matrizturno', MatrizturnoController::class);
 
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
-     //?ROLES
-     Route::get('permissions/{permissionId}/delete', [PermissionController::class, 'destroy']);
-     Route::resource('permissions', PermissionController::class);
+    //?ROLES
+    Route::get('permissions/{permissionId}/delete', [PermissionController::class, 'destroy']);
+    Route::resource('permissions', PermissionController::class);
 
-     Route::get('roles/{roleId}/delete', [RoleController::class, 'destroy']);
-     Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
-     Route::put('roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionToRole']);
-     Route::resource('roles', RoleController::class);
+    Route::get('roles/{roleId}/delete', [RoleController::class, 'destroy']);
+    Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
+    Route::put('roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionToRole']);
+    Route::resource('roles', RoleController::class);
 
-     Route::get('users/{userId}/delete', [UserController::class, 'destroy']);
-     Route::resource('users', UserController::class);
+    Route::get('users/{userId}/delete', [UserController::class, 'destroy']);
+    Route::resource('users', UserController::class);
 });
 
 

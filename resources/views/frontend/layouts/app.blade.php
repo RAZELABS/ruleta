@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/_variables.css') }}">
     @include('frontend.layouts.ico')
-    {{-- @vite(['resources/js/frontend.js']) --}}
+    @vite(['resources/js/frontend.js'])
     @stack('styles')
 
 

@@ -18,6 +18,7 @@ class VerificacionController extends Controller
     {
         // Validar los datos enviados por el formulario
         $request->validate([
+            'terminos'=>'required',
             'id_tienda' => 'required|integer|exists:tienda,id',
             'dni' => 'required|string|max:20',
         ]);

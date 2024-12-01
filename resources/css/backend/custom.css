@@ -1,4 +1,54 @@
-/* frontend 1.0 */
+:root {
+    --bs-primary: #343E49 !important;
+    --bs-secondary: #AAD500 !important;
+    --primary: #343E49 !important;
+    --secondary: #AAD500 !important;
+    --tertiary: #ff6201 !important;
+    --quaternary: #495867 !important;
+    --fab-enfasis: #f00f44 !important;
+    --fab-verde-1: #668F00 !important;
+    --fab-verde-2: #004527 !important;
+    --fab-verde-3: #35783C !important;
+    --fab-gradient: linear-gradient(90deg, #668F00 0%, #8FCA00 100%);
+    --fab-gradient2: rounded-gradient;
+    --fab-gradient2: rounded-gradient(90deg, #004527 30%, #35783C 80%);
+    --fabtxt: #343E49;
+    --fabtxt2: #FAFAFA;
+    --fab-bg: #FAFAFA;
+    --header-logo-background: transparent;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.btn-falabella{
+    color: var(--fab-verde-3);
+    background: var(--secondary);
+    border:none;
+    transition: all ease 0.1s;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.btn-falabella:hover{
+    color: #fff;
+    background: var(--fab-verde-3);
+    border:none;
+}
+.btn-falabella-2{
+    color: #fff;
+    background: var(--fabtxt);
+    border:none;
+    transition: all ease 0.1s;
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+.btn-falabella-2:hover{
+    color: var(--fab-verde-2);
+    background: var(--secondary);
+    border:none;
+    font-weight: bold;
+}
+
 
 
 .sidebar, .sidebar-content {

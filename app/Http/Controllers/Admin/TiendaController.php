@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tienda;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TiendaController extends Controller
 {
@@ -13,12 +14,35 @@ class TiendaController extends Controller
      */
     public function index()
     {
-        $tiendas = Tienda::select('id','codigo','nombre')->get();
-        $tiendaData = $tiendas->map(function($tienda) {
-            return [$tienda->id, $tienda->codigo, $tienda->nombre];
-        });
+        $tiendas = Tienda::select('id','codigo','qr','nombre')->orderBy('codigo','asc')->get();
+        // $tiendaData = $tiendas->map(function($tienda) {
+        //     return [$tienda->id, $tienda->codigo,$tienda->qr, $tienda->nombre];
+        // });
 
-            return view("admin.tienda.index", compact("tiendaData"));
+            return view("admin.tienda.index", compact("tiendas"));
+    }
+
+    public function generarQrs()
+    {
+        // Obtén todas las tiendas
+        $tiendas = Tienda::all();
+
+        foreach ($tiendas as $tienda) {
+            // Generar la URL con el código de la tienda
+            $url = url('https://www.ruletafalabella.com?t=' . $tienda->codigo);
+
+            // Generar el QR y guardarlo en el almacenamiento local
+            $path = public_path('qrs/' . $tienda->codigo . '.svg');
+
+            Tienda::where('codigo','=',$tienda->codigo)->update(['qr'=> $path]);
+
+            QrCode::format('svg')->size(500)->generate($url, $path);
+        }
+
+        // return response()->json(['message' => 'QRs generados correctamente'], 200);
+        // return view('admin.tienda.index')->with('message','QR generados con exito');
+        return redirect()->action([TiendaController::class, 'index'])
+            ->with('success', 'QRs generados con exito');
     }
 
     /**

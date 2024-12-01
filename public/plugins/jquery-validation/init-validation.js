@@ -15,6 +15,10 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             maxlength: 100,
             pattern: /^[a-zA-Z\s]+$/ //
         },
+        // Solo letras para el campo name (no se permiten números)
+        terminos: {
+            required: true,
+        },
         // Solo digitos para el campo name (no se permiten letras nio espacios)
         dni: {
             hasNumber: true,
@@ -96,6 +100,9 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             minlength: "Debe tener al menos 3 caracteres.",
             maxlength: "Debe tener menos de 100 caracteres.",
             pattern: "Solo se permiten letras y espacios."
+        },
+        terminos: {
+            required: "Debes aceptar los terminos y condiciones.",
         },
         dni: {
             hasNumber: "solo se permiten numeros",
