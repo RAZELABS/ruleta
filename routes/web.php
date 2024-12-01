@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\RolesPermissions\RoleController;
 use App\Http\Controllers\RolesPermissions\PermissionController;
 use App\Http\Controllers\RolesPermissions\UserController;
+use App\Http\Controllers\Front\VerificacionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::get('/', function () {
     return view('frontend.index');
 });
 
+
+Route::post('/verificar', [VerificacionController::class, 'verificar'])->name('verificar');
 
 
 // Route::get('/dashboard', function () {

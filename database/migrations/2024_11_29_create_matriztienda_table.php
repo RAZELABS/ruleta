@@ -15,8 +15,8 @@ return new class extends Migration
             $table->decimal('peso_tienda', 5, 2)->nullable();
             $table->timestamps();
 
-            // Foreign key constraint
-            $table->foreign('id_tienda')->references('id')->on('tienda')->onDelete('cascade');
+            // // Foreign key constraint
+            // $table->foreign('id_tienda')->references('id')->on('tienda')->onDelete('cascade');
         });
 
         // Seed initial data

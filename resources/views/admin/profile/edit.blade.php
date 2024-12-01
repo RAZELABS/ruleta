@@ -27,8 +27,5 @@
             </div>
         </div> --}}
     </div>
-    <div class="row">
-        @include('admin.cotizaciones.partials.tabla-cotizaciones')
-    </div>
 </div>
 @endsection

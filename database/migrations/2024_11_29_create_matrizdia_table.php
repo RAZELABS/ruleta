@@ -18,8 +18,8 @@ return new class extends Migration
 
         // Seed initial data
         $data = [
-            ['id' => 1, 'fecha' => '2024-12-09', 'peso_dia' => 5.29, 'created_at' => '2024-11-28 03:28:06'],
-            ['id' => 2, 'fecha' => '2024-12-10', 'peso_dia' => 5.49, 'created_at' => '2024-11-28 03:29:25'],
+            ['id' => 1, 'fecha' => '2024-12-09', 'peso_dia' => 5.29],
+            ['id' => 2, 'fecha' => '2024-12-10', 'peso_dia' => 5.49],
             ['id' => 3, 'fecha' => '2024-12-11', 'peso_dia' => 5.50],
             ['id' => 4, 'fecha' => '2024-12-12', 'peso_dia' => 5.71],
             ['id' => 5, 'fecha' => '2024-12-13', 'peso_dia' => 5.07],

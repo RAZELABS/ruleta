@@ -10,26 +10,28 @@ class BaseInput extends Component
     public $name;
     public $required;
     public $attributes;
+    public $boxClass;
+    public $labelClass;
+    public $inputClass;
 
-    /**
-     * Create a new component instance.
-     *
-     * @param string $label
-     * @param string $name
-     * @param bool $required
-     * @param array $attributes
-     */
-    public function __construct($label, $name, $required = false, $attributes = [])
-    {
+    public function __construct(
+        $label,
+        $name,
+        $required = false,
+        $attributes = [],
+        $boxClass = null,
+        $labelClass = null,
+        $inputClass = null
+    ) {
         $this->label = $label;
         $this->name = $name;
         $this->required = $required;
         $this->attributes = $attributes;
+        $this->boxClass = $boxClass ?? ''; // Clase para el label
+        $this->labelClass = $labelClass ?? ''; // Clase para el label
+        $this->inputClass = $inputClass ?? 'form-control'; // Clase para el input
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render()
     {
         return view('components.inputs.base-input');
