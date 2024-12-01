@@ -17,6 +17,9 @@
                     <span class="text-dark">{{ Auth::user()->name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i class="align-middle me-1"
+                        data-feather="user"></i> Perfil</a>
+
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
