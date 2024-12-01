@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('admin.layouts.app')
+
+@section('content')
 
     <div class="container mt-5">
         <a href="{{ url('roles') }}" class="btn btn-primary mx-1">Roles</a>
@@ -28,6 +30,8 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Tienda</th>
+                                    <th>DNI</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Roles</th>
@@ -38,6 +42,8 @@
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->id }}</td>
+                                    <td>{{$user->id_tienda}}</td>
+                                    <td>{{$user->dni}}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
@@ -67,4 +73,4 @@
     </div>
 </div>
 
-</x-app-layout>
+@endsection
