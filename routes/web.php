@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\CotizacionesController;
 use App\Http\Controllers\Admin\ConfiguracionesController;
 use App\Http\Controllers\Admin\ParametrosController;
 use App\Http\Controllers\Admin\DetalleController;
