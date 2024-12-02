@@ -15,10 +15,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="p-4 col-12 bg-white">
-                {{-- {{ $usersData }} --}}
+            <div class="p-2 col-12 col-md-8 offset-md-2">
+
                 <div class="p-4">
-                    {{-- <x-data-table idTable='TABLE_1' :columns="['ID', 'Descripcion','Estado']" :columnsClass="['', '','']" :datos=$premiosData /> --}}
+
                     <div class="table-responsive">
                         <table class="table table-striped" id="TABLE_1">
                             <thead>
@@ -38,14 +38,14 @@
                                     <td>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($premio->estado == 1)
-                                                <a href="{{route('admin.premios.edit', $premio->id)}}" class="btn btn-falabella-2 btn-sm">
+                                                <a href="{{route('admin.premios.edit', $premio->id)}}" class="btn btn-falabella-start btn-sm">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <form class="" action="{{ route('admin.premios.disabled', [$premio->id])}}"
                                                     @csrf
                                                     @method('GET')
                                                     <input type="hidden" name="cambioEstado" value="true">
-                                                        <button type="submit" id="btn-submit" class="btn btn-falabella-2 btn-sm ">
+                                                        <button type="submit" id="btn-submit" class="btn btn-falabella-end btn-sm ">
                                                             <i
                                                                 class="@if ($premio->estado == 1) fa-solid fa-ban @else fa-solid fa-check @endif">
                                                             </i>
