@@ -37,8 +37,13 @@ class PremiosController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        dd($data);
+        $data = $request->validate([
+            "descripcion"=> "required|string|min:3|max:20",
+            "estado"=> "integer|required|min:1|max:2",
+        ]);
+        //dd($data);
+        $premios = Premios::create($data);
+        return redirect()->route("admin.premios.create")->with("success","Registro creado con exito");
     }
 
     /**

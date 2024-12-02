@@ -2,14 +2,20 @@
 
 @section('content')
     <div class="container">
+
         <div class="row">
-            <div>
-                <h1>Premios</h1>
-            </div>
-            <div>
-                <a href="{{ route('admin.premios.create')}}" class="btn btn-falabella-2 btn-sm float-right">Agregar premios</a>
+            <div class="p-4 col-12 col-md-9 offset-md-1">
+                <div class="row">
+                    <div class="col-12 col-md-6 d-flex justify-content-start">
+                        <h1 class="text-secondary fw-bold">Lista de premios</h1>
+                    </div>
+                    <div class="col-12 col-md-6 d-flex justify-content-end align-items-center">
+                        <a href="{{route('admin.premios.create')}}" class="btn btn-falabella">Agregar premios</a>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="row">
             <div class="p-4 col-12 bg-white">
                 {{-- {{ $usersData }} --}}

@@ -17,7 +17,7 @@
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3">
-                <form action="{{route('admin.premios.store')}}" id="createPremios">
+                <form action="{{route('admin.premios.store')}}" id="createPremios" method="POST">
                     @csrf
                     @method('POST')
                     <div class="row">
@@ -36,8 +36,8 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
-                    @if (session('success'))
-                        <x-alerts.swal-notification icon="success" title="Exito" text="{{ session('message') }}"
+                    @if (session('message') ?? session('success'))
+                        <x-alerts.swal-notification icon="success" title="Exito" text="{{ session('message') ?? session('success')}}"
                             timer="3000" />
                     @endif
                     @if (session('error') || $errors->any())
