@@ -17,7 +17,7 @@
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3">
-                <form action="{{route('admin.premios.store')}}" id="createPremios">
+                <form action="{{route('admin.premios.store')}}" id="createPremios" method="POST">
                     @csrf
                     @method('POST')
                     <div class="row">
