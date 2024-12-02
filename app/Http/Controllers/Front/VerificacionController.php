@@ -20,7 +20,7 @@ class VerificacionController extends Controller
         $request->validate([
             'terminos'=>'required',
             'id_tienda' => 'required|integer|exists:tienda,id',
-            'dni' => 'required|string|max:20',
+            'dni' => 'required|string|min:8|max:8',
         ]);
 
         $dni = $request->dni;

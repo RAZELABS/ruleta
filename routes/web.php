@@ -52,6 +52,8 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::resource('matrizdia', MatrizdiaController::class);
     Route::resource('matriztienda', MatriztiendaController::class);
     Route::resource('matrizturno', MatrizturnoController::class);
+    Route::get('/premios/{id}/disabled', [PremiosController::class, 'disabled'])->name('premios.disabled');
+    Route::post('/premios/store', [PremiosController::class,'store'])->name('premios.store');
     Route::resource('premios', PremiosController::class);
 
 });
