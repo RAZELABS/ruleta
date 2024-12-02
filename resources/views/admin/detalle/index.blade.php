@@ -18,8 +18,7 @@
         var routeConfigurations = {
             'TABLE_1': {
                 'botones': 'Bfrtip',
-                'colFechaSimple': [1],
-                // 'ordenar': [0, "asc"],
+               
             },
         }
     </script>

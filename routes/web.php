@@ -2,11 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\FooterController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\ConfiguracionesController;
 use App\Http\Controllers\Admin\ParametrosController;
 use App\Http\Controllers\Admin\DetalleController;
@@ -47,13 +42,15 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::resource('parametros', ParametrosController::class);
     //? TIENDAS
     Route::get('/generar-qrs', [TiendaController::class, 'generarQrs'])->name('generar.qrs');
+    Route::get('tienda/{id}/disabled', [TiendaController::class, 'disabled'])->name('tienda.disabled');
     Route::resource('tienda', TiendaController::class);
+
     //? MATRIZ
     Route::resource('matrizdia', MatrizdiaController::class);
     Route::resource('matriztienda', MatriztiendaController::class);
     Route::resource('matrizturno', MatrizturnoController::class);
     Route::get('/premios/{id}/disabled', [PremiosController::class, 'disabled'])->name('premios.disabled');
-    Route::post('/premios/store', [PremiosController::class,'store'])->name('premios.store');
+    Route::post('/premios/store', [PremiosController::class, 'store'])->name('premios.store');
     Route::resource('premios', PremiosController::class);
 
 });
