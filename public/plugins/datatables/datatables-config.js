@@ -149,31 +149,31 @@ $(function () {
                         extend: "excel",
                         text: "Exportar a excel",
                         titleAttr: "excel",
-                        className: "btn btn-tablas btn-sm",
+                        className: "btn btn-falabella-start btn-sm",
                     },
                     {
                         extend: "print",
                         text: "Imprimir",
                         titleAttr: "Imprimir",
-                        className: "btn btn-tablas btn-sm",
+                        className: "btn btn-falabella-mid btn-sm",
                     },
                     {
                         extend: "pdf",
                         text: "PDF",
                         titleAttr: "Generar PDF",
-                        className: "btn btn-tablas btn-sm",
+                        className: "btn btn-falabella-end btn-sm",
                     },
-                    {
-                        extend: "copy",
-                        text: "Copiar",
-                        titleAttr: "copiar",
-                        className: "btn btn-tablas btn-sm",
-                    },
-                    {
-                        extend: "colvis",
-                        text: "Mostrar/Ocultar Columnas",
-                        className: "btn btn-tablas btn-sm",
-                    }
+                    // {
+                    //     extend: "copy",
+                    //     text: "Copiar",
+                    //     titleAttr: "copiar",
+                    //     className: "btn btn-tablas btn-sm",
+                    // },
+                    // {
+                    //     extend: "colvis",
+                    //     text: "Mostrar/Ocultar Columnas",
+                    //     className: "btn btn-tablas btn-sm",
+                    // }
                 ],
                 language: {
                     url: "http://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json",
