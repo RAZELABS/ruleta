@@ -11,7 +11,7 @@
         <span class="p-relative z-index-1">
             Ingresa tu <span class="text-color-tertiary">DNI</span>
         </span>
-        <span class="custom-stroke-text-effect-1 opacity-2 p-absolute text-10 right-0 me-4">LOL</span>
+        {{-- <span class="custom-stroke-text-effect-1 opacity-2 p-absolute text-10 right-0 me-4">LOL</span> --}}
     </h1>
 
     <p class="text-4-5 font-weight-medium mb-4 appear-animation text-color-light"
@@ -22,21 +22,17 @@
 
     <x-form action="{{route('verificar')}}" method="POST" id="form">
 
-        <x-inputs.text-input
-        name="dni"
-        label="DNI"
-        :placeholder="'Introduce tu DNI'"
-        :required="true"
-        :boxClass="'col-12 col-lg-6'"
-        :labelClass="'text-light'"
-        :inputClass="'form-control-lg'"
-        min-length=8
-        max-length=8
-        />
+        <x-inputs.text-input name="dni" label="DNI" :placeholder="'Introduce tu DNI'" :required="true"
+            :boxClass="'col-12 col-lg-6'" :labelClass="'text-light'" :inputClass="'form-control-lg'" min-length=8
+            max-length=8 />
 
+        <input type="hidden" name="id_tienda" id="editor_content">
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for=""><a href="terminos" class="text-color-secondary"
+                    required="true">Acepto los terminos y condiciones</a></label>
+            <input class="form-check-input" type="checkbox" id="" value="1" name="terminos" />
 
-        <input type="hidden" name="mensaje" id="editor_content">
-
+        </div>
 
         <div class="mb-3 col-12">
             <button type="submit"
@@ -45,12 +41,15 @@
                 data-plugin-options="{'minWindowWidth': 0}">
                 Participar
             </button>
-            @if (session('message') === 'true')
-            <x-alerts.swal-notification icon="success" title="Exito" text="el correo se ha enviado correctamente."
+            @if (session('success'))
+            <x-alerts.swal-notification icon="success" title="Exito" text="{{session('message')}}"
                 timer="3000" />
             @endif
-            @if (session('error'))
-            <x-alerts.swal-notification icon="success" title="Exito" text="Error enviando el email." timer="3000" />
+            @if (session('error') || $errors->any())
+            @php
+            $errorText = session('error') ?? implode(', ', $errors->all());
+        @endphp
+            <x-alerts.swal-notification icon="error" title="Error" text="{{ $errorText }}" timer="3000" />
             @endif
         </div>
     </x-form>
@@ -67,6 +66,7 @@
 
 @push('scripts')
 <script>
+
     initializeValidation("#form");
     $(document).ready(function () {
     // Limitar caracteres mientras el usuario escribe
@@ -88,8 +88,8 @@
         background-color: red;
         padding: 5px 20px;
         color: #fff !important;
-        width:auto;
+        width: auto;
         border-radius: 10px
     }
-    </style>
+</style>
 @endpush
