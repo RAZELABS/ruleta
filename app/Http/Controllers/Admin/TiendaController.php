@@ -14,7 +14,7 @@ class TiendaController extends Controller
      */
     public function index()
     {
-        $tiendas = Tienda::select('id','codigo','qr','nombre')->orderBy('codigo','asc')->get();
+        $tiendas = Tienda::select('id','codigo','qr','nombre','estado')->orderBy('codigo','asc')->get();
         // $tiendaData = $tiendas->map(function($tienda) {
         //     return [$tienda->id, $tienda->codigo,$tienda->qr, $tienda->nombre];
         // });
@@ -74,7 +74,7 @@ class TiendaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -92,4 +92,16 @@ class TiendaController extends Controller
     {
         //
     }
+    public function disabled($id)
+{
+    $tienda = Tienda::findOrFail($id);
+    //dd($tienda);
+
+    // Alternar el estado entre 1 (activo) y 2 (inactivo)
+    $tienda->estado = $tienda->estado == 1 ? 2 : 1;
+    $tienda->save();
+
+    return redirect()->route('admin.tienda.index')->with('success', 'Estado de la tienda actualizado correctamente.');
+}
+
 }

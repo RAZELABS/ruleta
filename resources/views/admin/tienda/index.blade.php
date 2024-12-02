@@ -25,6 +25,7 @@
                                 <th scope="col">Codigo</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">QR</th>
+                                <th scope="col">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,8 +34,28 @@
                                 <td scope="row">{{$tienda->codigo}}</td>
                                 <td>{{$tienda->nombre}}</td>
                                 <td class="float-center "><a href="{{ asset('qrs/' . $tienda->codigo . '.svg') }}"
-                                        alt="QR de {{ $tienda->nombre }}" class="btn btn-falabella-2 btn-sm w-100">QR de {{
-                                        $tienda->nombre }}</a></td>
+                                        alt="QR de {{ $tienda->nombre }}" class="btn btn-falabella-2 btn-sm w-100">QR de
+                                        {{$tienda->nombre }}</a></td>
+                                <td>
+                                    <div class="btn-group btn-group-toggle">
+                                        <!-- Botón para editar -->
+                                        @if ($tienda->estado == 1)
+                                        <a href="{{ route('admin.tienda.edit', $tienda->id) }}"
+                                            class="btn btn-falabella-start btn-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        @endif
+
+                                        <!-- Formulario para cambiar el estado -->
+                                        <form action="{{ route('admin.tienda.disabled', $tienda->id) }}" method="GET">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm {{ $tienda->estado == 1 ? 'btn-falabella-end' : 'btn-falabella-2' }}">
+                                                <i class="{{ $tienda->estado == 1 ? 'fa-solid fa-ban' : 'fa-solid fa-check' }}"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </td>
                             </tr>
                             @endforeach
 

@@ -51,3 +51,104 @@ body {
 .owl-stage-outer{
     border-radius: 30px !important;
 }
+
+.btn-primary.disabled:not(.bg-transparent), .btn-primary:disabled:not(.bg-transparent) {
+    background-color: var(--fab-verde-3);
+}
+.btn-primary.disabled, .btn-primary:disabled {
+    border-color: var(--fab-verde-3);
+}
+
+.btn-falabella{
+    color: var(--fab-verde-3);
+    background: var(--secondary);
+    border:none;
+    transition: all ease 0.1s;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.btn-falabella:hover{
+    color: #fff;
+    background: var(--fab-verde-3);
+    border:none;
+}
+.btn-falabella-2{
+    color: #fff;
+    background: var(--fabtxt);
+    border:none;
+    transition: all ease 0.1s;
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+.btn-falabella-2:hover{
+    color: var(--fab-verde-2);
+    background: var(--secondary);
+    border:none;
+    font-weight: bold;
+}
+.btn-falabella-start{
+    color: #fff;
+    background: var(--fabtxt);
+    border:none;
+    transition: all ease 0.1s;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 0px !important;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.btn-falabella-start:hover{
+    color: var(--fab-verde-2);
+    background: var(--secondary);
+    border:none;
+    font-weight: bold;
+}
+.btn-falabella-mid{
+    color: #fff;
+    background: var(--fabtxt);
+    border:none;
+    transition: all ease 0.1s;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.btn-falabella-mid:hover{
+    color: var(--fab-verde-2);
+    background: var(--secondary);
+    border:none;
+    font-weight: bold;
+}
+.btn-falabella-end{
+    color: #fff;
+    background: var(--fabtxt);
+    border:none;
+    transition: all ease 0.1s;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 10px !important;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.btn-falabella-end:hover{
+    color: var(--fab-verde-2);
+    background: var(--secondary);
+    border:none;
+    font-weight: bold;
+}
+
+.btn-secondary {
+    --hover: var(--secondary--200) !important;
+    background-color: var(--secondary) !important;
+    border:none !important;
+    color: var(--secondary-inverse);
+}
+.btn-secondary:hover:not(.bg-transparent), .btn-secondary.hover:not(.bg-transparent) {
+    background-color: var(--fab-verde-2) !important;
+    border: none;
+}
