@@ -50,6 +50,28 @@ return new class extends Migration
                 'descripcion' => 'Perdio',
                 'created_at' => '2024-11-27 15:47:17'
             ],
+            [
+                'id' => 5,
+                'flag' => 'tipo_documento',
+                'valor' => 1,
+                'descripcion' => 'DNI',
+                'created_at' => '2024-11-27 15:47:17'
+            ],
+            [
+                'id' => 6,
+                'flag' => 'tipo_documento',
+                'valor' => 2,
+                'descripcion' => 'C.E',
+                'created_at' => '2024-11-27 15:47:17'
+            ],
+
+            [
+                'id' => 7,
+                'flag' => 'tipo_documento',
+                'valor' => 3,
+                'descripcion' => 'Pasaporte',
+                'created_at' => '2024-11-27 15:47:17'
+            ],
         ];
 
         // Insert the data

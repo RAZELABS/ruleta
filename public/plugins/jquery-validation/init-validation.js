@@ -3,9 +3,11 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
 
     var form = $(selector);
     var submitButton = form.find('button[type="submit"]');
+    var participarButton = form.find('button[type="button"]');
 
     // Deshabilitamos el botón de submit inicialmente
     submitButton.prop('disabled', true);
+    participarButton.prop('disabled', true);
     // Reglas predefinidas
     var defaultRules = {
         // Solo letras para el campo name (no se permiten números)
@@ -14,6 +16,9 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             minlength: 3,
             maxlength: 100,
             pattern: /^[a-zA-Z\s]+$/ //
+        },
+        tipo_documento: {
+            required: true,
         },
         // Solo letras para el campo name (no se permiten números)
         terminos: {
@@ -100,6 +105,9 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             minlength: "Debe tener al menos 3 caracteres.",
             maxlength: "Debe tener menos de 100 caracteres.",
             pattern: "Solo se permiten letras y espacios."
+        },
+        tipo_documento: {
+            required: "Este campo es obligatorio.",
         },
         terminos: {
             required: "Debes aceptar los terminos y condiciones.",
@@ -252,8 +260,10 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
         // Verificamos si todo el formulario es válido
         if (form.valid()) {
             submitButton.prop('disabled', false); // Habilitamos el botón si es válido
+            participarButton.prop('disabled', false); // Habilitamos el botón si es válido
         } else {
             submitButton.prop('disabled', true);  // Deshabilitamos si no es válido
+            participarButton.prop('disabled', true);  // Deshabilitamos si no es válido
         }
     }
 }

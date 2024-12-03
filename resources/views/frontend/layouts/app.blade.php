@@ -13,20 +13,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/simple-line-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/owl-carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/owl-theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/theme-elements.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('frontend/css/settings.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/layers.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/navigation.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/skin-base.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/skin.css') }}">
-
-
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/_variables.css') }}">
     @include('frontend.layouts.ico')
@@ -37,15 +26,20 @@
 </head>
 
 <body>
+    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-1 overflow-hidden">
+    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-2 overflow-hidden">
+    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-3 overflow-hidden">
+    <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo overflow-hidden">
     <div class="body">
-        <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo">
-        @include('frontend.layouts.header')
-        <div role="main" class="main">
+        {{-- @include('frontend.layouts.header') --}}
+
+        <div role="main" class="main" >
 
                 @yield('content')
 
             @include('frontend.layouts.footer')
         </div>
+
     </div>
     {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('frontend/js/plugins.js') }}"></script>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MatrizdiaController;
 use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\Admin\PremiosController;
+use App\Http\Controllers\Front\IndexController;
 
 use App\Http\Controllers\RolesPermissions\RoleController;
 use App\Http\Controllers\RolesPermissions\PermissionController;
@@ -18,11 +19,12 @@ use App\Http\Controllers\Front\VerificacionController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+// Route::get('/', function () {
+//     return view('frontend.index');
+// });
 
 
+Route::get('/', [indexController::class, 'index']);
 Route::post('/verificar', [VerificacionController::class, 'verificar'])->name('verificar');
 
 
