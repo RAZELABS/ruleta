@@ -14,12 +14,8 @@ class ParametrosController extends Controller
     public function index()
     {
         $parametros = Parametros::all();
-        $parametros = Parametros::select('id','flag','valor','descripcion')->get();
-        $parametrosData = $parametros->map(function($parametro) {
-            return [$parametro->id, $parametro->flag, $parametro->valor, $parametro->descripcion];
-        });
 
-            return view("admin.parametros.index", compact("parametrosData"));
+        return view("admin.parametros.index", compact("parametros"));
     }
 
     /**
@@ -27,7 +23,7 @@ class ParametrosController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.parametros.create");
     }
 
     /**
@@ -35,7 +31,14 @@ class ParametrosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "flag"=> "required|string|min:3|max:20",
+            "valor"=> "integer|required",
+            "descripcion"=> "required|string|min:3|max:50",
+        ]);
+        //dd($data);
+        $parametros = Parametros::create($data);
+        return redirect()->route("admin.parametros.create")->with("success","Registro creado con exito");
     }
 
     /**

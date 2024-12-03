@@ -14,11 +14,11 @@ class MatrizdiaController extends Controller
     public function index()
     {
         $matrizdias = Matriz_dia::select('id','fecha','peso_dia')->get();
-        $matriz_diaData = $matrizdias->map(function($matriz_dia) {
-            return [$matriz_dia->id, $matriz_dia->fecha, $matriz_dia->peso_dia];
-        });
-            //dd($matriz_diaData);
-            return view("admin.matrizdia.index", compact("matriz_diaData"));
+        // $matriz_diaData = $matrizdias->map(function($matriz_dia) {
+        //     return [$matriz_dia->id, $matriz_dia->fecha, $matriz_dia->peso_dia];
+        // });
+            //dd($matrizdias);
+            return view("admin.matrizdia.index", compact("matrizdias"));
     }
 
     /**
@@ -50,7 +50,12 @@ class MatrizdiaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $matriz_dia = Matriz_dia::select('id','fecha','peso_dia')
+        ->where('id','=', $id)->first();
+
+        //dd($parametros, $premios);
+        return view("admin.matrizdia.edit", compact("matriz_dia"));
+
     }
 
     /**
@@ -58,7 +63,15 @@ class MatrizdiaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $data = $request->validate([
+            "peso_dia"=> "required|decimal:2",
+        ]);
+
+        //dd($data);
+        $matriz_dia = Matriz_dia::where("id","=", $id)->update($data);
+        return redirect()->route("admin.matrizdia.edit", $id)->with("success","Registro modificado con exito");
+
     }
 
     /**

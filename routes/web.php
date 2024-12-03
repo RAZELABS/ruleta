@@ -35,6 +35,7 @@ Route::post('/verificar', [VerificacionController::class, 'verificar'])->name('v
 Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/configuraciones', [ConfiguracionesController::class, 'index'])->name('configuraciones');
+    Route::get('/detalle/{id}/disabled', [DetalleController::class, 'disabled'])->name('detalle.disabled');
     Route::get('/detalle', [DetalleController::class, 'index'])->name('detalle');
     //?profile
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,12 +48,18 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::get('tienda/{id}/disabled', [TiendaController::class, 'disabled'])->name('tienda.disabled');
     Route::resource('tienda', TiendaController::class);
 
-    //? MATRIZ
+    //? MATRIZ DIA
+    Route::post('/matrizdia/{id}/update', [MatrizdiaController::class, 'update'])->name('matrizdia.update');
     Route::resource('matrizdia', MatrizdiaController::class);
+    //? MATRIZ TIENDA
     Route::resource('matriztienda', MatriztiendaController::class);
+    //? MATRIZ TURNO
     Route::resource('matrizturno', MatrizturnoController::class);
+
     Route::get('/premios/{id}/disabled', [PremiosController::class, 'disabled'])->name('premios.disabled');
     Route::post('/premios/store', [PremiosController::class, 'store'])->name('premios.store');
+    //Route::post('/premios/edit', [PremiosController::class, 'edit'])->name('premios.edit');
+    Route::post('/premios/{id}/update', [PremiosController::class, 'update'])->name('premios.update');
     Route::resource('premios', PremiosController::class);
 
 });

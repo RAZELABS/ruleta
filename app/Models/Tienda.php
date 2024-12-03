@@ -18,6 +18,8 @@ class Tienda extends Model
     protected $fillable = [
         'codigo',
         'nombre',
+        'qr',
+        'estado',
     ];
 
     // Casts para convertir automáticamente valores al acceder
