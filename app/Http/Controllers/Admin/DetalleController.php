@@ -13,12 +13,13 @@ class DetalleController extends Controller
      */
     public function index()
     {
-        $detalles = Detalle::with('parametro','tienda')->select('id','fecha','hora','id_tienda','dni','resultado')->get();
-        $detalleData = $detalles->map(function($detalle){
-            return [$detalle->id, $detalle->fecha, $detalle->hora, $detalle->tienda->nombre, $detalle->dni, $detalle->parametro->descripcion];
-        });
+        $detalles = Detalle::with('tienda','documento','parametro','estados')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado','estado')->get();
+        // $detalleData = $detalles->map(function($detalle){
+        //     return [$detalle->id, $detalle->fecha, $detalle->hora, $detalle->tienda->nombre, $detalle->documento->descripcion, $detalle->nro_documento, $detalle->parametro->descripcion, $detalle->estados->descripcion, $detalle->estado];
+        // });
 
-        return view("admin.detalle.index", compact("detalleData"));
+        //dd($detalles);
+        return view("admin.detalle.index", compact("detalles"));
     }
 
     /**
@@ -68,4 +69,18 @@ class DetalleController extends Controller
     {
         //
     }
+
+    public function disabled(Request $request, $id)
+    {
+        $estado = Detalle::select('estado')->where('id', '=', $id)->first();
+
+        if ($estado->estado == 1) {
+            $premios = Detalle::where('id', $id)->update(['estado' => 2]);
+        } else {
+            $premios = Detalle::where('id', $id)->update(['estado' => 1]);
+        }
+        $mensaje = 'exito';
+        return redirect()->back()->with('success',$mensaje);
+    }
+
 }

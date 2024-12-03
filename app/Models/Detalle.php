@@ -18,10 +18,12 @@ class Detalle extends Model
     protected $fillable = [
         'fecha',
         'id_tienda',
-        'dni',
+        'tipo_documento',
+        'nro_documento',
         'resultado',
         'hora',
         'opcion',
+        'estado',
     ];
 
     // Casts para convertir automáticamente valores al acceder
@@ -37,10 +39,21 @@ class Detalle extends Model
             ->where('flag', 'resultado');
     }
 
+    public function documento()
+    {
+        return $this->belongsTo(Parametros::class, 'tipo_documento', 'valor')
+            ->where('flag', 'tipo_documento');
+    }
+
+    public function estados()
+    {
+        return $this->belongsTo(Parametros::class, 'estado', 'valor')
+            ->where('flag', 'estado');
+    }
+
     public function tienda()
     {
         return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
-            // ->where('id', 'id_tienda');
     }
 }
 

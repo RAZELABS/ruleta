@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->char('codigo', 3)->nullable();
             $table->string('nombre', 100)->nullable();
+            $table->string('qr', 200)->nullable();
+            $table->integer('estado')->nullable();
             $table->timestamps();
         });
 
