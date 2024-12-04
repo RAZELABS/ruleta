@@ -25,11 +25,10 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             required: true,
         },
         // Solo digitos para el campo name (no se permiten letras nio espacios)
-        dni: {
-            hasNumber: true,
+        nro_documento: {
+           digits: true,
             required: true,
-            minlength: 8,
-            maxlength: 8,
+           documentoLength: true,
         },
         // Campo de email que acepta letras, números, y los caracteres @._-
         email: {
@@ -107,16 +106,14 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
             pattern: "Solo se permiten letras y espacios."
         },
         tipo_documento: {
-            required: "Este campo es obligatorio.",
+            required: "Seleccione un tipo de documento"
         },
         terminos: {
             required: "Debes aceptar los terminos y condiciones.",
         },
-        dni: {
-            hasNumber: "solo se permiten numeros",
-            required: "Este campo es obligatorio.",
-            minlength: "Debe tener al menos 8 digitos.",
-            maxlength: "Debe tener 8 digitos.",
+        nro_documento: {
+            required: "Ingrese su número de documento",
+            digits: "Solo se permiten números"
         },
         email: {
             required: "El correo electrónico es obligatorio.",
@@ -185,6 +182,20 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
     var finalRules = $.extend(true, {}, defaultRules, customRules);
     var finalMessages = $.extend(true, {}, defaultMessages, customMessages);
     // Métodos personalizados para validar cada regla por separado
+    $.validator.addMethod("documentoLength", function(value, element) {
+        var tipoDoc = $("#tipo_documento").val();
+        if (tipoDoc == "1") {
+            return value.length === 8;
+        } else if (tipoDoc == "2") {
+            return value.length >= 3 && value.length <= 12;
+        }
+        return false;
+    }, function(params, element) {
+        var tipoDoc = $("#tipo_documento").val();
+        return tipoDoc == "1"
+            ? "El DNI debe tener exactamente 8 caracteres"
+            : "El CE debe tener entre 3 y 12 caracteres";
+    });
     $.validator.addMethod("hasUppercase", function (value, element) {
         return /[A-Z]/.test(value);  // Al menos una mayúscula
     });
@@ -253,6 +264,14 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
         },
         unhighlight: function (element) {
             $(element).addClass('is-valid').removeClass('is-invalid');
+        }
+    });
+    // Enable button when form is valid
+    form.on('change keyup', function() {
+        if (form.valid()) {
+            participarButton.prop('disabled', false);
+        } else {
+            participarButton.prop('disabled', true);
         }
     });
     // Función para habilitar o deshabilitar el botón de submit

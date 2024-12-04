@@ -16,7 +16,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden; /* Para evitar scroll indeseado */
-    background: radial-gradient(circle, rgba(53,120,60,1) 0%, rgba(0,69,39,1) 70%) !important;
+    background: linear-gradient( rgba(53,120,60,1) 0%, rgba(0,69,39,1) 70%) !important;
     position: relative; /* Necesario para posicionar el logo como hijo absoluto */
     font-family: "Poppins", Arial, sans-serif;
     font-size: 14px;
@@ -1446,7 +1446,7 @@ body a {
 
 
 #footer-falabella {
-    position: fixed !important;
+    position: absolute !important;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -1455,17 +1455,21 @@ body a {
     color: var(--primary);
     opacity: 0.8;
 }
+#footer-falabella img{
+    height: 30px;
+    width: 100%;
+}
+
 
 .logo {
     position: absolute;
     top: 50%;
-    left: 0;
-    width: 100%;
-    max-width: 1920px;
+    left: 50%;
+    width: 110vw;
     height: auto;
-    transform: translateY(-100%);
+    transform: translate(-50% ,-50%);
     opacity: 0.06;
-    animation: float 20s linear infinite;
+    animation: float 30s ease-in-out infinite;
     z-index: -100;
 }
 .girnalda-1 {
@@ -1482,7 +1486,7 @@ body a {
     position: absolute;
 
     width: 50px;
-    left: 50%;
+    left: 45%;
     height: auto;
     transform-origin: top center;
     animation: swing 4s ease-in-out infinite;
@@ -1492,7 +1496,7 @@ body a {
     position: absolute;
 
     width: 110px;
-    right: 10%;
+    right: 5%;
     height: auto;
     transform-origin: top center;
     animation: swing 3.5s ease-in-out infinite;
@@ -1513,13 +1517,13 @@ body a {
 /* Animación para mover el logo horizontalmente */
 @keyframes float {
     0% {
-        transform: translateY(-50%) translateX(-10%);
+        transform: translate(-50%,-50%) translateX(-5%);
     }
     50% {
-        transform: translateY(-50%) translateX(10%);
+        transform: translateY(-50%,-50%) translateX(5%);
     }
     100% {
-        transform: translateY(-50%) translateX(-10%);
+        transform: translateY(-50%,50%) translateX(5%);
     }
 }
 
@@ -1672,5 +1676,4 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
     color: var(--secondary);
     font-weight: bold;
 }
-
 

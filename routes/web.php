@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Front\IndexController;
-
+use App\Http\Controllers\Front\RuletaController;
 use App\Http\Controllers\RolesPermissions\RoleController;
 use App\Http\Controllers\RolesPermissions\PermissionController;
 use App\Http\Controllers\RolesPermissions\UserController;
@@ -25,8 +25,17 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', [indexController::class, 'index']);
-Route::post('/verificar', [VerificacionController::class, 'verificar'])->name('verificar');
+// Route::get('/', [indexController::class, 'index']);
+Route::get('/', [IndexController::class, 'index'])
+    ->middleware('check.tienda')
+    ->name('home');
+
+Route::view('/error-tienda', 'frontend.error-tienda')
+    ->name('error.tienda');
+
+Route::post('/verificar', [IndexController::class, 'verificar'])->name('verificar');
+
+Route::get('/ruleta', [RuletaController::class, 'index'])->name('ruleta.index');
 
 
 // Route::get('/dashboard', function () {
