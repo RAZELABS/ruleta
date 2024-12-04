@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Matriz_dia;
+use App\Models\MatrizDia;
 
 class MatrizdiaController extends Controller
 {
@@ -13,7 +13,7 @@ class MatrizdiaController extends Controller
      */
     public function index()
     {
-        $matrizdias = Matriz_dia::select('id','fecha','peso_dia')->get();
+        $matrizdias = MatrizDia::select('id','fecha','peso_dia')->get();
         // $matriz_diaData = $matrizdias->map(function($matriz_dia) {
         //     return [$matriz_dia->id, $matriz_dia->fecha, $matriz_dia->peso_dia];
         // });
@@ -50,7 +50,7 @@ class MatrizdiaController extends Controller
      */
     public function edit(string $id)
     {
-        $matriz_dia = Matriz_dia::select('id','fecha','peso_dia')
+        $matriz_dia = MatrizDia::select('id','fecha','peso_dia')
         ->where('id','=', $id)->first();
 
         //dd($parametros, $premios);
@@ -69,7 +69,7 @@ class MatrizdiaController extends Controller
         ]);
 
         //dd($data);
-        $matriz_dia = Matriz_dia::where("id","=", $id)->update($data);
+        $matriz_dia = MatrizDia::where("id","=", $id)->update($data);
         return redirect()->route("admin.matrizdia.edit", $id)->with("success","Registro modificado con exito");
 
     }

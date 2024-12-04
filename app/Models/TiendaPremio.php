@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Matriz_tienda extends Model
+class TiendaPremio extends Model
 {
     use HasFactory;
     // Nombre de la tabla asociada
-    protected $table = 'matriz_tienda';
+    protected $table = 'tienda_premio';
 
     // Clave primaria de la tabla
     protected $primaryKey = 'id';
@@ -17,7 +17,8 @@ class Matriz_tienda extends Model
     // Campos asignables masivamente
     protected $fillable = [
         'id_tienda',
-        'peso_tienda',
+        'id_premio',
+        'estado',
     ];
 
     // Casts para convertir automáticamente valores al acceder
@@ -26,9 +27,19 @@ class Matriz_tienda extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function tienda()
+    public function tiendas()
     {
         return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
-            // ->where('id', 'id_tienda');
+    }
+
+    public function premios()
+    {
+        return $this->belongsTo(Premios::class, 'id_premio', 'id');
+    }
+
+    public function estados()
+    {
+        return $this->belongsTo(Parametros::class, 'estado', 'valor')
+        ->where('flag','=', 'estado');
     }
 }
