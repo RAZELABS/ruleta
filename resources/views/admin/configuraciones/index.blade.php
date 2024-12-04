@@ -87,7 +87,18 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col-6 col-md-3">
+                    <div class="featured-boxes  m-0 ">
+                        <div class="featured-box my-2 b-radius-20 ">
+                            <a href="{{ route('admin.tiendapremio.index') }}" class="text-decoration-none">
+                                <span class="p-1 text-center d-block">
+                                    <span class="text-secondary display-5"><i class="fa-solid fa-gifts"></i></span>
+                                    <span class="font-weight-bold    d-block text-secondary">Premios x tienda</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

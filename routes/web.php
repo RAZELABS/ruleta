@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ConfiguracionesController;
 use App\Http\Controllers\Admin\ParametrosController;
 use App\Http\Controllers\Admin\DetalleController;
 use App\Http\Controllers\Admin\TiendaController;
+use App\Http\Controllers\Admin\TiendapremioController;
 use App\Http\Controllers\Admin\MatrizdiaController;
 use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
@@ -56,21 +57,27 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::get('/generar-qrs', [TiendaController::class, 'generarQrs'])->name('generar.qrs');
     Route::get('tienda/{id}/disabled', [TiendaController::class, 'disabled'])->name('tienda.disabled');
     Route::resource('tienda', TiendaController::class);
+    Route::resource('tiendapremio', TiendapremioController::class);
 
     //? MATRIZ DIA
     Route::post('/matrizdia/{id}/update', [MatrizdiaController::class, 'update'])->name('matrizdia.update');
     Route::resource('matrizdia', MatrizdiaController::class);
     //? MATRIZ TIENDA
+    Route::post('/matriztienda/{id}/update', [MatriztiendaController::class, 'update'])->name('matriztienda.update');
     Route::resource('matriztienda', MatriztiendaController::class);
     //? MATRIZ TURNO
+    Route::post('/matrizturno/{id}/update', [MatrizturnoController::class, 'update'])->name('matrizturno.update');
     Route::resource('matrizturno', MatrizturnoController::class);
-
+    //? MATRIZ PREMIOS
     Route::get('/premios/{id}/disabled', [PremiosController::class, 'disabled'])->name('premios.disabled');
     Route::post('/premios/store', [PremiosController::class, 'store'])->name('premios.store');
-    //Route::post('/premios/edit', [PremiosController::class, 'edit'])->name('premios.edit');
     Route::post('/premios/{id}/update', [PremiosController::class, 'update'])->name('premios.update');
     Route::resource('premios', PremiosController::class);
-
+    //? MATRIZ PREMIOS POR TIENDA
+    Route::get('/tiendapremio/{id}/disabled', [TiendapremioController::class, 'disabled'])->name('tiendapremio.disabled');
+    Route::post('/tiendapremio/store', [TiendapremioController::class, 'store'])->name('tiendapremio.store');
+    Route::post('/tiendapremio/{id}/update', [TiendapremioController::class, 'update'])->name('tiendapremio.update');
+    Route::resource('tiendapremio', TiendapremioController::class);
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

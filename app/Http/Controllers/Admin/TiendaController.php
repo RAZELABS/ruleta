@@ -71,7 +71,7 @@ class TiendaController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */   
+     */
     public function edit(string $id)
     {
         $tienda = Tienda::findOrFail($id);

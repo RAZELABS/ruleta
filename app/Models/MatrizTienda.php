@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Matriz_dia extends Model
+class MatrizTienda extends Model
 {
     use HasFactory;
     // Nombre de la tabla asociada
-    protected $table = 'matriz_dia';
+    protected $table = 'matriz_tienda';
 
     // Clave primaria de la tabla
     protected $primaryKey = 'id';
 
     // Campos asignables masivamente
     protected $fillable = [
-        'fecha',
-        'peso_dia',
+        'id_tienda',
+        'peso_tienda',
     ];
 
     // Casts para convertir automáticamente valores al acceder
@@ -25,4 +25,10 @@ class Matriz_dia extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function tienda()
+    {
+        return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
+            // ->where('id', 'id_tienda');
+    }
 }
