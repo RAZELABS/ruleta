@@ -5,43 +5,15 @@
     <div class="row mb-5">
         <div class="col-12">
             <div class="row">
-                <div class="ruleta-container">
-                    <button onclick="spinner.spin()">perder</button>
-                    <button onclick="spinner.spin(0)">Ganar</button>
-                    <div class="roulette">
-                        <div class="outer-border"></div>
-<div class="outer-glow"></div>
-                        <div class="spinner"></div>
-                        <div class="shadow"></div>
-                        <div class="markers">
-                            <div class="triangle">
-                            </div>
-                        </div>
-                        <div class="button">
-                            <span class="text-dark">Gira</span>
-                        </div>
-                    </div>
-                </div>
+                @include('frontend.partials.info-ruleta')
+                @include('frontend.partials.ruleta-juego')
             </div>
+            
         </div>
     </div>
 </div>
-<div class="modal fade" id="premioModal" tabindex="-1" aria-labelledby="premioModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="premioModalLabel">¡Felicidades!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="premioTexto">Has ganado: </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 @endsection
 @push('styles')
@@ -51,41 +23,38 @@
     body {
         overflow: hidden;
     }
-    .roulette {
-    position: relative;
-}
 
-.outer-border {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border: 10px solid #eecbb6; /* Use your desired color */
-    border-radius: 50%;
-    z-index: -1;
-}
-
-.outer-glow {
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    right: -15px;
-    bottom: -15px;
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(0, 69, 39, 0.5); /* Optional glow effect */
-    z-index: -2;
-}
-    .roulette {
-        display: block;
+     .outer-border {
         position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border: 10px solid #eecbb6;
+        /* Use your desired color */
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .outer-glow {
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        right: -15px;
+        bottom: -15px;
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(0, 69, 39, 0.5);
+        /* Optional glow effect */
+        z-index: -2;
+    }
+
+    .roulette {
+        position: relative;
+        display: block;
         width: 500px;
         height: 500px;
-        top: 50%;
-        left: 50%;
-        margin-top: -250px;
-        margin-left: -250px;
     }
+
     .roulette .markers {
         display: block;
         position: absolute;
@@ -267,35 +236,36 @@
         max-width: 80px;
         word-wrap: break-word;
     }
+
     /* Add these styles */
-.text-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  transform: rotate(0deg);
-}
+    .text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        transform: rotate(0deg);
+    }
 
-.main-text {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 0px;
-  white-space: nowrap;
-}
+    .main-text {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 0px;
+        white-space: nowrap;
+    }
 
-.sub-text {
-  font-size: 0.9em;
-  white-space: nowrap;
-}
+    .sub-text {
+        font-size: 0.9em;
+        white-space: nowrap;
+    }
 
-.label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
+    .label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
 </style>
 @endpush
 @push('scripts')
@@ -303,18 +273,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
     // Datos de los premios en la ruleta
 const data = [
-  { id: '', type: 'perdedor', color: '#AAD500', text: '¡Ganaste!', subtext: '' },
-  { id: '', type: 'premio2', color: '#0e793e', text: 'Sigue', subtext: 'participando' },
-  { id: '', type: 'premio1', color: '#f00', text: 'Inténtalo', subtext: 'Mañana' },
-  { id: '', type: 'premio2', color: '#0e793e', text: 'Estuviste', subtext: 'muy cerca' },
-  { id: '', type: 'premio1', color: '#f00', text: 'Sigue', subtext: 'Participando' },
-  { id: '', type: 'premio2', color: '#0e793e', text: 'Sigue', subtext: 'Participando' }
+  { id: '', type: 'premio', color: '#AAD500', text: '¡Ganaste!', subtext: '' },
+  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'participando' },
+  { id: '', type: 'sin-premio', color: '#f00', text: 'Inténtalo', subtext: 'Mañana' },
+  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Estuviste', subtext: 'muy cerca' },
+  { id: '', type: 'sin-premio', color: '#f00', text: 'Sigue', subtext: 'Participando' },
+  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'Participando' }
 ];
-
+const winSound = new Audio('{{asset('frontend/sounds/win-2.wav')}}');
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
   this.$el = $(el);        // Elemento DOM de la ruleta
@@ -351,9 +322,10 @@ RouletteWheel.prototype.spin = function (_index) {
   };
 
   const _onAnimationComplete = () => {
-    this.$el.removeClass('busy'); // Elimina clase cuando termina de girar
-    this.trigger('spin:end', this);
-  };
+        this.$el.removeClass('busy');
+        this.trigger('spin:end', this);
+        showResult(this.items[this._index].type);
+    };
 
   // Inicia la animación del giro
   $spinner.velocity('stop').velocity(
@@ -506,12 +478,66 @@ $(window).ready(function () {
     const txt = data[r._index].text;
     const subtext = data[r._index].subtext;
 
-    // Muestra el premio en el modal
-    $('#premioTexto').text(pretext + txt);
-    const premioModal = new bootstrap.Modal(document.getElementById('premioModal'));
-    premioModal.show();
   });
 });
+function showResult(type) {
+    if (type === 'premio') {
+        // Play winning sound
+        winSound.play();
 
+        const duration = 2000;
+        const end = Date.now() + duration;
+        // Launch confetti
+        confetti({
+            particleCount: 10,
+            spread: 180,
+            origin: { y: 0.6 },
+            scalar: 1.5, // Makes particles bigger
+            gravity: 0.8, // Slower fall
+            ticks: 300
+        });
+        (function frame() {
+            confetti({
+                particleCount: 10,
+                angle: 60,
+                spread: 80,
+                origin: { x: 0, y: 0.8 },
+                scalar: 1.2
+            });
+            confetti({
+                particleCount: 10,
+                angle: 120,
+                spread: 80,
+                origin: { x: 1, y: 0.8 },
+                scalar: 1.2
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+
+        Swal.fire({
+            title: '<span style="font-size: 2em">¡GANASTE!</span>',
+            html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
+                   Acércate al módulo de la ruleta para activar tu premio</p>`,
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'animated bounceIn'
+            }
+        });
+    } else {
+        Swal.fire({
+            title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
+            html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
+                   Exclusivo con tarjetas Banco Falabella</p>`,
+            icon: 'info',
+            confirmButtonText: 'Aceptar',
+            allowOutsideClick: false
+        });
+    }
+}
 </script>
 @endpush
