@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use League\Csv\Reader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class KioscoController extends Controller
 {
     public function index()
     {
-        $kioscos = Kiosco::paginate(10);
+        $kioscos = Kiosco::all();
         return view('admin.kiosco.index', compact('kioscos'));
     }
 
@@ -25,50 +27,66 @@ class KioscoController extends Controller
         try {
             DB::beginTransaction();
 
-            $file = $request->file('csv_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/kioskos', $filename);
+          // Fix directory path with correct separators
+        $storage_path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'kioscos');
 
-            $csv = Reader::createFromPath(storage_path('app/public/kioskos/' . $filename), 'r');
-            $csv->setHeaderOffset(0);
+        // Create directory if doesn't exist
+        if (!File::exists($storage_path)) {
+            File::makeDirectory($storage_path, 0755, true);
+        }
+
+        $file = $request->file('csv_file');
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        // Store file using Storage facade
+        Storage::disk('public')->putFileAs('kioscos', $file, $filename);
+
+        // Get correct path with proper separators
+        $csv_path = Storage::disk('public')->path('kioscos' . DIRECTORY_SEPARATOR . $filename);
+
+        // Verify file exists before processing
+        if (!File::exists($csv_path)) {
+            throw new \Exception('El archivo no se pudo guardar correctamente');
+        }$csv = Reader::createFromPath($csv_path, 'r');
+        $csv->setHeaderOffset(0);
 
             $validator = Validator::make([], []); // Empty initial validator
 
+            // dd($csv->getRecords());
+
             foreach ($csv->getRecords() as $index => $record) {
                 $validator = Validator::make($record, [
-                    'fecha' => 'required|date_format:Y-m-d',
-                    'hora' => 'required|date_format:H:i:s',
-                    'tipo_documento' => 'required|in:1,2',
-                    'nro_documento' => 'required|string|min:3|max:12',
-                    'codigo_tienda' => 'required|numeric',
-                    'orden_compra' => 'required|string|max:20|alpha_num',
-                    'monto' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+                    'TRAN_ID' => 'numeric', // orden de compra
+                    'TRAN_DT' => 'date_format:d/m/Y', // fecha
+                    // 'hora' => 'required|date_format:H:i:s',
+                    'CUST_ID_TYPE' => 'numeric',
+                    'CUST_ID' => 'string',
+                    'LOC_ID' => 'numeric',
+                    'TOTAL_AMT' => 'numeric|regex:/^\d+(\.\d{1,2})?$/',
 
                 ], [
-                    'fecha.date_format' => 'La fecha debe tener el formato YYYY-MM-DD en la línea ' . ($index + 2),
-                    'hora.date_format' => 'La hora debe tener el formato HH:mm:ss en la línea ' . ($index + 2),
-                    'tipo_documento.in' => 'El tipo de documento debe ser 1 o 2 en la línea ' . ($index + 2),
-                    'nro_documento.min' => 'El número de documento debe tener al menos 3 caracteres en la línea ' . ($index + 2),
-                    'nro_documento.max' => 'El número de documento no debe exceder 12 caracteres en la línea ' . ($index + 2),
-                    'codigo_tienda.numeric' => 'El código de tienda debe ser numérico en la línea ' . ($index + 2),
-                    'orden_compra.alpha_num' => 'La orden de compra debe ser alfanumérica en la línea ' . ($index + 2),
-                    'orden_compra.max' => 'La orden de compra no debe exceder 20 caracteres en la línea ' . ($index + 2),
-                    'monto.regex' => 'El monto debe tener formato válido de moneda en la línea ' . ($index + 2),
+                    'TRAN_DT' => 'La fecha debe tener el formato DD-MM-YYYY en la línea ' . ($index + 2),
+                    // 'hora.date_format' => 'La hora debe tener el formato HH:mm:ss en la línea ' . ($index + 2),
+                    'CUST_ID_TYPE.in' => 'El tipo de documento debe ser 1 o 6 en la línea ' . ($index + 2),
+                    'CUST_ID.min' => 'El número de documento debe tener al menos 3 caracteres en la línea ' . ($index + 2),
+                    'CUST_ID.max' => 'El número de documento no debe exceder 12 caracteres en la línea ' . ($index + 2),
+                    'LOC_ID.numeric' => 'El código de tienda debe ser numérico en la línea ' . ($index + 2),
+                    'TRAN_ID.max' => 'La orden de compra no debe exceder 20 caracteres en la línea ' . ($index + 2),
+                    'TOTAL_AMT.regex' => 'El monto debe tener formato válido de moneda en la línea ' . ($index + 2),
                 ]);
-
                 if ($validator->fails()) {
                     throw new \Exception('Error de validación: ' . implode(', ', $validator->errors()->all()));
                 }
-
+                // dd($validator);
+                $fecha= \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
                 Kiosco::create([
-                    'fecha' => $record['fecha'],
-                    'hora' => $record['hora'],
-                    'tipo_documento' => $record['tipo_documento'],
-                    'nro_documento' => $record['nro_documento'],
-                    'codigo_tienda' => $record['codigo_tienda'],
-                    'orden_compra' => $record['orden_compra'],
-                    'monto' => $record['monto'],
-                    'estado' => $record['estado'],
+                    'fecha' => $fecha,
+                    // 'hora' => $record['hora'],
+                    'tipo_documento' => $record['CUST_ID_TYPE'],
+                    'nro_documento' => $record['CUST_ID'],
+                    'codigo_tienda' => $record['LOC_ID'],
+                    'orden_compra' => $record['TRAN_ID'],
+                    'monto' => $record['TOTAL_AMT']
                 ]);
             }
 
@@ -78,7 +96,8 @@ class KioscoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error importing CSV: ' . $e->getMessage());
-            return redirect()->route('kiosco.index')
+            dd($e->getMessage());
+            return redirect()->route('admin.kiosco.index')
                 ->with('error', 'Error al importar CSV: ' . $e->getMessage());
         }
     }
