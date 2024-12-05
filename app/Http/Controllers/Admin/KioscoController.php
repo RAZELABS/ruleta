@@ -13,7 +13,7 @@ class KioscoController extends Controller
     public function index()
     {
         $kioscos = Kiosco::paginate(10);
-        return view('kiosco.index', compact('kioscos'));
+        return view('admin.kiosco.index', compact('kioscos'));
     }
 
     public function import(Request $request)
@@ -43,7 +43,7 @@ class KioscoController extends Controller
                     'codigo_tienda' => 'required|numeric',
                     'orden_compra' => 'required|string|max:20|alpha_num',
                     'monto' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
-                    
+
                 ], [
                     'fecha.date_format' => 'La fecha debe tener el formato YYYY-MM-DD en la línea ' . ($index + 2),
                     'hora.date_format' => 'La hora debe tener el formato HH:mm:ss en la línea ' . ($index + 2),
@@ -73,7 +73,7 @@ class KioscoController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('kiosco.index')->with('success', 'CSV importado correctamente');
+            return redirect()->route('admin.kiosco.index')->with('success', 'CSV importado correctamente');
 
         } catch (\Exception $e) {
             DB::rollBack();
