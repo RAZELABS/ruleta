@@ -25,6 +25,15 @@
                             value="{{ $premios->descripcion }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                        <label for="resultado" class="form-label">Resultado</label>
+                        <select class="form-select form-select-lg" name="resultado" id="resultado">
+                            <option selected value="{{ $premios->estado}}">{{$premios->parametro->descripcion }}</option>
+                            @foreach ($parametros as $parametro)
+                                <option value="{{ $parametro->id }}">{{ $parametro->descripcion }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-md-6">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select form-select-lg" name="estado" id="estado">
                             <option selected value="{{ $premios->estado}}">{{$premios->parametro->descripcion }}</option>

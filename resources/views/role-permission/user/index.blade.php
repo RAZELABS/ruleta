@@ -32,10 +32,10 @@
                                     <th>Id</th>
                                     <th>Tienda</th>
                                     <th>DNI</th>
-                                    <th>Name</th>
+                                    <th>Nombre</th>
                                     <th>Email</th>
                                     <th>Roles</th>
-                                    <th>Action</th>
+                                    <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>

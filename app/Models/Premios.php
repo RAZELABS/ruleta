@@ -17,6 +17,7 @@ class Premios extends Model
     // Campos asignables masivamente
     protected $fillable = [
         'descripcion',
+        'premio',
         'estado',
     ];
 
@@ -31,4 +32,11 @@ class Premios extends Model
         return $this->belongsTo(Parametros::class, 'estado', 'valor')
             ->where('flag', 'estado');
     }
+
+    public function premios()
+    {
+        return $this->belongsTo(Parametros::class, 'premio', 'valor')
+            ->where('flag', 'premio');
+    }
+
 }

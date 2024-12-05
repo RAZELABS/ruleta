@@ -22,6 +22,7 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Descripcion</th>
+                                <th scope="col">Resultado</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Accion</th>
                             </tr>
@@ -31,6 +32,7 @@
                                 <tr class="">
                                     <td scope="row">{{ $premio->id }}</td>
                                     <td scope="row">{{ $premio->descripcion }}</td>
+                                    <td scope="row">{{ $premio->premios->descripcion }}</td>
                                     <td scope="row">{{ $premio->parametro->descripcion }}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle">
