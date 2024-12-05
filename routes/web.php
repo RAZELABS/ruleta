@@ -78,6 +78,11 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::post('/tiendapremio/store', [TiendapremioController::class, 'store'])->name('tiendapremio.store');
     Route::post('/tiendapremio/{id}/update', [TiendapremioController::class, 'update'])->name('tiendapremio.update');
     Route::resource('tiendapremio', TiendapremioController::class);
+    //! CArga MASIVA KIOSKO
+    // routes/web.php
+Route::get('/kiosco', [KioscoController::class, 'index'])->name('kiosco.index');
+Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
+Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

@@ -16,7 +16,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden; /* Para evitar scroll indeseado */
-    background: linear-gradient( rgba(53,120,60,1) 0%, rgba(0,69,39,1) 70%) !important;
+    background: linear-gradient( rgba(53,120,60,1) 0%, rgba(0,69,39,1) 50%) !important;
     position: relative; /* Necesario para posicionar el logo como hijo absoluto */
     font-family: "Poppins", Arial, sans-serif;
     font-size: 14px;
@@ -1474,8 +1474,8 @@ body a {
 }
 .girnalda-1 {
     position: absolute;
-
     width: 100px;
+    top:-30px;
     left: 10%;
     height: auto;
     transform-origin: top center;
