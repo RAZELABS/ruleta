@@ -14,7 +14,9 @@ class KioscoController extends Controller
 {
     public function index()
     {
-        $kioscos = Kiosco::all();
+        //$kioscos = Kiosco::select('id','fecha','tipo_documento','nro_documento');
+        $kioscos=Kiosco::all();
+        //dd($kioscos);
         return view('admin.kiosco.index', compact('kioscos'));
     }
 
@@ -27,28 +29,29 @@ class KioscoController extends Controller
         try {
             DB::beginTransaction();
 
-          // Fix directory path with correct separators
-        $storage_path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'kioscos');
+            // Fix directory path with correct separators
+            $storage_path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'kioscos');
 
-        // Create directory if doesn't exist
-        if (!File::exists($storage_path)) {
-            File::makeDirectory($storage_path, 0755, true);
-        }
+            // Create directory if doesn't exist
+            if (!File::exists($storage_path)) {
+                File::makeDirectory($storage_path, 0755, true);
+            }
 
-        $file = $request->file('csv_file');
-        $filename = time() . '_' . $file->getClientOriginalName();
+            $file = $request->file('csv_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
 
-        // Store file using Storage facade
-        Storage::disk('public')->putFileAs('kioscos', $file, $filename);
+            // Store file using Storage facade
+            Storage::disk('public')->putFileAs('kioscos', $file, $filename);
 
-        // Get correct path with proper separators
-        $csv_path = Storage::disk('public')->path('kioscos' . DIRECTORY_SEPARATOR . $filename);
+            // Get correct path with proper separators
+            $csv_path = Storage::disk('public')->path('kioscos' . DIRECTORY_SEPARATOR . $filename);
 
-        // Verify file exists before processing
-        if (!File::exists($csv_path)) {
-            throw new \Exception('El archivo no se pudo guardar correctamente');
-        }$csv = Reader::createFromPath($csv_path, 'r');
-        $csv->setHeaderOffset(0);
+            // Verify file exists before processing
+            if (!File::exists($csv_path)) {
+                throw new \Exception('El archivo no se pudo guardar correctamente');
+            }
+            $csv = Reader::createFromPath($csv_path, 'r');
+            $csv->setHeaderOffset(0);
 
             $validator = Validator::make([], []); // Empty initial validator
 
@@ -78,7 +81,7 @@ class KioscoController extends Controller
                     throw new \Exception('Error de validación: ' . implode(', ', $validator->errors()->all()));
                 }
                 // dd($validator);
-                $fecha= \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
+                $fecha = \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
                 Kiosco::create([
                     'fecha' => $fecha,
                     // 'hora' => $record['hora'],
@@ -96,7 +99,7 @@ class KioscoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error importing CSV: ' . $e->getMessage());
-       
+
             return redirect()->route('admin.kiosco.index')
                 ->with('error', 'Error al importar CSV: ' . $e->getMessage());
         }
@@ -108,8 +111,8 @@ class KioscoController extends Controller
 
     public function edit(string $id)
     {
-        $kioscos = Kiosco::select('id','fecha','hora','tipo_documento','nro_documento','codigo_tienda','orden_compra','monto')
-        ->where('id','=', $id)->first();
+        $kioscos = Kiosco::select('id', 'fecha', 'hora', 'tipo_documento', 'nro_documento', 'codigo_tienda', 'orden_compra', 'monto')
+            ->where('id', '=', $id)->first();
 
         //dd($kioscos);
         return view("admin.kiosco.edit", compact("kioscos"));
@@ -120,10 +123,10 @@ class KioscoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        //dd($request);
         $data = $request->validate([
-            'fecha' => 'required|date_format:Y-m-d',
-            'hora' => 'required|date_format:H:i:s',
+            // 'fecha' => 'required|date_format:Y-m-d',
+            // 'hora' => 'required|date_format:H:i:s',
             'tipo_documento' => 'required|in:1,2',
             'nro_documento' => 'required|string|min:3|max:12',
             'codigo_tienda' => 'required|numeric',
@@ -132,9 +135,18 @@ class KioscoController extends Controller
         ]);
 
         //dd($data);
-        $kioscos = Kiosco::where("id","=", $id)->update($data);
-        return redirect()->route("admin.kioscos.index")->with("success","Registro modificado con exito");
+        $kioscos = Kiosco::where("id", "=", $id)->update($data);
+        return redirect()->route("admin.kiosco.index")->with("success", "Registro modificado con exito");
 
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $kiosco = Kiosco::findOrFail($id);
+        // Show confirmation view
+        $kiosco->delete();
+        return redirect()->route("admin.kiosco.index")->with("success", "Registro eliminado con exito");
+    }
+
 
 }

@@ -15,30 +15,30 @@
             </div>
         </div>
         <div class="p-2 col-12 col-md-8 offset-md-2">
-            <form action="{{ route('admin.premios.update', $premios->id) }}" id="ModificaPremios" method="POST">
+            <form action="{{ route('admin.premios.update', $premioss->id) }}" id="ModificaPremios" method="POST">
                 @csrf
                 @method('PATCH')
                 <div class="row">
                     <div class="mb-3 col-12 col-md-6">
                         <label for="descripcion" class="form-label">Descripción</label>
                         <input type="text" class="form-control" id="descripcion" name="descripcion"
-                            value="{{ $premios->descripcion }}">
+                            value="{{ $premioss->descripcion }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
                         <label for="resultado" class="form-label">Resultado</label>
                         <select class="form-select form-select-lg" name="resultado" id="resultado">
-                            <option selected value="{{ $premios->estado}}">{{$premios->parametro->descripcion }}</option>
-                            @foreach ($parametros as $parametro)
-                                <option value="{{ $parametro->id }}">{{ $parametro->descripcion }}</option>
+                            <option selected value="{{ $premioss->premio}}">{{$premioss->premios->descripcion }}</option>
+                            @foreach ($premios as $premio)
+                                <option value="{{ $premio->id }}">{{ $premio->descripcion }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3 col-12 col-md-6">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select form-select-lg" name="estado" id="estado">
-                            <option selected value="{{ $premios->estado}}">{{$premios->parametro->descripcion }}</option>
-                            @foreach ($parametros as $parametro)
-                                <option value="{{ $parametro->id }}">{{ $parametro->descripcion }}</option>
+                            <option selected value="{{ $premioss->estado}}">{{$premioss->parametro->descripcion }}</option>
+                            @foreach ($parametro as $parametros)
+                                <option value="{{ $parametros->id }}">{{ $parametros->descripcion }}</option>
                             @endforeach
                         </select>
                     </div>
