@@ -14,7 +14,9 @@ class KioscoController extends Controller
 {
     public function index()
     {
-        $kioscos = Kiosco::all();
+        //$kioscos = Kiosco::select('id','fecha','tipo_documento','nro_documento');
+        $kioscos=Kiosco::all();
+        //dd($kioscos);
         return view('admin.kiosco.index', compact('kioscos'));
     }
 
@@ -119,8 +121,8 @@ class KioscoController extends Controller
 
     public function edit(string $id)
     {
-        $kioscos = Kiosco::select('id','fecha','hora','tipo_documento','nro_documento','codigo_tienda','orden_compra','monto')
-        ->where('id','=', $id)->first();
+        $kioscos = Kiosco::select('id', 'fecha', 'hora', 'tipo_documento', 'nro_documento', 'codigo_tienda', 'orden_compra', 'monto')
+            ->where('id', '=', $id)->first();
 
         //dd($kioscos);
         return view("admin.kiosco.edit", compact("kioscos"));
@@ -131,10 +133,10 @@ class KioscoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        //dd($request);
         $data = $request->validate([
-            'fecha' => 'required|date_format:Y-m-d',
-            'hora' => 'required|date_format:H:i:s',
+            // 'fecha' => 'required|date_format:Y-m-d',
+            // 'hora' => 'required|date_format:H:i:s',
             'tipo_documento' => 'required|in:1,2',
             'nro_documento' => 'required|string|min:3|max:12',
             'codigo_tienda' => 'required|numeric',
@@ -143,9 +145,18 @@ class KioscoController extends Controller
         ]);
 
         //dd($data);
-        $kioscos = Kiosco::where("id","=", $id)->update($data);
-        return redirect()->route("admin.kioscos.index")->with("success","Registro modificado con exito");
+        $kioscos = Kiosco::where("id", "=", $id)->update($data);
+        return redirect()->route("admin.kiosco.index")->with("success", "Registro modificado con exito");
 
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $kiosco = Kiosco::findOrFail($id);
+        // Show confirmation view
+        $kiosco->delete();
+        return redirect()->route("admin.kiosco.index")->with("success", "Registro eliminado con exito");
+    }
+
 
 }

@@ -14,7 +14,7 @@ class PremiosController extends Controller
      */
     public function index()
     {
-        $premios = Premios::with("parametro")->select('id','descripcion','premio','estado')->get();
+        $premios = Premios::with("parametro","premios")->select('id','descripcion','premio','estado')->get();
         // $premiosData = $premio->map(function($premios) {
         //     return [$premios->id, $premios->descripcion, $premios->parametro->descripcion];
         // });
@@ -60,12 +60,13 @@ class PremiosController extends Controller
      */
     public function edit(string $id)
     {
-        $premios = Premios::with("parametro", "resultado")->select('id','descripcion','estado')
+        $premioss = Premios::with("parametro", "premios")->select('id','descripcion','premio','estado')
         ->where('id','=', $id)->first();
-        $parametros = Parametros::select("id","descripcion")->where('flag','=','estado')->get();
+        $parametro = Parametros::select("id","descripcion")->where('flag','=','estado')->get();
+        $premios = Parametros::select("id","descripcion")->where('flag','=','premio')->get();
 
         //dd($parametros, $premios);
-        return view("admin.premios.edit", compact("premios","parametros"));
+        return view("admin.premios.edit", compact("premioss","parametro","premios"));
     }
 
     /**
