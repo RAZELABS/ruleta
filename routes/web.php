@@ -84,6 +84,7 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
 Route::get('/kiosco', [KioscoController::class, 'index'])->name('kiosco.index');
 Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
 Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
+Route::resource('kiosco', KioscoController::class);
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

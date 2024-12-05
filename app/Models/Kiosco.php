@@ -18,7 +18,6 @@ class Kiosco extends Model
         'codigo_tienda',
         'orden_compra',
         'monto',
-        'estado',
         'reservado_1',
         'reservado_2'
     ];
@@ -27,7 +26,6 @@ class Kiosco extends Model
         'fecha' => 'date',
         'hora' => 'datetime',
         'monto' => 'decimal:2',
-        'orden_compra' => 'integer',
-        'estado' => 'integer'
+        'orden_compra' => 'integer'
     ];
 }

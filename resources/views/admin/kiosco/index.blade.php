@@ -7,7 +7,7 @@
             <div class="p-4 col-12 col-md-12 offset-md-1">
                 <div class="row">
                     <div class="col-12 col-md-6 d-flex justify-content-start">
-                        <h1 class="text-secondary fw-bold">Importar jugadas en kioscos</h1>
+                        <h1 class="text-secondary fw-bold">Importar compras en kioscos</h1>
                     </div>
                 </div>
             </div>

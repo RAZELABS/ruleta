@@ -93,7 +93,7 @@ class KioscoController extends Controller
         ->where('id','=', $id)->first();
 
         //dd($kioscos);
-        return view("admin.kioscos.edit", compact("kioscos"));
+        return view("admin.kiosco.edit", compact("kioscos"));
     }
 
     /**
