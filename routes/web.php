@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MatrizdiaController;
 use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\Admin\PremiosController;
+use App\Http\Controllers\Admin\KioscoController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\RuletaController;
 use App\Http\Controllers\RolesPermissions\RoleController;

@@ -2,11 +2,11 @@
 @section('content')
 <div class="container p-3">
     <div class="row mt-3">
+        {{-- parametros generales --}}
         <div class="col-12 col-md-12 px-3">
             <div class="row bg-configuracion b-radius-20 px-2 mt-3 mt-md-0">
                 <div class="col-12 px-4 pt-2 text-center font-weight-bolder text-secondary">Información General</div>
 
-                {{-- parametros generales --}}
                 <div class="col-6 col-md-3">
                     <div class="featured-boxes  m-0 ">
                         <div class="featured-box my-2 b-radius-20 ">
@@ -31,9 +31,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-6 col-md-3">
+                    <div class="featured-boxes  m-0 ">
+                        <div class="featured-box my-2 b-radius-20 ">
+                            <a href="{{ route('admin.kiosco.index') }}" class="text-decoration-none">
+                                <span class="p-1 text-center d-block">
+                                    <span class="text-secondary display-5"><i class="fa-solid fa-file-import"></i></span>
+                                    <span class="font-weight-bold    d-block text-secondary">Importar archivo</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-
+        {{-- distribucion de ganadores --}}
         <div class="col-12 col-md-12 px-3 mt-4">
             <div class="row bg-configuracion b-radius-20 px-2 mt-3 mt-md-0">
                 <div class="col-12 px-4 pt-2 text-center font-weight-bolder text-secondary">Distribución de Ganadores y premios</div>
@@ -101,7 +114,7 @@
                 </div>
             </div>
         </div>
-
+        {{-- usuarios y roles --}}
         <div class="col-12 col-md-12 px-3 mt-4">
             <div class="row bg-configuracion b-radius-20 px-2 mt-3 mt-md-0">
                 <div class="col-12 px-4 pt-2 text-center font-weight-bolder text-secondary">Usuarios, roles y permisos</div>
@@ -145,7 +158,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
