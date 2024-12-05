@@ -86,4 +86,36 @@ class KioscoController extends Controller
     {
         return response()->download(storage_path('app/public/kioskos/' . $filename));
     }
+
+    public function edit(string $id)
+    {
+        $kioscos = Kiosco::select('id','fecha','hora','tipo_documento','nro_documento','codigo_tienda','orden_compra','monto')
+        ->where('id','=', $id)->first();
+
+        //dd($kioscos);
+        return view("admin.kioscos.edit", compact("kioscos"));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+
+        $data = $request->validate([
+            'fecha' => 'required|date_format:Y-m-d',
+            'hora' => 'required|date_format:H:i:s',
+            'tipo_documento' => 'required|in:1,2',
+            'nro_documento' => 'required|string|min:3|max:12',
+            'codigo_tienda' => 'required|numeric',
+            'orden_compra' => 'required|string|max:20|alpha_num',
+            'monto' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+        ]);
+
+        //dd($data);
+        $kioscos = Kiosco::where("id","=", $id)->update($data);
+        return redirect()->route("admin.kioscos.index")->with("success","Registro modificado con exito");
+
+    }
+
 }

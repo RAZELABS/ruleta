@@ -4,14 +4,14 @@
     <div class="container">
 
         <div class="row">
-            <div class="p-4 col-12 col-md-10 offset-md-1">
+            <div class="p-4 col-12 col-md-12 offset-md-1">
                 <div class="row">
                     <div class="col-12 col-md-6 d-flex justify-content-start">
                         <h1 class="text-secondary fw-bold">Importar jugadas en kioscos</h1>
                     </div>
                 </div>
             </div>
-            <div class="p-2 col-12 col-md-10 offset-md-1">
+            <div class="p-2 col-12 col-md-12 offset-md-1">
                 <div class="p-4">
                     <table class="table table-striped" id="TABLE_1">
                         <thead>
@@ -23,8 +23,7 @@
                                 <th>Código Tienda</th>
                                 <th>Orden Compra</th>
                                 <th>Monto</th>
-                                <th>Estado</th>
-                                <th>Archivo Original</th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,12 +36,17 @@
                                     <td>{{ $kiosco->codigo_tienda }}</td>
                                     <td>{{ $kiosco->orden_compra }}</td>
                                     <td>{{ $kiosco->monto }}</td>
-                                    <td>{{ $kiosco->estado }}</td>
                                     <td>
-                                        @if ($kiosco->csv_filename)
-                                            <a href="{{ route('kiosco.download', $kiosco->csv_filename) }}">Descargar
-                                                CSV</a>
-                                        @endif
+                                        <div class="btn-group btn-group-toggle">
+                                            <a href="{{ route('admin.kiosco.edit', $kiosco->id) }}"
+                                                class="btn btn-falabella btn-sm">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="{{ route('admin.kiosco.destroy', $kiosco->id) }}"
+                                                class="btn btn-falabella btn-sm">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
