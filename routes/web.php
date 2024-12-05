@@ -37,6 +37,8 @@ Route::view('/error-tienda', 'frontend.error-tienda')
 Route::post('/verificar', [IndexController::class, 'verificar'])->name('verificar');
 
 Route::get('/ruleta', [RuletaController::class, 'index'])->name('ruleta.index');
+Route::get('/ruleta/ganador', [RuletaController::class, 'ganador'])->name('ruleta.ganador');
+Route::get('/ruleta/sorry', [RuletaController::class, 'sorry'])->name('ruleta.sorry');
 
 
 // Route::get('/dashboard', function () {

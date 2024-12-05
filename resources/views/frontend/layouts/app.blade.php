@@ -24,8 +24,10 @@
 </head>
 <body>
     <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-1 overflow-hidden">
-    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-2 overflow-hidden">
-    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-3 overflow-hidden">
+    <img src="{{asset('frontend/img/elementos/campana.png')}}" alt=campana" class="campana-1 overflow-hidden">
+    {{-- <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-2 overflow-hidden"> --}}
+    <img src="{{asset('frontend/img/elementos/campana.png')}}" alt="campana" class="campana-2 overflow-hidden">
+    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-3 overflow-hidden d-none d-md-block">
     {{-- <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo overflow-hidden"> --}}
     <div class="body">
 
@@ -34,7 +36,7 @@
 
                 @yield('content')
 
-            @include('frontend.layouts.footer')
+            {{-- @include('frontend.layouts.footer') --}}
         </div>
 
     </div>

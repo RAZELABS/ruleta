@@ -1,4 +1,4 @@
-<div class="col-10 col-md-6 offset-1 offset-md-0 col-lg-6 text-start text-lg-start d-flex align-items-center">
+
     <div>
         <div class="row">
             <h2 class="text-color-light positive-ls-3 pt-5 pt-lg-2 font-weight-bold text-uppercase text-4 line-height-3 mb-0 appear-animation"
@@ -53,7 +53,7 @@
             </x-form>
         </div>
     </div>
-</div>
+
 @push('styles')
 <style>
     .invalid-feedback {

@@ -14,4 +14,14 @@ class RuletaController extends Controller
         return view('frontend.ruleta');
 
     }
+    public function ganador(){
+
+        return view('frontend.ganador');
+
+    }
+    public function sorry(){
+
+        return view('frontend.sorry');
+
+    }
 }

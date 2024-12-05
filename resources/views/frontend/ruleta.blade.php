@@ -5,8 +5,12 @@
     <div class="row mb-5">
         <div class="col-12">
             <div class="row">
+                <div class="col col-md-auto col-lg-6 d-flex align-items-center">
                 @include('frontend.partials.info-ruleta')
-                @include('frontend.partials.ruleta-juego')
+                </div>
+                <div class="col col-md-auto col-lg-6 d-flex align-items-center overflow-hidden">
+                    @include('frontend.partials.ruleta-juego')
+                </div>
             </div>
 
         </div>
@@ -53,6 +57,8 @@
         display: block;
         width: 500px;
         height: 500px;
+        transform: rotate(45deg);
+
     }
 
     .roulette .markers {
@@ -83,7 +89,7 @@
         border-width: 3em 0 3em 3em;
         border-color: transparent transparent transparent #007bff;
         position: absolute;
-        border-left-color: #eecbb6;
+        border-left-color: #C7CF06;
         top: 50%;
         left: -1px;
         margin-top: -3em;
@@ -163,6 +169,7 @@
         text-align: center;
         transition: transform 0.15s;
         transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform: rotate(-45deg);
     }
 
     .roulette .button:hover {
@@ -278,17 +285,10 @@ const data = [
   { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡No te rindas! Sigue participando'},
   { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue comprando y participa'},
   { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste muy cerca!'}
-
-//   { id: '', type: 'premio', color: '#878787', text: '¡Ganaste!', subtext: '' },
-//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'participando' },
-//   { id: '', type: 'sin-premio', color: '#878787', text: 'Inténtalo', subtext: 'Mañana' },
-//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Estuviste', subtext: 'muy cerca' },
-//   { id: '', type: 'sin-premio', color: '#878787', text: 'Sigue', subtext: 'Participando' },
-//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'Participando' },
-//   { id: '', type: 'sin-premio', color: '#878787', text: 'Sigue', subtext: 'Participando' },
-//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'Participando' }
 ];
+
 const winSound = new Audio('{{asset('frontend/sounds/win-3.mp3')}}');
+let isSpinning = false;
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
   this.$el = $(el);        // Elemento DOM de la ruleta
@@ -307,30 +307,38 @@ _.extend(RouletteWheel.prototype, Backbone.Events);
 
 // Método para hacer girar la ruleta
 RouletteWheel.prototype.spin = function (_index) {
-  const count = this.items.length;           // Número de elementos en la ruleta
-  const delta = 360 / count;                 // Ángulo entre premios
-  const index = !isNaN(parseInt(_index)) ? parseInt(_index) : Math.floor(Math.random() * count);
-  const a = index * delta + (this._bis ? 1440 : -1440); // Calcula el ángulo de giro
+  if (isSpinning) return; // Prevent multiple spins
+  isSpinning = true;
 
-  this._bis = !this._bis;        // Alterna la dirección en cada giro
-  this._angle = a;               // Almacena el ángulo actual
-  this._index = index;           // Guarda el índice seleccionado
+  const $button = $('#spin-button');
+  $button.prop('disabled', true).addClass('disabled');
+
+  const count = this.items.length;
+  const delta = 360 / count;
+  const index = !isNaN(parseInt(_index)) ? parseInt(_index) : Math.floor(Math.random() * count);
+  const a = index * delta + (this._bis ? 1440 : -1440);
+
+  this._bis = !this._bis;
+  this._angle = a;
+  this._index = index;
 
   const $spinner = $(this.$el.find('.spinner'));
 
-  // Funciones para el inicio y fin de la animación
   const _onAnimationBegin = () => {
-    this.$el.addClass('busy');   // Añade clase para indicar que está girando
+    this.$el.addClass('busy');
     this.trigger('spin:start', this);
   };
 
   const _onAnimationComplete = () => {
-        this.$el.removeClass('busy');
-        this.trigger('spin:end', this);
-        showResult(this.items[this._index].type);
-    };
+    this.$el.removeClass('busy');
+    this.trigger('spin:end', this);
+    showResult(this.items[this._index].type);
+    this.updateSectorColor($spinner.find(`.item[data-index="${this._index}"]`), this.items[this._index]);
+    // Keep button disabled
+    $button.prop('disabled', true).addClass('disabled');
+    isSpinning = true; // Keep it true to prevent further spins
+  };
 
-  // Inicia la animación del giro
   $spinner.velocity('stop').velocity(
     { rotateZ: `${a}deg` },
     {
@@ -342,6 +350,15 @@ RouletteWheel.prototype.spin = function (_index) {
   );
 };
 
+// Add button click handler
+$(document).ready(function() {
+  $('#spin-button').on('click', function() {
+    if (!isSpinning) {
+      roulette.spin();
+    }
+  });
+});
+
 // Método para renderizar la ruleta
 RouletteWheel.prototype.render = function () {
   const $spinner = $(this.$el.find('.spinner'));
@@ -352,7 +369,6 @@ RouletteWheel.prototype.render = function () {
 
   this.items.forEach((item, i) => {
     const { color, text, type,  } = item;
-
 
     const html = `
       <div class="item" data-index="${i}" data-type="${type || ''}">
@@ -453,8 +469,7 @@ RouletteWheel.prototype._createText = function(angle, item, index) {
     text.setAttribute("alignment-baseline", "middle");
     text.setAttribute("fill", "#fff");
     text.setAttribute("font-size", "14px");
-    text.textContent = item.text;     // Subtext
-
+    text.textContent = item.text;
 
     g.appendChild(text);
     return g;
@@ -464,12 +479,11 @@ RouletteWheel.prototype._createText = function(angle, item, index) {
 RouletteWheel.prototype.updateSectorColor = function(sector, item) {
   const $sector = $(sector);
   if (item.type === 'premio') {
-    $sector.css('background-color', item.winColor);
+    $sector.css('border-top-color', item.winColor);
   } else {
-    $sector.css('background-color', item.loseColor);
+    $sector.css('border-top-color', item.loseColor);
   }
 };
-
 
 // Inicialización de la ruleta cuando el DOM esté listo
 let spinner;
@@ -479,23 +493,9 @@ $(window).ready(function () {
   spinner.bindEvents();
 
   spinner.on('spin:start', () => console.log('spin start!'));
-  // spinner.on('spin:end', (r) => console.log(`spin end! --> ${r._index}`));
-  spinner.on('spin:end', function (r) {
-    console.log('spin end! -->' + r._index + r.items[r._index].type);
-    console.log(spinner);
-    // Obtiene el premio seleccionado
-
-    if (r.items[r._index].type == 'premio1') {
-      var pretext = 'Felicidades ';
-    }
-    if (r.items[r._index].type == 'premio2') {
-      console.log('true');
-      var pretext = 'Felicidades ';
-    }
-    const txt = data[r._index].text;
-
-  });
+  spinner.on('spin:end', (r) => console.log(`spin end! --> ${r._index}`));
 });
+
 function showResult(type) {
     if (type === 'premio') {
         // Play winning sound
@@ -532,27 +532,33 @@ function showResult(type) {
                 requestAnimationFrame(frame);
             }
         }());
+        setTimeout(() => {
+            window.location.href = "{{ route('ruleta.ganador') }}";
+        }, 3000);
 
-        Swal.fire({
-            title: '<span style="font-size: 2em">¡GANASTE!</span>',
-            html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
-                   Acércate al módulo de la ruleta para activar tu premio</p>`,
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false,
-            customClass: {
-                popup: 'animated bounceIn'
-            }
-        });
+        // Swal.fire({
+        //     title: '<span style="font-size: 2em">¡GANASTE!</span>',
+        //     html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
+        //            Acércate al módulo de la ruleta para activar tu premio</p>`,
+        //     icon: 'success',
+        //     confirmButtonText: 'Aceptar',
+        //     allowOutsideClick: false,
+        //     customClass: {
+        //         popup: 'animated bounceIn'
+        //     }
+        // });
     } else {
-        Swal.fire({
-            title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
-            html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
-                   Exclusivo con tarjetas Banco Falabella</p>`,
-            icon: 'info',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false
-        });
+        setTimeout(() => {
+            window.location.href = "{{ route('ruleta.sorry') }}";
+        }, 3000);
+        // Swal.fire({
+        //     title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
+        //     html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
+        //            Exclusivo con tarjetas Banco Falabella</p>`,
+        //     icon: 'info',
+        //     confirmButtonText: 'Aceptar',
+        //     allowOutsideClick: false
+        // });
     }
 }
 </script>
