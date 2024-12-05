@@ -28,9 +28,9 @@
     <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-3 overflow-hidden">
     {{-- <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo overflow-hidden"> --}}
     <div class="body">
-        {{-- @include('frontend.layouts.header') --}}
 
         <div role="main" class="main" >
+            @include('frontend.layouts.header')
 
                 @yield('content')
 

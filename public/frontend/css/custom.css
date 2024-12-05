@@ -27,6 +27,22 @@ body {
 body a {
 	outline: none !important;
 }
+.banner-superior {
+    background-color: #fff;
+    max-height: 200px;
+    height: 200px;
+}
+.barra-colores {
+    background: url(../img/elementos/franja.png);
+    height: 30px;
+}
+
+.img-cover {
+    object-fit:scale-down;
+    object-position: center;
+    height: 100%;
+    width:auto;
+}
 
 /* Selection */
 ::-moz-selection {

@@ -34,7 +34,7 @@
         @php
         $errorText = session('error') ?? implode(', ', $errors->all());
         @endphp
-        <x-alerts.swal-notification icon="error" title="Error" text="{{ $errorText }}" timer="3000" />
+        <x-alerts.swal-notification icon="error" title="Error" text="{{ $errorText }}" timer="15000" />
         @endif
     </div>
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

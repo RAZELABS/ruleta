@@ -27,28 +27,29 @@ class KioscoController extends Controller
         try {
             DB::beginTransaction();
 
-          // Fix directory path with correct separators
-        $storage_path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'kioscos');
+            // Fix directory path with correct separators
+            $storage_path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'kioscos');
 
-        // Create directory if doesn't exist
-        if (!File::exists($storage_path)) {
-            File::makeDirectory($storage_path, 0755, true);
-        }
+            // Create directory if doesn't exist
+            if (!File::exists($storage_path)) {
+                File::makeDirectory($storage_path, 0755, true);
+            }
 
-        $file = $request->file('csv_file');
-        $filename = time() . '_' . $file->getClientOriginalName();
+            $file = $request->file('csv_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
 
-        // Store file using Storage facade
-        Storage::disk('public')->putFileAs('kioscos', $file, $filename);
+            // Store file using Storage facade
+            Storage::disk('public')->putFileAs('kioscos', $file, $filename);
 
-        // Get correct path with proper separators
-        $csv_path = Storage::disk('public')->path('kioscos' . DIRECTORY_SEPARATOR . $filename);
+            // Get correct path with proper separators
+            $csv_path = Storage::disk('public')->path('kioscos' . DIRECTORY_SEPARATOR . $filename);
 
-        // Verify file exists before processing
-        if (!File::exists($csv_path)) {
-            throw new \Exception('El archivo no se pudo guardar correctamente');
-        }$csv = Reader::createFromPath($csv_path, 'r');
-        $csv->setHeaderOffset(0);
+            // Verify file exists before processing
+            if (!File::exists($csv_path)) {
+                throw new \Exception('El archivo no se pudo guardar correctamente');
+            }
+            $csv = Reader::createFromPath($csv_path, 'r');
+            $csv->setHeaderOffset(0);
 
             $validator = Validator::make([], []); // Empty initial validator
 
@@ -56,13 +57,21 @@ class KioscoController extends Controller
 
             foreach ($csv->getRecords() as $index => $record) {
                 $validator = Validator::make($record, [
-                    'TRAN_ID' => 'numeric', // orden de compra
-                    'TRAN_DT' => 'date_format:d/m/Y', // fecha
-                    // 'hora' => 'required|date_format:H:i:s',
-                    'CUST_ID_TYPE' => 'numeric',
-                    'CUST_ID' => 'string',
-                    'LOC_ID' => 'numeric',
-                    'TOTAL_AMT' => 'numeric|regex:/^\d+(\.\d{1,2})?$/',
+                    'TRAN_DT' => 'required|date_format:d/m/Y',
+                    'TRAN_ID' => 'required|string|max:20',
+                    'CUST_ID_TYPE' => 'required|string',
+                    'CUST_ID' => 'required|string',
+                    'LOC_ID' => 'required|numeric',
+                    'TOTAL_AMT' => 'required|string|regex:/^\d+(\.\d{1,2})?$/',
+                    'RESERVADO_1' => 'string|nullable',
+                    'RESERVADO_2' => 'string|nullable',
+                    // 'TRAN_ID' => 'numeric', // orden de compra
+                    // 'TRAN_DT' => 'date_format:d/m/Y', // fecha
+                    // // 'hora' => 'required|date_format:H:i:s',
+                    // 'CUST_ID_TYPE' => 'numeric',
+                    // 'CUST_ID' => 'string',
+                    // 'LOC_ID' => 'numeric',
+                    // 'TOTAL_AMT' => 'numeric|regex:/^\d+(\.\d{1,2})?$/',
 
                 ], [
                     'TRAN_DT' => 'La fecha debe tener el formato DD-MM-YYYY en la línea ' . ($index + 2),
@@ -78,7 +87,7 @@ class KioscoController extends Controller
                     throw new \Exception('Error de validación: ' . implode(', ', $validator->errors()->all()));
                 }
                 // dd($validator);
-                $fecha= \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
+                $fecha = \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
                 Kiosco::create([
                     'fecha' => $fecha,
                     // 'hora' => $record['hora'],
@@ -86,7 +95,9 @@ class KioscoController extends Controller
                     'nro_documento' => $record['CUST_ID'],
                     'codigo_tienda' => $record['LOC_ID'],
                     'orden_compra' => $record['TRAN_ID'],
-                    'monto' => $record['TOTAL_AMT']
+                    'monto' => $record['TOTAL_AMT'],
+                    'reservado_1' => $record['RESERVADO_1'] ?? null,
+                    'reservado_2' => $record['RESERVADO_2'] ?? null
                 ]);
             }
 
@@ -96,7 +107,7 @@ class KioscoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error importing CSV: ' . $e->getMessage());
-       
+
             return redirect()->route('admin.kiosco.index')
                 ->with('error', 'Error al importar CSV: ' . $e->getMessage());
         }

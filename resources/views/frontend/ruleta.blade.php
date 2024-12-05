@@ -18,7 +18,7 @@
 @endsection
 @push('styles')
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900");
+    /* @import url("https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900"); */
 
     body {
         overflow: hidden;
@@ -119,13 +119,13 @@
         position: absolute;
         color: #fff;
         font-weight: 800;
-        top: 7;
-        left: 1;
+        top: 26px ;
+        left: -18px ;
         white-space: nowrap;
         transform-origin: 0 0;
-        font-size: 0.8em;
-        line-height: 15px;
-        height: 136px !important;
+        font-size: 0.7em;
+        line-height: 11px;
+        height: 136px ;
     }
 
     .roulette .spinner .item .label i,
@@ -226,10 +226,6 @@
         text-transform: uppercase;
     }
 
-    .wheel-subtext {
-        font-family: Arial, sans-serif;
-        font-weight: normal;
-    }
 
     /* Add to existing styles */
     text {
@@ -243,20 +239,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        transform: rotate(0deg);
+        height: 90%;
+        transform: rotate(-90deg);
+        width: 40%;
     }
 
     .main-text {
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: bold;
         margin-bottom: 0px;
-        white-space: nowrap;
-    }
-
-    .sub-text {
-        font-size: 0.9em;
-        white-space: nowrap;
+        white-space: normal;
     }
 
     .label {
@@ -278,12 +270,23 @@
 <script>
     // Datos de los premios en la ruleta
 const data = [
-  { id: '', type: 'premio', color: '#AAD500', text: '¡Ganaste!', subtext: '' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'participando' },
-  { id: '', type: 'sin-premio', color: '#f00', text: 'Inténtalo', subtext: 'Mañana' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Estuviste', subtext: 'muy cerca' },
-  { id: '', type: 'sin-premio', color: '#f00', text: 'Sigue', subtext: 'Participando' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'Participando' }
+    { id: '', type: 'premio', color: '#878787', winColor: '#2ecc71', text: '¡Ganaste!'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste cerca!'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue Participando' },
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: 'Intentalo en tu siguiente compra'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: '¡Ánimo! sigue participando'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡No te rindas! Sigue participando'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue comprando y participa'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste muy cerca!'}
+
+//   { id: '', type: 'premio', color: '#878787', text: '¡Ganaste!', subtext: '' },
+//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'participando' },
+//   { id: '', type: 'sin-premio', color: '#878787', text: 'Inténtalo', subtext: 'Mañana' },
+//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Estuviste', subtext: 'muy cerca' },
+//   { id: '', type: 'sin-premio', color: '#878787', text: 'Sigue', subtext: 'Participando' },
+//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'Participando' },
+//   { id: '', type: 'sin-premio', color: '#878787', text: 'Sigue', subtext: 'Participando' },
+//   { id: '', type: 'sin-premio', color: '#a1a1a1', text: 'Sigue', subtext: 'Participando' }
 ];
 const winSound = new Audio('{{asset('frontend/sounds/win-3.mp3')}}');
 // Constructor para la clase RouletteWheel que maneja la ruleta
@@ -291,11 +294,11 @@ function RouletteWheel(el, items) {
   this.$el = $(el);        // Elemento DOM de la ruleta
   this.items = items || []; // Elementos de la ruleta
   this._bis = false;        // Alterna la dirección de giro
-  this._angle = 0;          // Ángulo actual
+  this._angle = 90;          // Ángulo actual
   this._index = 0;          // Índice del premio actual
   this._type = items['type'] || [];          // Índice del premio actual
   this.options = {
-    angleOffset: -90        // Offset inicial del ángulo
+    angleOffset: -90      // Offset inicial del ángulo
   };
 }
 
@@ -332,7 +335,7 @@ RouletteWheel.prototype.spin = function (_index) {
     { rotateZ: `${a}deg` },
     {
       easing: 'easeOutQuint',
-      duration: 2500,
+      duration: 8500,
       begin: _onAnimationBegin.bind(this),
       complete: _onAnimationComplete.bind(this)
     }
@@ -348,15 +351,14 @@ RouletteWheel.prototype.render = function () {
   const delta = 360 / count;
 
   this.items.forEach((item, i) => {
-    const { color, text, type, subtext } = item;
+    const { color, text, type,  } = item;
 
-    // Update HTML structure for text and subtext
+
     const html = `
       <div class="item" data-index="${i}" data-type="${type || ''}">
         <div class="label">
           <div class="text-container">
             <span class="main-text">${text}</span>
-            <span class="sub-text">${subtext}</span>
           </div>
         </div>
       </div>`;
@@ -405,12 +407,25 @@ RouletteWheel.prototype.renderMarker = function () {
   const $markerA = $('<div class="marker">');
   const $markerB = $('<div class="marker">');
 
-  const rA = delta * (count - 1) - delta * 0.5 + this.options.angleOffset;
-  const rB = delta * (count + 1) - delta * 0.5 + this.options.angleOffset;
+  // Ajustamos los ángulos para que apunten hacia arriba (270 grados)
+  const baseRotation = 270; // Rotación base para alinear arriba
+  const rA = baseRotation - delta * 0.5;  // Marcador izquierdo
+  const rB = baseRotation + delta * 0.5;  // Marcador derecho
 
-  // Estilos de los marcadores
-  $markerA.css({ borderTopWidth, borderRightWidth, transform: `scale(2) rotate(${rA}deg)`, borderTopColor: '#FFF' });
-  $markerB.css({ borderTopWidth, borderRightWidth, transform: `scale(2) rotate(${rB}deg)`, borderTopColor: '#FFF' });
+  // Estilos de los marcadores sin scale
+  $markerA.css({
+    borderTopWidth,
+    borderRightWidth,
+    transform: `rotate(${rA}deg)`,
+    borderTopColor: '#FFF'
+  });
+
+  $markerB.css({
+    borderTopWidth,
+    borderRightWidth,
+    transform: `rotate(${rB}deg)`,
+    borderTopColor: '#FFF'
+  });
 
   $markers.append($markerA).append($markerB);
 };
@@ -438,21 +453,23 @@ RouletteWheel.prototype._createText = function(angle, item, index) {
     text.setAttribute("alignment-baseline", "middle");
     text.setAttribute("fill", "#fff");
     text.setAttribute("font-size", "14px");
-    text.textContent = item.text;
-     // Subtext
-     const subtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    subtext.setAttribute("class", "wheel-subtext");
-    subtext.setAttribute("text-anchor", "middle");
-    subtext.setAttribute("alignment-baseline", "middle");
-    subtext.setAttribute("fill", "#fff");
-    subtext.setAttribute("font-size", "12px");
-    subtext.setAttribute("dy", "20"); // Offset for subtext
-    subtext.textContent = item.subtext;
+    text.textContent = item.text;     // Subtext
+
 
     g.appendChild(text);
-    g.appendChild(subtext);
     return g;
 };
+
+// Agregar este método a la clase RouletteWheel
+RouletteWheel.prototype.updateSectorColor = function(sector, item) {
+  const $sector = $(sector);
+  if (item.type === 'premio') {
+    $sector.css('background-color', item.winColor);
+  } else {
+    $sector.css('background-color', item.loseColor);
+  }
+};
+
 
 // Inicialización de la ruleta cuando el DOM esté listo
 let spinner;
@@ -476,7 +493,6 @@ $(window).ready(function () {
       var pretext = 'Felicidades ';
     }
     const txt = data[r._index].text;
-    const subtext = data[r._index].subtext;
 
   });
 });
