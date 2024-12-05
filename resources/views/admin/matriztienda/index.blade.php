@@ -2,27 +2,59 @@
 
 @section('content')
     <div class="container">
+
         <div class="row">
-            <div class="p-4 col-12 bg-white">
-                {{-- {{ $usersData }} --}}
-                <div class="p-4">
-                    <x-data-table idTable='TABLE_1' :columns="['ID', 'Tienda', 'Peso (%)']" :columnsClass="['', '', '']" :datos=$matriz_tiendaData />
+            <div class="p-4 col-12 col-md-8 offset-md-2">
+                <div class="row">
+                    <div class="col-12 col-md-8 d-flex justify-content-start">
+                        <h1 class="text-secondary fw-bold">% de ganadores por tienda</h1>
+                    </div>
                 </div>
             </div>
+            <div class="p-2 col-12 col-md-8 offset-md-2">
+                <div class="p-4">
+                    <table class="table table-striped" id="TABLE_1">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Tienda</th>
+                                <th scope="col">Peso (%)</th>
+                                <th scope="col">Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($matriztiendas as $matriztienda)
+                                <tr class="">
+                                    <td scope="row">{{ $matriztienda->id }}</td>
+                                    <td scope="row">{{ $matriztienda->tienda->nombre }}</td>
+                                    <td scope="row">{{ $matriztienda->peso_tienda }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-toggle">
+                                                <a href="{{ route('admin.matriztienda.edit', $matriztienda->id) }}"
+                                                    class="btn btn-falabella-2 btn-sm">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                        </div>
+                                    </td>
 
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-@endsection
-@push('scripts')
-    <script>
-        var routeConfigurations = {
-            'TABLE_1': {
-                'botones': 'Bfrtip',
-                // 'ordenar': [0, "asc"],
-            },
-        }
-    </script>
-@endpush
-@push('scripts')
-    <script src="{{ asset('plugins/datatables/datatables-config.js') }}"></script>
-@endpush
+    @endsection
+    @push('scripts')
+        <script>
+            var routeConfigurations = {
+                'TABLE_1': {
+                    'botones': 'Bfrtip',
+                    // 'ordenar': [0, "asc"],
+                },
+            }
+        </script>
+    @endpush
+    @push('scripts')
+        <script src="{{ asset('plugins/datatables/datatables-config.js') }}"></script>
+    @endpush

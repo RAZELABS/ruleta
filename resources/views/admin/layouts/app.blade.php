@@ -27,6 +27,15 @@
             </main>
             @include('admin.layouts.footer')
         </div>
+        @if (session('success'))
+        <x-alerts.swal-notification icon="success" title="Exito" text="{{session('message')}}" timer="3000" />
+        @endif
+        @if (session('error') || $errors->any())
+        @php
+        $errorText = session('error') ?? implode(', ', $errors->all());
+        @endphp
+        <x-alerts.swal-notification icon="error" title="Error" text="{{ $errorText }}" timer="3000" />
+        @endif
     </div>
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>

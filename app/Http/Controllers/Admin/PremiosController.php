@@ -14,11 +14,12 @@ class PremiosController extends Controller
      */
     public function index()
     {
-        $premios = Premios::with("parametro")->select('id','descripcion','estado')->get();
+        $premios = Premios::with("parametro")->select('id','descripcion','premio','estado')->get();
         // $premiosData = $premio->map(function($premios) {
         //     return [$premios->id, $premios->descripcion, $premios->parametro->descripcion];
         // });
 
+            //dd($premios);
             return view("admin.premios.index", compact("premios"));
     }
 
@@ -59,7 +60,12 @@ class PremiosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $premios = Premios::with("parametro", "resultado")->select('id','descripcion','estado')
+        ->where('id','=', $id)->first();
+        $parametros = Parametros::select("id","descripcion")->where('flag','=','estado')->get();
+
+        //dd($parametros, $premios);
+        return view("admin.premios.edit", compact("premios","parametros"));
     }
 
     /**
@@ -67,7 +73,16 @@ class PremiosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $data = $request->validate([
+            "descripcion"=> "required|string|min:3|max:20",
+            "estado"=> "integer|required|min:1|max:2",
+        ]);
+
+        //dd($data);
+        $premios = Premios::where("id","=", $id)->update($data);
+        return redirect()->route("admin.premios.index")->with("success","Registro modificado con exito");
+
     }
 
     /**
