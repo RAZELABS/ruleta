@@ -133,6 +133,9 @@ $(function () {
                     enable: grupos.length > 0,
                     dataSrc: dataSrcArray,
                 },
+                "initComplete": function(settings, json) {
+                    $('.loading-spinner').fadeOut();
+                },
                 createdRow: function (row, data, dataIndex) {
                     // Iterar sobre todas las celdas de la fila
                     $("td", row).each(function (index, el) {
