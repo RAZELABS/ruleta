@@ -96,7 +96,7 @@ class KioscoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error importing CSV: ' . $e->getMessage());
-            dd($e->getMessage());
+       
             return redirect()->route('admin.kiosco.index')
                 ->with('error', 'Error al importar CSV: ' . $e->getMessage());
         }

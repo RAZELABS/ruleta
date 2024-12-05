@@ -14,7 +14,7 @@
                             @csrf
                             <div class="input-group">
                                 <input type="file" name="csv_file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" aria-placeholder="Ingrese archivo">
-                                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Importar</button>
+                                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Importar</button>
                               </div>
 
 
@@ -83,7 +83,7 @@
     </style>
     @endpush
     @push('scripts')
-  
+
         <script>
             var routeConfigurations = {
                 'TABLE_1': {
