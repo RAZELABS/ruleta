@@ -18,7 +18,6 @@ class Kiosco extends Model
         'codigo_tienda',
         'orden_compra',
         'monto',
-        'estado',
         'reservado_1',
         'reservado_2'
     ];
