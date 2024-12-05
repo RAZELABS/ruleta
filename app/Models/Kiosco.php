@@ -6,16 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kiosco extends Model
 {
-    protected $table = "programacioncurso";
-    protected $primarykey = "idProgramacionCurso";
+    protected $table = 'kiosco';
+
+    public $timestamps = false;
+
     protected $fillable = [
         'fecha',
-        'nrc',
-        'curso',
-        'fecha',
-        'dia',
-        'hora_inicio',
-        'hora_fin',
+        'hora',
+        'tipo_documento',
+        'nro_documento',
+        'codigo_tienda',
+        'orden_compra',
+        'monto',
         'estado',
+        'reservado_1',
+        'reservado_2'
+    ];
 
+    protected $casts = [
+        'fecha' => 'date',
+        'hora' => 'datetime',
+        'monto' => 'decimal:2',
+        'orden_compra' => 'integer',
+        'estado' => 'integer'
+    ];
 }

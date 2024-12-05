@@ -285,7 +285,7 @@ const data = [
   { id: '', type: 'sin-premio', color: '#f00', text: 'Sigue', subtext: 'Participando' },
   { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'Participando' }
 ];
-const winSound = new Audio('{{asset('frontend/sounds/win.wav')}}');
+const winSound = new Audio('{{asset('frontend/sounds/win-3.mp3')}}');
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
   this.$el = $(el);        // Elemento DOM de la ruleta
