@@ -37,6 +37,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id_tienda' => 'required',
+            'dni' => 'required|string|max:8',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:20',
@@ -44,6 +46,8 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
+            'id_tienda' => $request->id_tienda,
+            'dni' => $request->dni,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

@@ -54,7 +54,12 @@ class ParametrosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $parametros = Parametros::select('id','flag','valor','descripcion')
+        ->where('id','=', $id)->first();
+
+        //dd($parametros);
+        return view("admin.parametros.edit", compact("parametros"));
+
     }
 
     /**
@@ -62,7 +67,17 @@ class ParametrosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $data = $request->validate([
+            "flag"=> "required|string",
+            "valor"=> "required|numeric",
+            "descripcion"=> "required|string"
+        ]);
+
+        //dd($data);
+        $parametros = Parametros::where("id","=", $id)->update($data);
+        return redirect()->route("admin.parametros.index")->with("success","Registro modificado con exito");
+
     }
 
     /**
