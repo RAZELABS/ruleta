@@ -7,15 +7,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col col-lg-6 p-4">
-            <h1 class="font-weight-bold fab-text-light">Por compras mayores a s/129
+        <div class="col col-lg-6 p-4 mt-2">
+            <h1 class="font-weight-bold fab-text-light text-sorry" style="text-align: end;">Por compras mayores a s/129
                 podrás llevarte tus compras
                 gratis girando la ruleta.</h1>
 
         </div>
 
-        <div class="col col-lg-6 p-4 d-flex justify-content-center">
-            <img src="{{asset('frontend/img/elementos/tarjetas.png')}}">
+        <div class=" col col-lg-6 p-4 d-flex justify-content-center">
+                <img src="{{asset('frontend/img/elementos/tarjetas.png')}}" style="max-width:400px !important; height:auto" class="tarjetas">
         </div>
 
     </div>

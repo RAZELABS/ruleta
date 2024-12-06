@@ -13,7 +13,7 @@ class DetalleController extends Controller
      */
     public function index()
     {
-        $detalles = Detalle::with('tienda','documento','parametro','estados')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado','estado')->get();
+        $detalles = Detalle::with('tienda','documento','parametro')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado')->get();
         // $detalleData = $detalles->map(function($detalle){
         //     return [$detalle->id, $detalle->fecha, $detalle->hora, $detalle->tienda->nombre, $detalle->documento->descripcion, $detalle->nro_documento, $detalle->parametro->descripcion, $detalle->estados->descripcion, $detalle->estado];
         // });

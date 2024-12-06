@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\Detalle;
+use App\Models\Premios;
 use Illuminate\Validation\Rule;
 
 class IndexController extends Controller
@@ -71,13 +72,15 @@ class IndexController extends Controller
         if ($registro) {
             // Redirigir con mensaje si el registro ya existe
             return redirect()->back()
-                ->with('error', 'Este usuario ya ha hecho una jugada hoy, solo se permite una jugada por día.');
+                ->with('error', 'Ya haz hecho una jugada hoy, solo se permite una jugada por día.');
         }
+        $premios= Premios::all();
 
         // Si no existe registro, permitir continuar
         // Aquí puedes realizar la lógica para guardar o procesar los datos si es necesario
-        return redirect('/ruleta')
-            ->with('success', 'El usuario puede realizar una jugada.');
+        return redirect()->route('ruleta.index')
+            ->with(compact('premios'))
+            ->with('success', 'Mucha suerte.');
     }
 }
 

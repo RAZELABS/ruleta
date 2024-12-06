@@ -5,7 +5,7 @@
         </div>
         <div class="col-12 d-flex justify-content-center">
             <!-- Contenido del col-12 -->
-            <img src="{{asset('frontend/img/elementos/tarjetas.png')}}" class="img-fluid" style="max-width: 400px"/>
+            <img src="{{asset('frontend/img/elementos/tarjetas.png')}}" class="img-fluid" style="max-width: 200px"/>
         </div>
     </div>
 

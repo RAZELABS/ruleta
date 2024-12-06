@@ -22,26 +22,26 @@
                     <div class="mb-3 col-12 col-md-6">
                         <label for="fecha" class="form-label">Fecha</label>
                         <input type="date" class="form-control" id="fecha" name="fecha"
-                            value="{{ $kioscos->fecha }}">
+                            value="{{ \Carbon\Carbon::parse($kioscos->fecha)->format('Y-m-d') }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                        <label for="tipodocumento" class="form-label">Tipo de documento</label>
-                        <input type="text" class="form-control" id="tipodocumento" name="tipodocumento"
+                        <label for="tipo_documento" class="form-label">Tipo de documento</label>
+                        <input type="text" class="form-control" id="tipo_documento" name="tipo_documento"
                             value="{{ $kioscos->tipo_documento }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                        <label for="nrodocumento" class="form-label">Número de documento</label>
-                        <input type="text" class="form-control" id="nrodocumento" name="nrodocumento"
+                        <label for="nro_documento" class="form-label">Número de documento</label>
+                        <input type="text" class="form-control" id="nro_documento" name="nro_documento"
                             value="{{ $kioscos->nro_documento }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                        <label for="codigotienda" class="form-label">Código de tienda</label>
-                        <input type="text" class="form-control" id="codigotienda" name="codigotienda"
+                        <label for="codigo_tienda" class="form-label">Código de tienda</label>
+                        <input type="text" class="form-control" id="codigo_tienda" name="codigo_tienda"
                             value="{{ $kioscos->codigo_tienda }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                        <label for="ordencompra" class="form-label">Orden de compra</label>
-                        <input type="text" class="form-control" id="ordencompra" name="ordencompra"
+                        <label for="orden_compra" class="form-label">Orden de compra</label>
+                        <input type="text" class="form-control" id="orden_compra" name="orden_compra"
                             value="{{ $kioscos->orden_compra }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
