@@ -4,7 +4,7 @@
 
     <div class="container mt-5">
         <a href="{{ url('roles') }}" class="btn btn-primary mx-1">Roles</a>
-        <a href="{{ url('permissions') }}" class="btn btn-info mx-1">Permissions</a>
+        {{-- <a href="{{ url('permissions') }}" class="btn btn-info mx-1">Permissions</a> --}}
         <a href="{{ url('users') }}" class="btn btn-warning mx-1">Users</a>
     </div>
 
@@ -32,7 +32,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
-                                    <th width="40%">Action</th>
+                                    {{-- <th width="40%">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,7 +40,7 @@
                                 <tr>
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <a href="{{ url('roles/'.$role->id.'/give-permissions') }}" class="btn btn-warning">
                                             Add / Edit Role Permission
                                         </a>
@@ -56,7 +56,7 @@
                                             Delete
                                         </a>
                                         @endcan
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
