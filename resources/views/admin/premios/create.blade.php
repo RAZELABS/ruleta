@@ -21,14 +21,23 @@
             <div class="row">
                 <div class="mb-3 col-12 col-md-6">
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion">
+                    <input type="text" class="form-control"  name="descripcion" id="descripcion">
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                    <label for="premio" class="form-label">Resultado</label>
+                    <select class="form-select form-select-lg" name="premio" id="premio">
+                        <option selected disabled>Selecione una opción</option>
+                        @foreach ($premios as $premio)
+                            <option value="{{ $premio->valor }}">{{ $premio->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3 col-12 col-md-6">
                     <label for="estado" class="form-label">Estado</label>
                     <select class="form-select form-select-lg" name="estado" id="estado">
                         <option selected disabled>Selecione una opción</option>
                         @foreach ($parametros as $parametro)
-                        <option value="{{ $parametro->id }}">{{ $parametro->descripcion }}</option>
+                        <option value="{{ $parametro->valor }}">{{ $parametro->descripcion }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,9 +64,13 @@
     initializeValidation("#createPremios", {
             descripcion: {
                 minlength: 3,
-                maxlength: 20,
+                maxlength: 50,
                 required: true
             },
+
+            premio: {
+                required:true
+            }
 
             estado: {
                 required: true
@@ -65,9 +78,13 @@
         }, {
             descripcion: {
                 minlength: "El nombre debe tener al menos 3 caracteres.",
-                maxlength: "El nombre debe tener máximo 20 caracteres.",
+                maxlength: "El nombre debe tener máximo 50 caracteres.",
                 required: "Este campo es obligatorio"
             },
+
+            premio: {
+                required: "Este campo es obligatorio"
+            }
 
             estado: {
                 required: "Este campo es obligatorio"
