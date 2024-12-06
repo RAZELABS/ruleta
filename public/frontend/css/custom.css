@@ -1,6 +1,7 @@
 html {
-    direction: ltr;
+    /* direction: ltr; */
     overflow-x: hidden;
+    /* overflow-y: hidden; */
     box-shadow: none !important;
     -webkit-font-smoothing: antialiased;
 }
@@ -28,10 +29,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    /* Para evitar scroll indeseado */
-    background: radial-gradient(rgba(53, 120, 60, 1) 0%, rgba(0, 69, 39, 1) 100%) !important;
-    position: relative;
-    /* Necesario para posicionar el logo como hijo absoluto */
+    background: url(../img/bg/bg-verde.jpg) no-repeat center center fixed;
+    background-size: cover;
     font-family: "Mont", Arial, sans-serif;
     font-size: 14px;
     line-height: 26px;
@@ -40,6 +39,7 @@ body {
 body a {
     outline: none !important;
 }
+
 
 .banner-superior {
     background-color: #fff;
@@ -69,6 +69,9 @@ body a {
     color: var(--primary-inverse);
     background: var(--primary);
 }
+
+
+
 
 .custom-font-size-1 {
     font-size: 50px;
@@ -119,28 +122,28 @@ body a {
     height: auto;
     transform: translate(-50%, -50%);
     opacity: 0.06;
-    animation: float 30s ease-in-out infinite;
+    /* animation: float 30s ease-in-out infinite; */
     z-index: -100;
 }
 
 .girnalda-1 {
     position: absolute;
-    width: 50px;
+    width: 40px;
     top: 230px;
-    left: 10%;
+    left: 12%;
     height: auto;
     transform-origin: top center;
-    animation: swing 3s ease-in-out infinite;
+    /* animation: swing 3s ease-in-out infinite; */
     z-index: 1000;
 }
 .campana-1 {
     position: absolute;
-    width: 50px;
+    width: 60px;
     top: 230px;
-    left: 8%;
+    left: 7%;
     height: auto;
     transform-origin: top center;
-    animation: swing 4s ease-in-out infinite;
+    /* animation: swing 4s ease-in-out infinite; */
     z-index: 1000;
 }
 
@@ -152,17 +155,17 @@ body a {
     right: 8%;
     height: auto;
     transform-origin: top center;
-    animation: swing 4.5s ease-in-out infinite;
+    /* animation: swing 4.5s ease-in-out infinite; */
     z-index: 1000;
 }
 .girnalda-3 {
     position: absolute;
     top: 230px;
-    width: 60px;
+    width: 40px;
     right: 5%;
     height: auto;
     transform-origin: top center;
-    animation: swing 3.5s ease-in-out infinite;
+    /* animation: swing 3.5s ease-in-out infinite; */
     z-index: 1000;
 }
 
@@ -362,3 +365,82 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
 }
 
 
+/* Mobile Portrait */
+@media only screen and (max-width: 576px) {
+    #contenedor-fb {
+      margin-top: 35% !important;
+      margin-bottom: 35% !important;
+    }
+    .girnalda-1 {
+        width: 40px;
+        top: 230px;
+        left: 20%;
+    }
+    .girnalda-3 {
+        top: 230px;
+        width: 40px;
+        right: 25% !important;
+    }
+    .campana-1 {
+        width: 60px;
+        top: 230px;
+        left: 7%;
+    }
+    .campana-1 {
+        width: 60px;
+        top: 230px;
+        right: 7%;
+    }
+
+    .titulo-ganador{
+        font-size: 4em !important;
+        margin-top: 10px;
+    }
+
+}
+
+/* Mobile Landscape */
+@media only screen and (min-width: 577px) and (max-width: 932px) and (orientation: landscape) {
+    .titulo-ganador{
+        font-size: 5em !important;
+        margin-top: 10px;
+    }
+    #contenedor-fb {
+      margin-top: 10% !important;
+      margin-bottom: 10% !important;
+    }
+
+  }
+
+  /* Tablet Portrait */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #contenedor-fb {
+      margin-top: 20% !important;
+      margin-bottom: 20% !important;
+    }
+    .titulo-sorry{
+        font-size: 4.5em !important;
+        margin-top: 10px;
+    }
+    .text-sorry{
+        font-size: 2em !important;
+
+    }
+    .tarjetas{
+        width:300px !important;
+    }
+  }
+
+  /* Tablet Landscape */
+  @media only screen and (min-width: 992px) and (max-width: 1366px) and (orientation: landscape) {
+    #contenedor-fb {
+      margin-top: 10% !important;
+      margin-bottom: 10% !important;
+    }
+  }
+  @media only screen and (min-width: 1336px) and (max-width: 1920px) and (orientation: landscape) {
+    #contenedor-fb {
+      margin-top: 10% !important;
+      margin-bottom: 10% !important;
+    }
+  }

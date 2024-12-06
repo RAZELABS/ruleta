@@ -1,9 +1,9 @@
-<div class="row ">
+<div class="row">
     <div class="col col-md-12 d-flex justify-content-center">
-        <img src="{{asset('frontend/img/elementos/texto-ruleta.png')}}" class="img-fluid rounded-top mt-5" style="max-width: 300px"/>
+        <img src="{{asset('frontend/img/elementos/texto-ruleta.png')}}" class="img-fluid rounded-top mt-5 mt-md-1" style="max-width: 300px"/>
     </div>
     <div class="col col-md-12 d-flex justify-content-center">
-        <img src="{{asset('frontend/img/elementos/tarjetas.png')}}" class="img-fluid rounded-top mt-5" style="max-width: 350px"/>
+        <img src="{{asset('frontend/img/elementos/tarjetas.png')}}" class="img-fluid rounded-top mt-5" style="max-width: 200px"/>
     </div>
 </div>
 

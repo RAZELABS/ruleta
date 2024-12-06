@@ -3,7 +3,7 @@
     <div class="sidebar-content js-simplebar flex">
 
         <a class="sidebar-brand m-auto" href="{{ route('admin.dashboard') }}">
-            <img class="align-middle img-fluid " src="{{asset('img/logos/banco-falabella.png')}}" width="150">
+            <img class="align-middle img-fluid " src="{{asset('img/logos/logo-fa.png')}}" width="150">
         </a>
 
 

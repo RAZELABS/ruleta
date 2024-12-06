@@ -31,9 +31,9 @@
                             @foreach ($premios as $premio)
                                 <tr class="">
                                     <td scope="row">{{ $premio->id }}</td>
-                                    <td scope="row">{{ $premio->descripcion }}</td>
-                                    <td scope="row">{{ $premio->premios->descripcion }}</td>
-                                    <td scope="row">{{ $premio->parametro->descripcion }}</td>
+                                    <td scope="row">{{ $premio->descripcion ?? '' }}</td>
+                                    <td scope="row">{{ $premio->premios->descripcion ??'' }}</td>
+                                    <td scope="row">{{ $premio->parametro->descripcion ??''}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($premio->estado == 1)

@@ -1,24 +1,21 @@
 @extends('frontend.layouts.app')
 @section('content')
+{{-- @php
+dd($premios)
+@endphp --}}
+<div class="container d-flex align-items-center justify-content-center">
 
-<div class="container min-vh-100 d-flex align-items-center my-5">
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="row">
-                <div class="col col-md-auto col-lg-6 d-flex align-items-center">
-                @include('frontend.partials.info-ruleta')
-                </div>
-                <div class="col col-md-auto col-lg-6 d-flex align-items-center overflow-hidden">
-                    @include('frontend.partials.ruleta-juego')
-                </div>
-            </div>
-
+    <div class="row justify-content-center" id="contenedor-fb">
+        <div class="col-10 mb-5 mb-lg-1 col-lg-6 ">
+            @include('frontend.partials.info-ruleta')
+        </div>
+        <div class="col-10 col-lg-6 px-3 ">
+            @include('frontend.partials.ruleta-juego')
         </div>
     </div>
+
+
 </div>
-
-
-
 @endsection
 @push('styles')
 <style>
@@ -28,7 +25,7 @@
         overflow: hidden;
     }
 
-     .outer-border {
+    .outer-border {
         position: absolute;
         top: -10px;
         left: -10px;
@@ -60,6 +57,7 @@
         transform: rotate(45deg);
 
     }
+
 
     .roulette .markers {
         display: block;
@@ -125,13 +123,13 @@
         position: absolute;
         color: #fff;
         font-weight: 800;
-        top: 26px ;
-        left: -18px ;
+        top: 26px;
+        left: -18px;
         white-space: nowrap;
         transform-origin: 0 0;
         font-size: 0.7em;
         line-height: 11px;
-        height: 136px ;
+        height: 136px;
     }
 
     .roulette .spinner .item .label i,
@@ -187,6 +185,7 @@
         color: #999;
         background-color: #eecbb6;
         cursor: default;
+        transform: rotate(-45deg);
     }
 
     /* CUSTOM LABELS */
@@ -265,6 +264,80 @@
         width: 100%;
         height: 100%;
     }
+     /* Mobile Portrait */
+    @media only screen and (max-width: 576px) {
+
+    .roulette {
+        width: 380px;
+        height: 380px;
+    }
+
+    .roulette .spinner .item {
+        top: -190px;
+        left: 190px;
+        transform-origin: 0% 380px;
+    }
+
+    .roulette .spinner .item .label {
+        top: 20px;
+        left: -14px;
+        font-size: 0.77em;
+        height: 103px;
+    }
+
+    .roulette .button {
+        width: 6.84em;
+        height: 6.84em;
+        line-height: 6.84em;
+        margin-left: -3.42em;
+        margin-top: -3.42em;
+        font-size: 1.22em;
+    }
+
+    .roulette .spinner .item .label .text {
+        font-size: 0.76em;
+    }
+
+    .roulette .spinner .item[data-type="quiz"] .label {
+        font-size: 1.14em;
+    }
+
+    .roulette .spinner .item[data-type="question"] .label {
+        font-size: 0.99em;
+    }
+
+    .roulette .spinner .item[data-type="replay"] .label .text {
+        font-size: 0.46em;
+    }
+
+    .roulette .spinner .item[data-type="premio1"] .label .text {
+        font-size: 1.45em;
+    }
+
+    .roulette .spinner .item[data-type="premio2"] .label .text {
+        font-size: 1.37em;
+    }
+
+    .roulette .spinner .item[data-type="perdedor"] .label .text {
+        font-size: 2.13em;
+    }
+
+    .roulette .spinner .item[data-type="time"] .label i {
+        font-size: 1.14em;
+    }
+    }
+
+
+
+    /* Mobile Landscape */
+    @media only screen and (min-width: 577px) and (max-width: 932px) and (orientation: landscape) {}
+
+    /* Tablet Portrait */
+    @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {}
+
+    /* Tablet Landscape */
+    @media only screen and (min-width: 992px) and (max-width: 1366px) and (orientation: landscape) {}
+
 </style>
 @endpush
 @push('scripts')
@@ -287,7 +360,7 @@ const data = [
   { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste muy cerca!'}
 ];
 
-const winSound = new Audio('{{asset('frontend/sounds/win-3.mp3')}}');
+const winSound = new Audio('{{asset('frontend/sounds/verde.wav')}}');
 let isSpinning = false;
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
