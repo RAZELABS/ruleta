@@ -1,21 +1,25 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container">
+<div class="container">
 
         <div class="row">
             <div class="p-4 col-12 col-md-12 offset-md-1">
                 <div class="row">
                     <div class="col-12 col-md-6 d-flex justify-content-start">
-                        <h1 class="text-secondary fw-bold">kioscos</h1>
+                        <h1 class="text-secondary fw-bold">Importar movimientos en kioscos</h1>
                     </div>
                     <div class="col-12 col-md-6 d-flex justify-content-start">
-                                                <form action="{{ route('admin.kiosco.import') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
+                        <form action="{{ route('admin.kiosco.import') }}" method="POST" enctype="multipart/form-data"
+                            class="d-flex align-items-center">
                             @csrf
                             <div class="input-group">
-                                <input type="file" name="csv_file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" aria-placeholder="Ingrese archivo">
-                                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Importar</button>
-                              </div>
+                                <input type="file" name="csv_file" class="form-control" id="inputGroupFile04"
+                                    aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                    aria-placeholder="Ingrese archivo">
+                                <button class="btn btn-outline-secondary" type="submit"
+                                    id="inputGroupFileAddon04">Importar</button>
+                            </div>
 
 
                         </form>
@@ -45,7 +49,7 @@
                         <tbody>
                             @foreach ($kioscos as $kiosco)
                                 <tr>
-                                    <td>{{$kiosco->fecha }}</td>
+                                    <td>{{ $kiosco->fecha }}</td>
                                     <td>{{ $kiosco->hora }}</td>
                                     <td>{{ $kiosco->tipo_documento }}</td>
                                     <td>{{ $kiosco->nro_documento }}</td>
@@ -58,10 +62,14 @@
                                                 class="btn btn-falabella btn-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a href="{{ route('admin.kiosco.destroy', $kiosco->id) }}"
-                                                class="btn btn-falabella btn-sm">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </a>
+                                            <form action="{{ route('admin.kiosco.destroy', $kiosco->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" id="btn-submit" class="btn btn-falabella btn-sm ">
+                                                    <i class="fa-solid fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -73,40 +81,38 @@
         </div>
     @endsection
 
-    @push('styles')
-    <style>
-        .loading-spinner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    @push('scripts')
 
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-        }
-    </style>
+    <script>
+                // Table initialization code here
+                var routeConfigurations = {
+                    'TABLE_1': {
+                        'botones': 'Bfrtip',
+                        'autoWidth': false,
+                        'numerical': false,
+                        'ordering': true,
+                        'colFecha': [0],
+                        'columnDefs': [
+                {
+                    // Target columns that need leading zeros (tipo_documento, nro_documento, codigo_tienda, orden_compra)
+                    'targets': [2, 3, 4, 5,6],
+                    'render': function(data, type, row) {
+                        if (type === 'display') {
+                            // Convert to string and preserve leading zeros
+                            return data.toString();
+                        }
+                        return data;
+                    },
+                    // Prevent automatic type detection
+                    'type': 'string'
+                }
+            ]
+                    },
+                }
+
+    </script>
     @endpush
     @push('scripts')
 
-        <script>
-            var routeConfigurations = {
-                'TABLE_1': {
-                    'botones': 'Bfrtip',
-                    'colFechaSimple': [0],
-                    // 'ordenar': [0, "asc"],
-                },
-            }
-        </script>
-    @endpush
-    @push('scripts')
-        <script src="{{ asset('plugins/datatables/datatables-config.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/datatables-config.js') }}"></script>
     @endpush

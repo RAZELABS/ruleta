@@ -20,7 +20,7 @@
                 @method('PATCH')
                 <div class="row">
                     <div class="mb-3 col-12 col-md-6">
-                        <label for="turno" class="form-label">Fecha</label>
+                        <label for="turno" class="form-label">Turno</label>
                         <input type="text" class="form-control" id="turno" name="turno"
                             value="{{ $matriz_turno->turno }}" readonly>
                     </div>

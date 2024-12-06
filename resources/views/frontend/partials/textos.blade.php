@@ -1,59 +1,43 @@
-<div class="col-10 col-md-6 offset-1 offset-md-0 col-lg-6 text-start text-lg-start d-flex align-items-center">
-    <div>
-        <div class="row">
-            <h2 class="text-color-light positive-ls-3 pt-5 pt-lg-2 font-weight-bold text-uppercase text-4 line-height-3 mb-0 appear-animation"
-                data-appear-animation="fadeInUpShorter" data-appear-animation-delay="500"
-                data-plugin-options="{'minWindowWidth': 0}">
-                <img src="{{asset('img/logos/logo_fa.png')}}" class="img-fluid" alt=""
-                    style="height: 70px !important" />
-            </h2>
-
-            <h1 class="display-4 text-color-light font-weight-bold py-0 mb-1 p-relative appear-animation"
-                data-appear-animation="fadeInUpShorter" data-appear-animation-delay="750"
-                data-plugin-options="{'minWindowWidth': 0}">
-                <span class="p-relative z-index-1 fab-text-light">
-                    Ingresa tu <span class="text-color-tertiary">DNI</span>
-                </span>
-                {{-- <span class="custom-stroke-text-effect-1 opacity-2 p-absolute text-10 right-0 me-4">LOL</span>
-                --}}
-            </h1>
-
-            <p class="text-4-5 font-weight-medium mb-4 appear-animation fab-text-light"
-                data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1000"
-                data-plugin-options="{'minWindowWidth': 0}">
-                y empieza a ganar!
-            </p>
-        </div>
-        <div class="row">
-            <x-form action="{{route('verificar')}}" method="POST" id="form" class="appear-animation"
-                data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1200"
-                data-plugin-options="{'minWindowWidth': 0}">
-
-                <div class="mb-3 col-12 col-lg-6">
-                    <label for="" class="form-label fab-text-enfasis">Tipo de documento</label>
-                    <select class="form-select form-select-lg" name="tipo_documento" id="tipo_documento">
-                        <option selected disabled>Selecciona una opción</option>
-                        @foreach ( $tipo_documentos as $tipo_documento )
-                        <option value="{{$tipo_documento->valor}}">{{$tipo_documento->descripcion}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <x-inputs.text-input name="nro_documento" label="DNI" :placeholder="'Introduce tu DNI'" :required="true"
-                    :boxClass="'col-12 col-lg-6'" :labelClass="'fab-text-enfasis'" :inputClass="'form-control-lg'"
-                    min-length=8 max-length=8/>
-                <input type="hidden" name="id_tienda" id="editor_content" value="{{$tiendaId}}">
-                <div class="mb-3 col-12">
-                    <button id="participar" type="button"
-                        class="btn btn-secondary fab-text-light font-weight-bold text-5 btn-py-3 px-5 mt-2 appear-animation"
-                        data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1300"
-                        data-plugin-options="{'minWindowWidth': 0}" onclick="mostrarTerminosCondiciones()">
-                        Participar
-                    </button>
-                </div>
-            </x-form>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-12">
+        <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="500"
+            data-plugin-options="{'minWindowWidth': 0}">
+            <img src="{{asset('img/logos/logo_fa.png')}}" class="img-fluid w-100 mb-4" alt=""
+                style="max-width: 400px !important" />
         </div>
     </div>
+    <div class="col-12 col-md-12">
+        <x-form action="{{route('verificar')}}" method="POST" id="form" class="appear-animation"
+            data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1200"
+            data-plugin-options="{'minWindowWidth': 0}">
+
+            <div class="mb-3 col-12 col-lg-8">
+                <label for="" class="form-label fab-text-enfasis">Tipo de documento <span style="color:red">*</span></label>
+                <select class="form-select form-select-lg" name="tipo_documento" id="tipo_documento">
+                    <option selected disabled>Selecciona una opción</option>
+                    @foreach ( $tipo_documentos as $tipo_documento )
+                    <option value="{{$tipo_documento->valor}}">{{$tipo_documento->descripcion}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <x-inputs.text-input name="nro_documento" label="Número de documento" :placeholder="'Introduce tu DNI'" :required="true"
+                :boxClass="'col-12 col-lg-8'" :labelClass="'fab-text-enfasis'" :inputClass="'form-control-lg'"
+                min-length=8 max-length=8 />
+            <input type="hidden" name="id_tienda" id="editor_content" value="{{$tiendaId}}">
+            <div class="mb-3 col-12">
+                <button id="participar" type="button"
+                    class="btn btn-secondary fab-text-light font-weight-bold text-5 btn-py-3 px-5 mt-2 appear-animation"
+                    data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1300"
+                    data-plugin-options="{'minWindowWidth': 0}" onclick="mostrarTerminosCondiciones()">
+                    Participar
+                </button>
+            </div>
+        </x-form>
+    </div>
 </div>
+
+
+
 @push('styles')
 <style>
     .invalid-feedback {

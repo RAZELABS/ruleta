@@ -1,30 +1,31 @@
 @extends('frontend.layouts.app')
 @section('content')
+{{-- @php
+dd($premios)
+@endphp --}}
+<div class="container d-flex align-items-center justify-content-center">
 
-<div class="container min-vh-100 d-flex align-items-center my-5">
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="row">
-                @include('frontend.partials.info-ruleta')
-                @include('frontend.partials.ruleta-juego')
-            </div>
-
+    <div class="row justify-content-center" id="contenedor-fb">
+        <div class="col-10 mb-5 mb-lg-1 col-lg-6 ">
+            @include('frontend.partials.info-ruleta')
+        </div>
+        <div class="col-10 col-lg-6 px-3 ">
+            @include('frontend.partials.ruleta-juego')
         </div>
     </div>
+
+
 </div>
-
-
-
 @endsection
 @push('styles')
 <style>
-    @import url("https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900");
+    /* @import url("https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900"); */
 
     body {
         overflow: hidden;
     }
 
-     .outer-border {
+    .outer-border {
         position: absolute;
         top: -10px;
         left: -10px;
@@ -53,7 +54,10 @@
         display: block;
         width: 500px;
         height: 500px;
+        transform: rotate(45deg);
+
     }
+
 
     .roulette .markers {
         display: block;
@@ -83,7 +87,7 @@
         border-width: 3em 0 3em 3em;
         border-color: transparent transparent transparent #007bff;
         position: absolute;
-        border-left-color: #eecbb6;
+        border-left-color: #C7CF06;
         top: 50%;
         left: -1px;
         margin-top: -3em;
@@ -119,13 +123,13 @@
         position: absolute;
         color: #fff;
         font-weight: 800;
-        top: 7;
-        left: 1;
+        top: 26px;
+        left: -18px;
         white-space: nowrap;
         transform-origin: 0 0;
-        font-size: 0.8em;
-        line-height: 15px;
-        height: 136px !important;
+        font-size: 0.7em;
+        line-height: 11px;
+        height: 136px;
     }
 
     .roulette .spinner .item .label i,
@@ -163,6 +167,7 @@
         text-align: center;
         transition: transform 0.15s;
         transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform: rotate(-45deg);
     }
 
     .roulette .button:hover {
@@ -180,6 +185,7 @@
         color: #999;
         background-color: #eecbb6;
         cursor: default;
+        transform: rotate(-45deg);
     }
 
     /* CUSTOM LABELS */
@@ -226,10 +232,6 @@
         text-transform: uppercase;
     }
 
-    .wheel-subtext {
-        font-family: Arial, sans-serif;
-        font-weight: normal;
-    }
 
     /* Add to existing styles */
     text {
@@ -243,20 +245,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        transform: rotate(0deg);
+        height: 90%;
+        transform: rotate(-90deg);
+        width: 40%;
     }
 
     .main-text {
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: bold;
         margin-bottom: 0px;
-        white-space: nowrap;
-    }
-
-    .sub-text {
-        font-size: 0.9em;
-        white-space: nowrap;
+        white-space: normal;
     }
 
     .label {
@@ -266,6 +264,80 @@
         width: 100%;
         height: 100%;
     }
+     /* Mobile Portrait */
+    @media only screen and (max-width: 576px) {
+
+    .roulette {
+        width: 380px;
+        height: 380px;
+    }
+
+    .roulette .spinner .item {
+        top: -190px;
+        left: 190px;
+        transform-origin: 0% 380px;
+    }
+
+    .roulette .spinner .item .label {
+        top: 20px;
+        left: -14px;
+        font-size: 0.77em;
+        height: 103px;
+    }
+
+    .roulette .button {
+        width: 6.84em;
+        height: 6.84em;
+        line-height: 6.84em;
+        margin-left: -3.42em;
+        margin-top: -3.42em;
+        font-size: 1.22em;
+    }
+
+    .roulette .spinner .item .label .text {
+        font-size: 0.76em;
+    }
+
+    .roulette .spinner .item[data-type="quiz"] .label {
+        font-size: 1.14em;
+    }
+
+    .roulette .spinner .item[data-type="question"] .label {
+        font-size: 0.99em;
+    }
+
+    .roulette .spinner .item[data-type="replay"] .label .text {
+        font-size: 0.46em;
+    }
+
+    .roulette .spinner .item[data-type="premio1"] .label .text {
+        font-size: 1.45em;
+    }
+
+    .roulette .spinner .item[data-type="premio2"] .label .text {
+        font-size: 1.37em;
+    }
+
+    .roulette .spinner .item[data-type="perdedor"] .label .text {
+        font-size: 2.13em;
+    }
+
+    .roulette .spinner .item[data-type="time"] .label i {
+        font-size: 1.14em;
+    }
+    }
+
+
+
+    /* Mobile Landscape */
+    @media only screen and (min-width: 577px) and (max-width: 932px) and (orientation: landscape) {}
+
+    /* Tablet Portrait */
+    @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {}
+
+    /* Tablet Landscape */
+    @media only screen and (min-width: 992px) and (max-width: 1366px) and (orientation: landscape) {}
+
 </style>
 @endpush
 @push('scripts')
@@ -278,24 +350,28 @@
 <script>
     // Datos de los premios en la ruleta
 const data = [
-  { id: '', type: 'premio', color: '#AAD500', text: '¡Ganaste!', subtext: '' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'participando' },
-  { id: '', type: 'sin-premio', color: '#f00', text: 'Inténtalo', subtext: 'Mañana' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Estuviste', subtext: 'muy cerca' },
-  { id: '', type: 'sin-premio', color: '#f00', text: 'Sigue', subtext: 'Participando' },
-  { id: '', type: 'sin-premio', color: '#0e793e', text: 'Sigue', subtext: 'Participando' }
+    { id: '', type: 'premio', color: '#878787', winColor: '#2ecc71', text: '¡Ganaste!'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste cerca!'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue Participando' },
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: 'Intentalo en tu siguiente compra'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: '¡Ánimo! sigue participando'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡No te rindas! Sigue participando'},
+  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue comprando y participa'},
+  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste muy cerca!'}
 ];
-const winSound = new Audio('{{asset('frontend/sounds/win-3.mp3')}}');
+
+const winSound = new Audio('{{asset('frontend/sounds/verde.wav')}}');
+let isSpinning = false;
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
   this.$el = $(el);        // Elemento DOM de la ruleta
   this.items = items || []; // Elementos de la ruleta
   this._bis = false;        // Alterna la dirección de giro
-  this._angle = 0;          // Ángulo actual
+  this._angle = 90;          // Ángulo actual
   this._index = 0;          // Índice del premio actual
   this._type = items['type'] || [];          // Índice del premio actual
   this.options = {
-    angleOffset: -90        // Offset inicial del ángulo
+    angleOffset: -90      // Offset inicial del ángulo
   };
 }
 
@@ -304,40 +380,57 @@ _.extend(RouletteWheel.prototype, Backbone.Events);
 
 // Método para hacer girar la ruleta
 RouletteWheel.prototype.spin = function (_index) {
-  const count = this.items.length;           // Número de elementos en la ruleta
-  const delta = 360 / count;                 // Ángulo entre premios
-  const index = !isNaN(parseInt(_index)) ? parseInt(_index) : Math.floor(Math.random() * count);
-  const a = index * delta + (this._bis ? 1440 : -1440); // Calcula el ángulo de giro
+  if (isSpinning) return; // Prevent multiple spins
+  isSpinning = true;
 
-  this._bis = !this._bis;        // Alterna la dirección en cada giro
-  this._angle = a;               // Almacena el ángulo actual
-  this._index = index;           // Guarda el índice seleccionado
+  const $button = $('#spin-button');
+  $button.prop('disabled', true).addClass('disabled');
+
+  const count = this.items.length;
+  const delta = 360 / count;
+  const index = !isNaN(parseInt(_index)) ? parseInt(_index) : Math.floor(Math.random() * count);
+  const a = index * delta + (this._bis ? 1440 : -1440);
+
+  this._bis = !this._bis;
+  this._angle = a;
+  this._index = index;
 
   const $spinner = $(this.$el.find('.spinner'));
 
-  // Funciones para el inicio y fin de la animación
   const _onAnimationBegin = () => {
-    this.$el.addClass('busy');   // Añade clase para indicar que está girando
+    this.$el.addClass('busy');
     this.trigger('spin:start', this);
   };
 
   const _onAnimationComplete = () => {
-        this.$el.removeClass('busy');
-        this.trigger('spin:end', this);
-        showResult(this.items[this._index].type);
-    };
+    this.$el.removeClass('busy');
+    this.trigger('spin:end', this);
+    showResult(this.items[this._index].type);
+    this.updateSectorColor($spinner.find(`.item[data-index="${this._index}"]`), this.items[this._index]);
+    // Keep button disabled
+    $button.prop('disabled', true).addClass('disabled');
+    isSpinning = true; // Keep it true to prevent further spins
+  };
 
-  // Inicia la animación del giro
   $spinner.velocity('stop').velocity(
     { rotateZ: `${a}deg` },
     {
       easing: 'easeOutQuint',
-      duration: 2500,
+      duration: 8500,
       begin: _onAnimationBegin.bind(this),
       complete: _onAnimationComplete.bind(this)
     }
   );
 };
+
+// Add button click handler
+$(document).ready(function() {
+  $('#spin-button').on('click', function() {
+    if (!isSpinning) {
+      roulette.spin();
+    }
+  });
+});
 
 // Método para renderizar la ruleta
 RouletteWheel.prototype.render = function () {
@@ -348,15 +441,13 @@ RouletteWheel.prototype.render = function () {
   const delta = 360 / count;
 
   this.items.forEach((item, i) => {
-    const { color, text, type, subtext } = item;
+    const { color, text, type,  } = item;
 
-    // Update HTML structure for text and subtext
     const html = `
       <div class="item" data-index="${i}" data-type="${type || ''}">
         <div class="label">
           <div class="text-container">
             <span class="main-text">${text}</span>
-            <span class="sub-text">${subtext}</span>
           </div>
         </div>
       </div>`;
@@ -405,12 +496,25 @@ RouletteWheel.prototype.renderMarker = function () {
   const $markerA = $('<div class="marker">');
   const $markerB = $('<div class="marker">');
 
-  const rA = delta * (count - 1) - delta * 0.5 + this.options.angleOffset;
-  const rB = delta * (count + 1) - delta * 0.5 + this.options.angleOffset;
+  // Ajustamos los ángulos para que apunten hacia arriba (270 grados)
+  const baseRotation = 270; // Rotación base para alinear arriba
+  const rA = baseRotation - delta * 0.5;  // Marcador izquierdo
+  const rB = baseRotation + delta * 0.5;  // Marcador derecho
 
-  // Estilos de los marcadores
-  $markerA.css({ borderTopWidth, borderRightWidth, transform: `scale(2) rotate(${rA}deg)`, borderTopColor: '#FFF' });
-  $markerB.css({ borderTopWidth, borderRightWidth, transform: `scale(2) rotate(${rB}deg)`, borderTopColor: '#FFF' });
+  // Estilos de los marcadores sin scale
+  $markerA.css({
+    borderTopWidth,
+    borderRightWidth,
+    transform: `rotate(${rA}deg)`,
+    borderTopColor: '#FFF'
+  });
+
+  $markerB.css({
+    borderTopWidth,
+    borderRightWidth,
+    transform: `rotate(${rB}deg)`,
+    borderTopColor: '#FFF'
+  });
 
   $markers.append($markerA).append($markerB);
 };
@@ -439,19 +543,19 @@ RouletteWheel.prototype._createText = function(angle, item, index) {
     text.setAttribute("fill", "#fff");
     text.setAttribute("font-size", "14px");
     text.textContent = item.text;
-     // Subtext
-     const subtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    subtext.setAttribute("class", "wheel-subtext");
-    subtext.setAttribute("text-anchor", "middle");
-    subtext.setAttribute("alignment-baseline", "middle");
-    subtext.setAttribute("fill", "#fff");
-    subtext.setAttribute("font-size", "12px");
-    subtext.setAttribute("dy", "20"); // Offset for subtext
-    subtext.textContent = item.subtext;
 
     g.appendChild(text);
-    g.appendChild(subtext);
     return g;
+};
+
+// Agregar este método a la clase RouletteWheel
+RouletteWheel.prototype.updateSectorColor = function(sector, item) {
+  const $sector = $(sector);
+  if (item.type === 'premio') {
+    $sector.css('border-top-color', item.winColor);
+  } else {
+    $sector.css('border-top-color', item.loseColor);
+  }
 };
 
 // Inicialización de la ruleta cuando el DOM esté listo
@@ -462,24 +566,9 @@ $(window).ready(function () {
   spinner.bindEvents();
 
   spinner.on('spin:start', () => console.log('spin start!'));
-  // spinner.on('spin:end', (r) => console.log(`spin end! --> ${r._index}`));
-  spinner.on('spin:end', function (r) {
-    console.log('spin end! -->' + r._index + r.items[r._index].type);
-    console.log(spinner);
-    // Obtiene el premio seleccionado
-
-    if (r.items[r._index].type == 'premio1') {
-      var pretext = 'Felicidades ';
-    }
-    if (r.items[r._index].type == 'premio2') {
-      console.log('true');
-      var pretext = 'Felicidades ';
-    }
-    const txt = data[r._index].text;
-    const subtext = data[r._index].subtext;
-
-  });
+  spinner.on('spin:end', (r) => console.log(`spin end! --> ${r._index}`));
 });
+
 function showResult(type) {
     if (type === 'premio') {
         // Play winning sound
@@ -516,27 +605,33 @@ function showResult(type) {
                 requestAnimationFrame(frame);
             }
         }());
+        setTimeout(() => {
+            window.location.href = "{{ route('ruleta.ganador') }}";
+        }, 3000);
 
-        Swal.fire({
-            title: '<span style="font-size: 2em">¡GANASTE!</span>',
-            html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
-                   Acércate al módulo de la ruleta para activar tu premio</p>`,
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false,
-            customClass: {
-                popup: 'animated bounceIn'
-            }
-        });
+        // Swal.fire({
+        //     title: '<span style="font-size: 2em">¡GANASTE!</span>',
+        //     html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
+        //            Acércate al módulo de la ruleta para activar tu premio</p>`,
+        //     icon: 'success',
+        //     confirmButtonText: 'Aceptar',
+        //     allowOutsideClick: false,
+        //     customClass: {
+        //         popup: 'animated bounceIn'
+        //     }
+        // });
     } else {
-        Swal.fire({
-            title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
-            html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
-                   Exclusivo con tarjetas Banco Falabella</p>`,
-            icon: 'info',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false
-        });
+        setTimeout(() => {
+            window.location.href = "{{ route('ruleta.sorry') }}";
+        }, 3000);
+        // Swal.fire({
+        //     title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
+        //     html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
+        //            Exclusivo con tarjetas Banco Falabella</p>`,
+        //     icon: 'info',
+        //     confirmButtonText: 'Aceptar',
+        //     allowOutsideClick: false
+        // });
     }
 }
 </script>

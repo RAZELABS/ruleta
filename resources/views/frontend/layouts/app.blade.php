@@ -24,22 +24,19 @@
 </head>
 <body>
     <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-1 overflow-hidden">
-    <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-2 overflow-hidden">
+    <img src="{{asset('frontend/img/elementos/campana.png')}}" alt=campana" class="campana-1 overflow-hidden">
+    {{-- <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-2 overflow-hidden"> --}}
+    <img src="{{asset('frontend/img/elementos/campana.png')}}" alt="campana" class="campana-2 overflow-hidden">
     <img src="{{asset('frontend/img/elementos/1.png')}}" alt="girnalda" class="girnalda-3 overflow-hidden">
     {{-- <img src="{{asset('img/logos/Falabella-Logo.png')}}" alt="Logo" class="logo overflow-hidden"> --}}
     <div class="body">
-        {{-- @include('frontend.layouts.header') --}}
-
         <div role="main" class="main" >
-
+            @include('frontend.layouts.header')
                 @yield('content')
-
-            @include('frontend.layouts.footer')
         </div>
-
     </div>
-    @if (session('success'))
-    <x-alerts.swal-notification icon="success" title="Exito" text="{{session('message')}}" timer="3000" />
+    @if (session('success') || session('message'))
+    <x-alerts.swal-notification icon="success" title="Exito" text="{{session('message') ?? session('success') }}" timer="3000" />
     @endif
     @if (session('error') || $errors->any())
     @php

@@ -37,6 +37,8 @@ Route::view('/error-tienda', 'frontend.error-tienda')
 Route::post('/verificar', [IndexController::class, 'verificar'])->name('verificar');
 
 Route::get('/ruleta', [RuletaController::class, 'index'])->name('ruleta.index');
+Route::get('/ruleta/ganador', [RuletaController::class, 'ganador'])->name('ruleta.ganador');
+Route::get('/ruleta/sorry', [RuletaController::class, 'sorry'])->name('ruleta.sorry');
 
 
 // Route::get('/dashboard', function () {
@@ -81,10 +83,10 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::resource('tiendapremio', TiendapremioController::class);
     //! CArga MASIVA KIOSKO
     // routes/web.php
-Route::get('/kiosco', [KioscoController::class, 'index'])->name('kiosco.index');
-Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
-Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
-Route::resource('kiosco', KioscoController::class);
+    Route::get('/kiosco', [KioscoController::class, 'index'])->name('kiosco.index');
+    Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
+    Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
+    Route::resource('kiosco', KioscoController::class);
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

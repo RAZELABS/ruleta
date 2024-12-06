@@ -58,7 +58,7 @@
         initializeValidation("#createParametros", {
             flag: {
                 minlength: 3,
-                maxlength: 20,
+                maxlength: 50,
                 required: true
             },
 
@@ -75,7 +75,7 @@
         }, {
             flag: {
                 minlength: "El nombre debe tener al menos 3 caracteres.",
-                maxlength: "El nombre debe tener máximo 20 caracteres.",
+                maxlength: "El nombre debe tener máximo 50 caracteres.",
                 required: "Este campo es obligatorio"
             },
 

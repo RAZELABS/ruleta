@@ -1,5 +1,6 @@
 $(function () {
     var tableIds = Object.keys(routeConfigurations);
+
     tableIds.forEach(function (tableId) {
         var tableConfig = routeConfigurations[tableId];
         if (tableConfig) {
@@ -83,11 +84,8 @@ $(function () {
                             var date = new Date(data);
                             return date.toLocaleString("es-ES", {
                                 day: "2-digit",
-                                month: "short",
+                                month: "numeric",
                                 year: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
                             });
                         } else {
                             return "";
@@ -124,17 +122,19 @@ $(function () {
             var table = $("#" + tableId).DataTable({
                 dom: tableConfig.botones ?? "",
                 autoWidth: tableConfig.autoWidth ?? true,
+                numerical: tableConfig.numerical ?? true,
                 responsive: tableConfig.responsive ?? true,
                 paging: tableConfig.paginacion ?? true,
                 pageLength: tableConfig.nroFilas ?? 30,
                 order: tableConfig.ordenar ?? false,
+                ordering: tableConfig.ordering ?? false,
                 columnDefs: columnDefs,
                 rowGroup: {
                     enable: grupos.length > 0,
                     dataSrc: dataSrcArray,
                 },
                 "initComplete": function(settings, json) {
-                    $('.loading-spinner').fadeOut();
+                    Swal.close();
                 },
                 createdRow: function (row, data, dataIndex) {
                     // Iterar sobre todas las celdas de la fila

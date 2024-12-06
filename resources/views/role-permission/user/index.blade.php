@@ -54,13 +54,13 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @can('update user')
+                                    {{-- @can('update user') --}}
                                     <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-success">Edit</a>
-                                    @endcan
+                                    {{-- @endcan
 
-                                    @can('delete user')
+                                    @can('delete user') --}}
                                     <a href="{{ url('users/'.$user->id.'/delete') }}" class="btn btn-danger mx-2">Delete</a>
-                                    @endcan
+                                    {{-- @endcan --}}
                                 </td>
                             </tr>
                             @endforeach
