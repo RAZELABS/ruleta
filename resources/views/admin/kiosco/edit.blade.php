@@ -25,6 +25,11 @@
                             value="{{ \Carbon\Carbon::parse($kioscos->fecha)->format('Y-m-d') }}">
                     </div>
                     <div class="mb-3 col-12 col-md-6">
+                        <label for="hora" class="form-label">Hora</label>
+                        <input type="text" class="form-control" id="hora" name="hora"
+                            value="{{ $kioscos->hora }}">
+                    </div>
+                    <div class="mb-3 col-12 col-md-6">
                         <label for="tipo_documento" class="form-label">Tipo de documento</label>
                         <input type="text" class="form-control" id="tipo_documento" name="tipo_documento"
                             value="{{ $kioscos->tipo_documento }}">

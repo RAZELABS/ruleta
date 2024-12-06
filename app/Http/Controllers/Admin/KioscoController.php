@@ -60,6 +60,7 @@ class KioscoController extends Controller
             foreach ($csv->getRecords() as $index => $record) {
                 $validator = Validator::make($record, [
                     'TRAN_DT' => 'required|date_format:d/m/Y',
+                    'TRAN_TM' => 'required|string|max:2',
                     'TRAN_ID' => 'required|string|max:20',
                     'CUST_ID_TYPE' => 'required|string',
                     'CUST_ID' => 'required|string',
@@ -67,18 +68,11 @@ class KioscoController extends Controller
                     'TOTAL_AMT' => 'required|string|regex:/^\d+(\.\d{1,2})?$/',
                     'RESERVADO_1' => 'string|nullable',
                     'RESERVADO_2' => 'string|nullable',
-                    // 'TRAN_ID' => 'numeric', // orden de compra
-                    // 'TRAN_DT' => 'date_format:d/m/Y', // fecha
-                    // // 'hora' => 'required|date_format:H:i:s',
-                    // 'CUST_ID_TYPE' => 'numeric',
-                    // 'CUST_ID' => 'string',
-                    // 'LOC_ID' => 'numeric',
-                    // 'TOTAL_AMT' => 'numeric|regex:/^\d+(\.\d{1,2})?$/',
 
                 ], [
                     'TRAN_DT' => 'La fecha debe tener el formato DD-MM-YYYY en la línea ' . ($index + 2),
-                    // 'hora.date_format' => 'La hora debe tener el formato HH:mm:ss en la línea ' . ($index + 2),
-                    'CUST_ID_TYPE.in' => 'El tipo de documento debe ser 1 o 6 en la línea ' . ($index + 2),
+                    'TRAN_TM'=> 'La hora debe tener el formato HH ' . ($index + 2),
+                    'CUST_ID_TYPE.in' => 'El tipo de documento debe ser 1,4 o 6 en la línea ' . ($index + 2),
                     'CUST_ID.min' => 'El número de documento debe tener al menos 3 caracteres en la línea ' . ($index + 2),
                     'CUST_ID.max' => 'El número de documento no debe exceder 12 caracteres en la línea ' . ($index + 2),
                     'LOC_ID.numeric' => 'El código de tienda debe ser numérico en la línea ' . ($index + 2),
@@ -92,7 +86,7 @@ class KioscoController extends Controller
                 $fecha = \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
                 Kiosco::create([
                     'fecha' => $fecha,
-                    // 'hora' => $record['hora'],
+                    'hora' => $record['TRAN_TM'],
                     'tipo_documento' => $record['CUST_ID_TYPE'],
                     'nro_documento' => $record['CUST_ID'],
                     'codigo_tienda' => $record['LOC_ID'],
@@ -122,7 +116,7 @@ class KioscoController extends Controller
     public function edit(string $id)
     {
         $kioscos = Kiosco::select('id', 'fecha', 'hora', 'tipo_documento', 'nro_documento', 'codigo_tienda', 'orden_compra', 'monto')
-            ->where('id', '=', $id)->first();
+        ->where('id', '=', $id)->first();
 
         //dd($kioscos);
         return view("admin.kiosco.edit", compact("kioscos"));
@@ -135,9 +129,9 @@ class KioscoController extends Controller
     {
         //dd($request);
         $data = $request->validate([
-            // 'fecha' => 'required|date_format:Y-m-d',
-            // 'hora' => 'required|date_format:H:i:s',
-            'tipo_documento' => 'required|in:1,2',
+            'fecha' => 'required|date_format:Y-m-d',
+            'hora' => 'string',
+            'tipo_documento' => 'required|in:1,4,6',
             'nro_documento' => 'required|string|min:3|max:12',
             'codigo_tienda' => 'required|numeric',
             'orden_compra' => 'required|string|max:20|alpha_num',

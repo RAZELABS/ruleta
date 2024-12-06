@@ -23,8 +23,7 @@ class Kiosco extends Model
     ];
 
     protected $casts = [
-        'fecha' => 'date',
-        'hora' => 'datetime',
+        'hora' => 'string',
         'monto' => 'string',
         'orden_compra' => 'string',
         'estado' => 'integer'

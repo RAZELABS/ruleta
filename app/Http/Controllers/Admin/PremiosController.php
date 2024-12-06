@@ -28,9 +28,10 @@ class PremiosController extends Controller
      */
     public function create()
     {
-        $parametros = Parametros::select("id","descripcion")->where('flag','=','estado')->get();
 
-        return view("admin.premios.create", compact("parametros"));
+        $parametros = Parametros::select("id","descripcion","valor")->where('flag','=','estado')->get();
+        $premios = Parametros::select("id","descripcion","valor")->where('flag','=','premio')->get();
+        return view("admin.premios.create", compact("parametros","premios"));
     }
 
     /**
@@ -39,7 +40,8 @@ class PremiosController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            "descripcion"=> "required|string|min:3|max:20",
+            "descripcion"=> "required|string|min:3|max:50",
+            "premio" => "integer|required|min:1|max:2",
             "estado"=> "integer|required|min:1|max:2",
         ]);
         //dd($data);
@@ -62,8 +64,8 @@ class PremiosController extends Controller
     {
         $premioss = Premios::with("parametro", "premios")->select('id','descripcion','premio','estado')
         ->where('id','=', $id)->first();
-        $parametro = Parametros::select("id","descripcion")->where('flag','=','estado')->get();
-        $premios = Parametros::select("id","descripcion")->where('flag','=','premio')->get();
+        $parametro = Parametros::select("id","descripcion","valor")->where('flag','=','estado')->get();
+        $premios = Parametros::select("id","descripcion","valor")->where('flag','=','premio')->get();
 
         //dd($parametros, $premios);
         return view("admin.premios.edit", compact("premioss","parametro","premios"));
@@ -76,7 +78,7 @@ class PremiosController extends Controller
     {
 
         $data = $request->validate([
-            "descripcion"=> "required|string|min:3|max:20",
+            "descripcion"=> "required|string|min:3|max:50",
             "estado"=> "integer|required|min:1|max:2",
         ]);
 
