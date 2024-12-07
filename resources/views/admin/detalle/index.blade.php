@@ -39,8 +39,12 @@
                                     <td scope="row">{{ $detalle->nro_documento }}</td>
                                     <td scope="row">{{ $detalle->parametro->descripcion }}</td>
                                     <td scope="row">{{ $detalle->nombrePremio }}</td>
-                                    <td scope="row">{{ ($detalle->latitud && $detalle->longitud) ? $detalle->latitud .','.$detalle->longitud : 'rechazado por cliente'}}</td>
-                                    <td>
+                                    @if($detalle->latitud && $detalle->longitud)
+                                    <td scope="row"><a href="{{$detalle->enlaceMapa}}" target="_blank" class="btn btn-falabella">Ver ubicación</td>
+                                    @else
+                                    <td scope="row">Rechazado / cliente</td>
+                                    @endif
+                                            <td>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($detalle->estado == 1)
                                                 <form class=""

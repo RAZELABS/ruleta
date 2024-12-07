@@ -35,8 +35,4 @@
         </form>
     </div>
 
-    {{-- <div class="col-12">
-        <button onclick="spinner.spin()">perder</button>
-        <button onclick="spinner.spin(0)">Ganar</button>
-    </div> --}}
 </div>

@@ -4,32 +4,14 @@
 {{-- Add hidden form with user data --}}
 <form id="formJugada" action="{{ route('ruleta.registrarJugada') }}" method="POST">
     @csrf
-    <input type="hidden" name="latitud" value="{{ $latitud }}">
-    <input type="hidden" name="longitud" value="{{ $longitud }}">
-    <input type="hidden" name="id_tienda" value="{{ $id_tienda }}">
-    <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}">
-    <input type="hidden" name="nro_documento" value="{{ $nro_documento }}">
-    <input type="hidden" name="resultado" value="">
-    <input type="hidden" name="opcion" value="">
+    <input type="hidden" name="latitud" id="latitud" value="" readonly>
+    <input type="hidden" name="longitud" id="longitud" value="" readonly>
+    <input type="hidden" name="id_tienda" value="{{ $id_tienda }}" readonly>
+    <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}" readonly>
+    <input type="hidden" name="nro_documento" value="{{ $nro_documento }}" readonly>
+    <input type="hidden" name="resultado" value="" readonly>
+    <input type="hidden" name="opcion" value="" readonly>
 </form>
-
-{{-- Debug data
-@if(config('app.debug'))
-    <div class="container">
-        <div class="row">
-            <div class="col text-color-light" style="color: #fff !important">
-                <pre>
-                    Latitud: {{ $latitud }}
-                    Longitud: {{ $longitud }}
-                    ID Tienda: {{ $id_tienda }}
-                    Tipo Documento: {{ $tipo_documento }}
-                    Nro Documento: {{ $nro_documento }}
-                    Premios: {{ $premios->count() }}
-                </pre>
-            </div>
-        </div>
-    </div>
-@endif --}}
 
 
 <div class="container d-flex align-items-center justify-content-center">
@@ -40,9 +22,13 @@
         </div>
         <div class="col-10 col-lg-6 px-3 ">
             @include('frontend.partials.ruleta-juego')
-        </div>
-    </div>
 
+        </div>
+        <div class="col-12">
+           <button onclick="spinner.spin()">perder</button>
+           <button onclick="spinner.spin(0)">Ganar</button>
+       </div>
+    </div>
 
 </div>
 @endsection
@@ -375,6 +361,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+{{-- <script>
+    $(document).ready(function() {
+        Swal.fire({
+            title: 'We need your location',
+            text: 'To register your game, we need to access your location. Do you allow us to access your location?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, allow',
+            cancelButtonText: 'No, deny'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        sessionStorage.setItem('latitud', position.coords.latitude);
+                        sessionStorage.setItem('longitud', position.coords.longitude);
+                        updateFormCoordinates(position.coords.latitude, position.coords.longitude);
+                    }, function(error) {
+                        console.log('User denied geolocation request.');
+                    });
+                } else {
+                    console.log('Geolocation is not supported by this browser.');
+                }
+            } else {
+                updateFormCoordinates(null, null);
+            }
+
+            if (sessionStorage.getItem('latitud') && sessionStorage.getItem('longitud')) {
+                updateFormCoordinates(sessionStorage.getItem('latitud'), sessionStorage.getItem('longitud'));
+            }
+        });
+    });
+
+    function updateFormCoordinates(lat, long) {
+        $('#latitud').val(lat);
+        $('#longitud').val(long);
+    }
+</script> --}}
+
 @php
     function colorOpcionResaltada($color = null){
         $cor = ($color == 1) ? '#2ecc71' : '#e74c3c';
@@ -640,13 +664,37 @@ function showResult(type) {
         }());
         setTimeout(() => {
             form.submit();
-        }, 5000);
+        }, 8000);
 
     } else {
         setTimeout(() => {
             form.submit();
-        }, 5000);
+        }, 8000);
     }
 }
+</script>
+<script>
+    $(document).ready(function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                sessionStorage.setItem('latitud', position.coords.latitude);
+                sessionStorage.setItem('longitud', position.coords.longitude);
+                updateFormCoordinates(position.coords.latitude, position.coords.longitude);
+            }, function(error) {
+                console.log('User denied geolocation request.');
+            });
+        } else {
+            console.log('Geolocation is not supported by this browser.');
+        }
+
+        if (sessionStorage.getItem('latitud') && sessionStorage.getItem('longitud')) {
+            updateFormCoordinates(sessionStorage.getItem('latitud'), sessionStorage.getItem('longitud'));
+        }
+    });
+
+    function updateFormCoordinates(lat, long) {
+        $('#latitud').val(lat);
+        $('#longitud').val(long);
+    }
 </script>
 @endpush

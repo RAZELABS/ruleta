@@ -1,3 +1,4 @@
+<a href="{{ route('home') }}" class="btn btn-falabella float-end m-2"><i class="fa-solid fa-house"></i> Home</a>
 <div class="container-fluid banner-superior">
     <div class="row h-100">
         <div class="container h-100">
