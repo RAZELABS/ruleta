@@ -13,7 +13,7 @@
     <input type="hidden" name="opcion" value="">
 </form>
 
-{{-- Debug data --}}
+{{-- Debug data
 @if(config('app.debug'))
     <div class="container">
         <div class="row">
@@ -29,11 +29,9 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}
 
-{{-- @php
-dd($premios)
-@endphp --}}
+
 <div class="container d-flex align-items-center justify-content-center">
 
     <div class="row justify-content-center" id="contenedor-fb">

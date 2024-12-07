@@ -4,14 +4,14 @@
     <div class="container">
 
         <div class="row">
-            <div class="p-4 col-12 col-md-10 offset-md-1">
+            <div class="p-4 col-12">
                 <div class="row">
                     <div class="col-12 col-md-6 d-flex justify-content-start">
                         <h1 class="text-secondary fw-bold">Relación de jugadas realizadas</h1>
                     </div>
                 </div>
             </div>
-            <div class="p-2 col-12 col-md-10 offset-md-1">
+            <div class="p-2 col-12 ">
                 <div class="p-4">
                     <table class="table table-striped" id="TABLE_1">
                         <thead>
@@ -23,6 +23,7 @@
                                 <th scope="col">Tipo documento</th>
                                 <th scope="col">Nro documento</th>
                                 <th scope="col">Resultado</th>
+                                <th scope="col">Opción</th>
                                 <th scope="col">ubicacion</th>
                                 <th scope="col">Accion</th>
                             </tr>
@@ -37,6 +38,7 @@
                                     <td scope="row">{{ $detalle->documento->descripcion }}</td>
                                     <td scope="row">{{ $detalle->nro_documento }}</td>
                                     <td scope="row">{{ $detalle->parametro->descripcion }}</td>
+                                    <td scope="row">{{ $detalle->nombrePremio }}</td>
                                     <td scope="row">{{ ($detalle->latitud && $detalle->longitud) ? $detalle->latitud .','.$detalle->longitud : 'rechazado por cliente'}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle">

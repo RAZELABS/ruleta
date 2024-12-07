@@ -13,10 +13,11 @@ class DetalleController extends Controller
      */
     public function index()
     {
-    $detalles = Detalle::with('tienda','documento','parametro')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado')->get();
+    $detalles = Detalle::with('tienda','documento','parametro','premio')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado','opcion')->get();
 
     foreach ($detalles as $detalle) {
         $detalle->tienda_nombre = $detalle->tienda->nombre;
+        $detalle->nombrePremio= $detalle->premio->descripcion;
     }
 
     //dd($detalles);

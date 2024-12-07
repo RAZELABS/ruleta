@@ -57,5 +57,10 @@ class Detalle extends Model
     {
         return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
     }
+
+    public function premio()
+    {
+        return $this->belongsTo(Premios::class, 'opcion', 'id');
+    }
 }
 

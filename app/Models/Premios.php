@@ -39,4 +39,9 @@ class Premios extends Model
             ->where('flag', 'premio');
     }
 
+    public function detalles()
+    {
+        return $this->hasMany(Detalle::class, 'opcion', 'id');
+    }
+
 }
