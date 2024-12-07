@@ -6,7 +6,7 @@
         <div class="row">
             <div class="p-4 col-12">
                 <div class="row">
-                    <div class="col-12 col-md-6 d-flex justify-content-start">
+                    <div class="col-12 col-md-12 d-flex justify-content-start">
                         <h1 class="text-secondary fw-bold">Relación de jugadas realizadas</h1>
                     </div>
                 </div>
