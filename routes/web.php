@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Admin\KioscoController;
+use App\Http\Controllers\Admin\KioscodeleteController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\RuletaController;
 use App\Http\Controllers\RolesPermissions\RoleController;
@@ -54,14 +55,15 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //?USERS
-    Route::resource('parametros', ParametrosController::class);
     //? TIENDAS
     Route::get('/generar-qrs', [TiendaController::class, 'generarQrs'])->name('generar.qrs');
     Route::get('tienda/{id}/disabled', [TiendaController::class, 'disabled'])->name('tienda.disabled');
     Route::resource('tienda', TiendaController::class);
     Route::resource('tiendapremio', TiendapremioController::class);
 
+    //?PARAMETROS
+    Route::post('/parametros/{id}/update', [ParametrosController::class, 'update'])->name('parametros.update');
+    Route::resource('parametros', ParametrosController::class);
     //? MATRIZ DIA
     Route::post('/matrizdia/{id}/update', [MatrizdiaController::class, 'update'])->name('matrizdia.update');
     Route::resource('matrizdia', MatrizdiaController::class);
@@ -87,6 +89,8 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
     Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
     Route::resource('kiosco', KioscoController::class);
+    Route::delete('/kioscodelete/{id}', [KioscoDeleteController::class, 'destroy'])->name('kioscodelete.destroy');
+    Route::resource('kioscodelete', KioscodeleteController::class);
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

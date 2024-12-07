@@ -516,7 +516,7 @@ RouletteWheel.prototype.renderMarker = function () {
     borderTopColor: '#FFF'
   });
 
-  $markers.append($markerA).append($markerB);
+  $markers. append($markerA).append($markerB);
 };
 
 // Método para asociar eventos
@@ -574,7 +574,7 @@ function showResult(type) {
         // Play winning sound
         winSound.play();
 
-        const duration = 2000;
+        const duration = 5000;
         const end = Date.now() + duration;
         // Launch confetti
         confetti({

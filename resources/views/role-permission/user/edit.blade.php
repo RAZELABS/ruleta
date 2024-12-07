@@ -26,6 +26,14 @@
                             @method('PUT')
 
                             <div class="mb-3">
+                                <label for="">Tienda</label>
+                                <input type="text" name="id_tienda" readonly value="{{ $user->id_tienda }}" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="">DNI</label>
+                                <input type="text" name="dni" readonly value="{{ $user->dni }}" class="form-control" />
+                            </div>
+                            <div class="mb-3">
                                 <label for="">Name</label>
                                 <input type="text" name="name" value="{{ $user->name }}" class="form-control" />
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror

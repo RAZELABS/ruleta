@@ -11,6 +11,7 @@ class Kiosco extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'fecha_carga',
         'fecha',
         'hora',
         'tipo_documento',

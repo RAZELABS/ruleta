@@ -25,6 +25,14 @@
                             @csrf
 
                             <div class="mb-3">
+                                <label for="">Tienda</label>
+                                <input type="text" name="id_tienda" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="">DNI</label>
+                                <input type="text" name="dni" class="form-control" />
+                            </div>
+                            <div class="mb-3">
                                 <label for="">Name</label>
                                 <input type="text" name="name" class="form-control" />
                             </div>

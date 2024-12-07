@@ -29,7 +29,7 @@ class TiendaController extends Controller
 
         foreach ($tiendas as $tienda) {
             // Generar la URL con el código de la tienda
-            $url = url('https://www.ruletafalabella.com?t=' . $tienda->codigo);
+            $url = url('https://www.ruletafalabella.com/?t=' . $tienda->codigo);
 
             // Generar el QR y guardarlo en el almacenamiento local
             $path = public_path('qrs/' . $tienda->codigo . '.svg');
