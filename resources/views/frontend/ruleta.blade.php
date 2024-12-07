@@ -516,7 +516,7 @@ RouletteWheel.prototype.renderMarker = function () {
     borderTopColor: '#FFF'
   });
 
-  $markers.append($markerA).append($markerB);
+  $markers. append($markerA).append($markerB);
 };
 
 // Método para asociar eventos
