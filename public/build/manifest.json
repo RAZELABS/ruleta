@@ -1,9 +1,16 @@
 {
+  "_sweetalert2.esm.all.js": {
+    "file": "assets/sweetalert2.esm.all.js",
+    "name": "sweetalert2.esm.all"
+  },
   "resources/js/backend.js": {
     "file": "assets/backend/backend.js",
     "name": "backend",
     "src": "resources/js/backend.js",
     "isEntry": true,
+    "imports": [
+      "_sweetalert2.esm.all.js"
+    ],
     "css": [
       "assets/backend/backend.css"
     ]
@@ -12,6 +19,9 @@
     "file": "assets/frontend/frontend.js",
     "name": "frontend",
     "src": "resources/js/frontend.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_sweetalert2.esm.all.js"
+    ]
   }
 }

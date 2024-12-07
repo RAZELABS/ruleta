@@ -574,7 +574,7 @@ function showResult(type) {
         // Play winning sound
         winSound.play();
 
-        const duration = 2000;
+        const duration = 5000;
         const end = Date.now() + duration;
         // Launch confetti
         confetti({
