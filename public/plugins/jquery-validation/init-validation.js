@@ -186,7 +186,7 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
         var tipoDoc = $("#tipo_documento").val();
         if (tipoDoc == "1") {
             return value.length === 8;
-        } else if (tipoDoc == "2") {
+        } else if (tipoDoc == "4") {
             return value.length >= 3 && value.length <= 12;
         }
         return false;
@@ -194,7 +194,7 @@ function initializeValidation(selector, customRules = {}, customMessages = {}) {
         var tipoDoc = $("#tipo_documento").val();
         return tipoDoc == "1"
             ? "El DNI debe tener exactamente 8 caracteres"
-            : "El CE debe tener entre 3 y 12 caracteres";
+            : "El CEX debe tener entre 3 y 12 caracteres";
     });
     $.validator.addMethod("hasUppercase", function (value, element) {
         return /[A-Z]/.test(value);  // Al menos una mayúscula

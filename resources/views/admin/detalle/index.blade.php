@@ -23,6 +23,7 @@
                                 <th scope="col">Tipo documento</th>
                                 <th scope="col">Nro documento</th>
                                 <th scope="col">Resultado</th>
+                                <th scope="col">ubicacion</th>
                                 <th scope="col">Accion</th>
                             </tr>
                         </thead>
@@ -32,10 +33,11 @@
                                     <td scope="row">{{ $detalle->id }}</td>
                                     <td scope="row">{{ $detalle->fecha }}</td>
                                     <td scope="row">{{ $detalle->hora }}</td>
-                                    <td scope="row">{{ $detalle->tienda->nombre }}</td>
+                                    <td scope="row">{{ $detalle->tienda_nombre }}</td>
                                     <td scope="row">{{ $detalle->documento->descripcion }}</td>
                                     <td scope="row">{{ $detalle->nro_documento }}</td>
                                     <td scope="row">{{ $detalle->parametro->descripcion }}</td>
+                                    <td scope="row">{{ ($detalle->latitud && $detalle->longitud) ? $detalle->latitud .','.$detalle->longitud : 'rechazado por cliente'}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($detalle->estado == 1)

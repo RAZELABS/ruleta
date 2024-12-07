@@ -16,13 +16,15 @@ class Detalle extends Model
 
     // Campos asignables masivamente
     protected $fillable = [
-        'fecha',
         'id_tienda',
         'tipo_documento',
         'nro_documento',
         'resultado',
-        'hora',
         'opcion',
+        'fecha',
+        'hora',
+        'latitud',
+        'longitud',
         'estado',
     ];
 

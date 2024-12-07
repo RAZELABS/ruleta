@@ -133,7 +133,7 @@
         if(tipoDoc == 1){
             maxLength = 8;
         }
-        if(tipoDoc == 2){
+        if(tipoDoc == 4){
             maxLength = 12;
         }
     });

@@ -1,5 +1,36 @@
 @extends('frontend.layouts.app')
 @section('content')
+
+{{-- Add hidden form with user data --}}
+<form id="formJugada" action="{{ route('ruleta.registrarJugada') }}" method="POST">
+    @csrf
+    <input type="hidden" name="latitud" value="{{ $latitud }}">
+    <input type="hidden" name="longitud" value="{{ $longitud }}">
+    <input type="hidden" name="id_tienda" value="{{ $id_tienda }}">
+    <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}">
+    <input type="hidden" name="nro_documento" value="{{ $nro_documento }}">
+    <input type="hidden" name="resultado" value="">
+    <input type="hidden" name="opcion" value="">
+</form>
+
+{{-- Debug data --}}
+@if(config('app.debug'))
+    <div class="container">
+        <div class="row">
+            <div class="col text-color-light" style="color: #fff !important">
+                <pre>
+                    Latitud: {{ $latitud }}
+                    Longitud: {{ $longitud }}
+                    ID Tienda: {{ $id_tienda }}
+                    Tipo Documento: {{ $tipo_documento }}
+                    Nro Documento: {{ $nro_documento }}
+                    Premios: {{ $premios->count() }}
+                </pre>
+            </div>
+        </div>
+    </div>
+@endif
+
 {{-- @php
 dd($premios)
 @endphp --}}
@@ -19,7 +50,6 @@ dd($premios)
 @endsection
 @push('styles')
 <style>
-    /* @import url("https://fonts.googleapis.com/css?family=Material+Icons|Work+Sans:400,700,900"); */
 
     body {
         overflow: hidden;
@@ -264,67 +294,68 @@ dd($premios)
         width: 100%;
         height: 100%;
     }
-     /* Mobile Portrait */
+
+    /* Mobile Portrait */
     @media only screen and (max-width: 576px) {
 
-    .roulette {
-        width: 380px;
-        height: 380px;
-    }
+        .roulette {
+            width: 380px;
+            height: 380px;
+        }
 
-    .roulette .spinner .item {
-        top: -190px;
-        left: 190px;
-        transform-origin: 0% 380px;
-    }
+        .roulette .spinner .item {
+            top: -190px;
+            left: 190px;
+            transform-origin: 0% 380px;
+        }
 
-    .roulette .spinner .item .label {
-        top: 20px;
-        left: -14px;
-        font-size: 0.77em;
-        height: 103px;
-    }
+        .roulette .spinner .item .label {
+            top: 20px;
+            left: -14px;
+            font-size: 0.77em;
+            height: 103px;
+        }
 
-    .roulette .button {
-        width: 6.84em;
-        height: 6.84em;
-        line-height: 6.84em;
-        margin-left: -3.42em;
-        margin-top: -3.42em;
-        font-size: 1.22em;
-    }
+        .roulette .button {
+            width: 6.84em;
+            height: 6.84em;
+            line-height: 6.84em;
+            margin-left: -3.42em;
+            margin-top: -3.42em;
+            font-size: 1.22em;
+        }
 
-    .roulette .spinner .item .label .text {
-        font-size: 0.76em;
-    }
+        .roulette .spinner .item .label .text {
+            font-size: 0.76em;
+        }
 
-    .roulette .spinner .item[data-type="quiz"] .label {
-        font-size: 1.14em;
-    }
+        .roulette .spinner .item[data-type="quiz"] .label {
+            font-size: 1.14em;
+        }
 
-    .roulette .spinner .item[data-type="question"] .label {
-        font-size: 0.99em;
-    }
+        .roulette .spinner .item[data-type="question"] .label {
+            font-size: 0.99em;
+        }
 
-    .roulette .spinner .item[data-type="replay"] .label .text {
-        font-size: 0.46em;
-    }
+        .roulette .spinner .item[data-type="replay"] .label .text {
+            font-size: 0.46em;
+        }
 
-    .roulette .spinner .item[data-type="premio1"] .label .text {
-        font-size: 1.45em;
-    }
+        .roulette .spinner .item[data-type="premio1"] .label .text {
+            font-size: 1.45em;
+        }
 
-    .roulette .spinner .item[data-type="premio2"] .label .text {
-        font-size: 1.37em;
-    }
+        .roulette .spinner .item[data-type="premio2"] .label .text {
+            font-size: 1.37em;
+        }
 
-    .roulette .spinner .item[data-type="perdedor"] .label .text {
-        font-size: 2.13em;
-    }
+        .roulette .spinner .item[data-type="perdedor"] .label .text {
+            font-size: 2.13em;
+        }
 
-    .roulette .spinner .item[data-type="time"] .label i {
-        font-size: 1.14em;
-    }
+        .roulette .spinner .item[data-type="time"] .label i {
+            font-size: 1.14em;
+        }
     }
 
 
@@ -337,7 +368,6 @@ dd($premios)
 
     /* Tablet Landscape */
     @media only screen and (min-width: 992px) and (max-width: 1366px) and (orientation: landscape) {}
-
 </style>
 @endpush
 @push('scripts')
@@ -347,18 +377,23 @@ dd($premios)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+@php
+    function colorOpcionResaltada($color = null){
+        $cor = ($color == 1) ? '#2ecc71' : '#e74c3c';
+        return $cor;
+    };
+    function colorOpcion($ruletaColor = null) {
+        $co = ($ruletaColor % 2 !== 0) ? '#878787' : '#a1a1a1';
+        return $co;
+    }
+@endphp
+
 <script>
-    // Datos de los premios en la ruleta
-const data = [
-    { id: '', type: 'premio', color: '#878787', winColor: '#2ecc71', text: '¡Ganaste!'},
-  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste cerca!'},
-  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue Participando' },
-  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: 'Intentalo en tu siguiente compra'},
-  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: '¡Ánimo! sigue participando'},
-  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡No te rindas! Sigue participando'},
-  { id: '', type: 'sin-premio', color: '#878787', loseColor: '#e74c3c', text: 'Sigue comprando y participa'},
-  { id: '', type: 'sin-premio', color: '#a1a1a1', loseColor: '#e74c3c', text: '¡Estuviste muy cerca!'}
-];
+    const data = [
+    @foreach ($premios as $premio)
+        { id: '{{ $premio->id }}', type: '{{ $premio->premio }}', colorOpcion: '{{ colorOpcion($premio->id) }}', colorOpcionResaltada: '{{ colorOpcionResaltada($premio->premio) }}', text: '{{ $premio->descripcion }}' },
+    @endforeach
+    ];
 
 const winSound = new Audio('{{asset('frontend/sounds/verde.wav')}}');
 let isSpinning = false;
@@ -441,7 +476,7 @@ RouletteWheel.prototype.render = function () {
   const delta = 360 / count;
 
   this.items.forEach((item, i) => {
-    const { color, text, type,  } = item;
+    const { colorOpcion, text, type,  } = item;
 
     const html = `
       <div class="item" data-index="${i}" data-type="${type || ''}">
@@ -463,7 +498,7 @@ RouletteWheel.prototype.render = function () {
       borderTopWidth,
       borderRightWidth,
       transform: `scale(2) rotate(${r}deg)`,
-      borderTopColor: color
+      borderTopColor: colorOpcion
     });
 
     // Adjust text positioning
@@ -551,11 +586,7 @@ RouletteWheel.prototype._createText = function(angle, item, index) {
 // Agregar este método a la clase RouletteWheel
 RouletteWheel.prototype.updateSectorColor = function(sector, item) {
   const $sector = $(sector);
-  if (item.type === 'premio') {
-    $sector.css('border-top-color', item.winColor);
-  } else {
-    $sector.css('border-top-color', item.loseColor);
-  }
+  $sector.css('border-top-color', item.colorOpcionResaltada);
 };
 
 // Inicialización de la ruleta cuando el DOM esté listo
@@ -570,7 +601,11 @@ $(window).ready(function () {
 });
 
 function showResult(type) {
-    if (type === 'premio') {
+    const form = document.getElementById('formJugada');
+    form.resultado.value = type;
+    form.opcion.value = spinner.items[spinner._index].id;
+
+    if (type == 1) {
         // Play winning sound
         winSound.play();
 
@@ -606,32 +641,13 @@ function showResult(type) {
             }
         }());
         setTimeout(() => {
-            window.location.href = "{{ route('ruleta.ganador') }}";
-        }, 3000);
+            form.submit();
+        }, 5000);
 
-        // Swal.fire({
-        //     title: '<span style="font-size: 2em">¡GANASTE!</span>',
-        //     html: `<p style="font-size: 1.2em">El premio se te abonará en 3 días hábiles en tu medio de pago (CMR o Débito Banco Falabella)<br><br>
-        //            Acércate al módulo de la ruleta para activar tu premio</p>`,
-        //     icon: 'success',
-        //     confirmButtonText: 'Aceptar',
-        //     allowOutsideClick: false,
-        //     customClass: {
-        //         popup: 'animated bounceIn'
-        //     }
-        // });
     } else {
         setTimeout(() => {
-            window.location.href = "{{ route('ruleta.sorry') }}";
-        }, 3000);
-        // Swal.fire({
-        //     title: '<span style="font-size: 2em">¡Sigue intentando!</span>',
-        //     html: `<p style="font-size: 1.2em">Por compras mayores a S/129 podrás llevarte tus compras gratis girando la ruleta.<br><br>
-        //            Exclusivo con tarjetas Banco Falabella</p>`,
-        //     icon: 'info',
-        //     confirmButtonText: 'Aceptar',
-        //     allowOutsideClick: false
-        // });
+            form.submit();
+        }, 5000);
     }
 }
 </script>

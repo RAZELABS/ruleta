@@ -36,13 +36,13 @@
         </div>
     </div>
     @if (session('success') || session('message'))
-    <x-alerts.swal-notification icon="success" title="Exito" text="{{session('message') ?? session('success') }}" timer="3000" />
+    <x-alerts.swal-notification icon="{{session('icon')??''}}" title="{{session('titulo')}}" text="{{session('message') ?? session('success') }}" timer="3000" />
     @endif
     @if (session('error') || $errors->any())
     @php
     $errorText = session('error') ?? implode(', ', $errors->all());
     @endphp
-    <x-alerts.swal-notification icon="error" title="Error" text="{{ $errorText }}" timer="3000" />
+    <x-alerts.swal-notification icon="{{session('icon')??''}}" title="{{session('titulo')}}" text="{{ $errorText }}" timer="10000"/>
     @endif
     {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('frontend/js/plugins.js') }}"></script>
