@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Admin\KioscoController;
+use App\Http\Controllers\Admin\KioscodeleteController;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\RuletaController;
 use App\Http\Controllers\RolesPermissions\RoleController;
@@ -88,6 +89,8 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::post('/kiosco/import', [KioscoController::class, 'import'])->name('kiosco.import');
     Route::get('/kiosco/download/{filename}', [KioscoController::class, 'download'])->name('kiosco.download');
     Route::resource('kiosco', KioscoController::class);
+    Route::delete('/kioscodelete/{id}', [KioscoDeleteController::class, 'destroy'])->name('kioscodelete.destroy');
+    Route::resource('kioscodelete', KioscodeleteController::class);
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES
