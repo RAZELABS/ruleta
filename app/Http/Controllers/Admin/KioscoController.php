@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kiosco;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use League\Csv\Reader;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,11 @@ class KioscoController extends Controller
             }
 
             $file = $request->file('csv_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time().'-'.$file->getClientOriginalName();
+
+            $nombreArchivo = $file->getClientOriginalName();
+            $fechaArchivo = substr($nombreArchivo, strpos($nombreArchivo, '-')+1,8);
+            $fechaArchivo = Carbon::createFromFormat('Ymd', $fechaArchivo)->format('Y-m-d');
 
             // Store file using Storage facade
             Storage::disk('public')->putFileAs('kioscos', $file, $filename);
@@ -83,8 +88,9 @@ class KioscoController extends Controller
                     throw new \Exception('Error de validación: ' . implode(', ', $validator->errors()->all()));
                 }
                 // dd($validator);
-                $fecha = \Carbon\Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
+                $fecha = Carbon::createFromFormat('d/m/Y', $record['TRAN_DT'])->format('Y-m-d');
                 Kiosco::create([
+                    'fecha_carga' => $fechaArchivo,
                     'fecha' => $fecha,
                     'hora' => $record['TRAN_TM'],
                     'tipo_documento' => $record['CUST_ID_TYPE'],
