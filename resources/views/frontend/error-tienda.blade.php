@@ -17,7 +17,7 @@
                         data-appear-animation="fadeInUpShorter" data-appear-animation-delay="750"
                         data-plugin-options="{'minWindowWidth': 0}">
                         <span class="p-relative z-index-1 fab-text-light">
-                            ¿Quieres <span class="text-color-tertiary">participar?</span>
+                            ¿Quieres participar?
                         </span>
                     </h1>
                     <p class="text-4-5 font-weight-medium appear-animation fab-text-light py-0 mb-1 mt-2"
