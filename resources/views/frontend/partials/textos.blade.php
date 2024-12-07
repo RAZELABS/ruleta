@@ -2,7 +2,7 @@
     <div class="col-12 col-md-12">
         <div class="appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="500"
             data-plugin-options="{'minWindowWidth': 0}">
-            <img src="{{asset('img/logos/logo_fa.png')}}" class="img-fluid w-100 mb-4" alt=""
+            <img src="{{asset('img/logos/logo-fa.png')}}" class="img-fluid w-100 mb-4" alt=""
                 style="max-width: 400px !important" />
         </div>
     </div>
@@ -52,7 +52,9 @@
         max-height: 100vh !important;
         background-color: #f9f9f9;
         opacity: 0.98;
-        border-radius: 20px
+        border-radius: 20px;
+        padding: 5px !important;
+        min-width: 400px !important
     }
 
     .terms-swal-content {
@@ -92,7 +94,7 @@
         cancelButtonColor: '#d33',
         allowOutsideClick: false,
         customClass: {
-            container: 'terms-swal-container featured-box.border-radius',
+            container: 'terms-swal-container featured-box.border-radius p-0 m-0',
             popup: 'terms-swal-popup',
             content: 'terms-swal-content',
         }
@@ -133,7 +135,7 @@
         if(tipoDoc == 1){
             maxLength = 8;
         }
-        if(tipoDoc == 2){
+        if(tipoDoc == 4){
             maxLength = 12;
         }
     });

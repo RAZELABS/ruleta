@@ -16,8 +16,23 @@
             </div>
         </div>
     </div>
-    {{-- <div class="col-12">
-        <button onclick="spinner.spin()">perder</button>
-        <button onclick="spinner.spin(0)">Ganar</button>
-    </div> --}}
+
+    <div class="container">
+        <form action="{{ route('ruleta.registrarJugada') }}" method="post" id="formJugada">
+            @csrf
+            @method('POST')
+            <input type="hidden" name="id_tienda" value="{{ $id_tienda }}" readonly/>
+            <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}" readonly/>
+            <input type="hidden" name="nro_documento" value="{{ $nro_documento }}" readonly/>
+            <input type="hidden" name="resultado" readonly/>
+            <input type="hidden" name="opcion" readonly/>
+            <input type="hidden" name="latitud" value="{{ $latitud }}" readonly/>
+            <input type="hidden" name="longitud" value="{{ $longitud }}" readonly/>
+
+            <button type="submit" class="btn btn-primary d-none">
+                Action
+            </button>
+        </form>
+    </div>
+
 </div>

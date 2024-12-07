@@ -25,7 +25,12 @@ class IndexController extends Controller
                 't' => 'required|integer|exists:tienda,codigo'
             ])->validate();
 
-            $tipo_documentos = Parametros::where('flag', '=', 'tipo_documento')->get();
+            $tipo_documentos = Parametros::where('flag', '=', 'tipo_documento')
+            ->where(function($query) {
+                $query->where('valor', '=', 4)
+                      ->orWhere('valor', '=', 1);
+            })
+            ->get();
 
             return view('frontend.index', compact('tipo_documentos', 'tiendaId'));
 
@@ -39,8 +44,10 @@ class IndexController extends Controller
         // Validar los datos enviados por el formulario
 
         $request->validate([
+            'latitud' => 'numeric',
+            'longitud' => 'numeric',
             'id_tienda' => 'required|integer|exists:tienda,codigo',
-            'tipo_documento' => 'required|integer|in:1,2',
+            'tipo_documento' => 'required|integer|in:1,4',
             'nro_documento' => [
                 'required',
                 'string',
@@ -49,7 +56,7 @@ class IndexController extends Controller
                         if (strlen($value) !== 8) {
                             $fail('El DNI debe tener exactamente 8 caracteres.');
                         }
-                    } elseif ($request->tipo_documento == 2) {
+                    } elseif ($request->tipo_documento == 4) {
                         if (strlen($value) < 3 || strlen($value) > 12) {
                             $fail('El CE debe tener entre 3 y 12 caracteres.');
                         }
@@ -58,8 +65,11 @@ class IndexController extends Controller
             ],
         ]);
 
-        $nro_documento = $request->nro_documento;
+        $latitud = $request->latitud;
+        $longitud = $request->longitud;
         $id_tienda = $request->id_tienda;
+        $tipo_documento = $request->tipo_documento;
+        $nro_documento = $request->nro_documento;
 
         // Obtener la fecha actual
         $hoy = Carbon::today()->format('Y-m-d');
@@ -72,15 +82,20 @@ class IndexController extends Controller
         if ($registro) {
             // Redirigir con mensaje si el registro ya existe
             return redirect()->back()
-                ->with('error', 'Ya haz hecho una jugada hoy, solo se permite una jugada por día.');
+                ->with('error', 'Ya haz hecho una jugada hoy, solo se permite una jugada por día.')
+                ->with('titulo', '=(');
         }
-        $premios= Premios::all();
 
-        // Si no existe registro, permitir continuar
-        // Aquí puedes realizar la lógica para guardar o procesar los datos si es necesario
-        return redirect()->route('ruleta.index')
-            ->with(compact('premios'))
-            ->with('success', 'Mucha suerte.');
+        // Store data in session before redirect
+        session([
+            'latitud' => $latitud,
+            'longitud' => $longitud,
+            'id_tienda' => $id_tienda,
+            'tipo_documento' => $tipo_documento,
+            'nro_documento' => $nro_documento
+        ]);
+
+        return redirect()->route('ruleta.index');
     }
 }
 

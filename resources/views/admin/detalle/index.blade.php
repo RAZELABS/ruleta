@@ -4,14 +4,14 @@
     <div class="container">
 
         <div class="row">
-            <div class="p-4 col-12 col-md-10 offset-md-1">
+            <div class="p-4 col-12">
                 <div class="row">
-                    <div class="col-12 col-md-6 d-flex justify-content-start">
+                    <div class="col-12 col-md-12 d-flex justify-content-start">
                         <h1 class="text-secondary fw-bold">Relación de jugadas realizadas</h1>
                     </div>
                 </div>
             </div>
-            <div class="p-2 col-12 col-md-10 offset-md-1">
+            <div class="p-2 col-12 ">
                 <div class="p-4">
                     <table class="table table-striped" id="TABLE_1">
                         <thead>
@@ -23,6 +23,8 @@
                                 <th scope="col">Tipo documento</th>
                                 <th scope="col">Nro documento</th>
                                 <th scope="col">Resultado</th>
+                                <th scope="col">Opción</th>
+                                <th scope="col">ubicacion</th>
                                 <th scope="col">Accion</th>
                             </tr>
                         </thead>
@@ -32,11 +34,17 @@
                                     <td scope="row">{{ $detalle->id }}</td>
                                     <td scope="row">{{ $detalle->fecha }}</td>
                                     <td scope="row">{{ $detalle->hora }}</td>
-                                    <td scope="row">{{ $detalle->tienda->nombre }}</td>
+                                    <td scope="row">{{ $detalle->tienda_nombre }}</td>
                                     <td scope="row">{{ $detalle->documento->descripcion }}</td>
                                     <td scope="row">{{ $detalle->nro_documento }}</td>
                                     <td scope="row">{{ $detalle->parametro->descripcion }}</td>
-                                    <td>
+                                    <td scope="row">{{ $detalle->nombrePremio }}</td>
+                                    @if($detalle->latitud && $detalle->longitud)
+                                    <td scope="row"><a href="{{$detalle->enlaceMapa}}" target="_blank" class="btn btn-falabella">Ver ubicación</td>
+                                    @else
+                                    <td scope="row">Rechazado / cliente</td>
+                                    @endif
+                                            <td>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($detalle->estado == 1)
                                                 <form class=""

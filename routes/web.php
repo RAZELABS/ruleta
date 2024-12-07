@@ -29,17 +29,19 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [indexController::class, 'index']);
 Route::get('/', [IndexController::class, 'index'])
-    ->middleware('check.tienda')
-    ->name('home');
+->middleware('check.tienda')
+->name('home');
 
 Route::view('/error-tienda', 'frontend.error-tienda')
     ->name('error.tienda');
+Route::view('/ganador', 'frontend.ganador')
+    ->name('ganador');
+Route::view('/sorry', 'frontend.sorry')
+    ->name('sorry');
 
 Route::post('/verificar', [IndexController::class, 'verificar'])->name('verificar');
-
 Route::get('/ruleta', [RuletaController::class, 'index'])->name('ruleta.index');
-Route::get('/ruleta/ganador', [RuletaController::class, 'ganador'])->name('ruleta.ganador');
-Route::get('/ruleta/sorry', [RuletaController::class, 'sorry'])->name('ruleta.sorry');
+Route::post('/ruleta/registrarJugada', [RuletaController::class, 'registrarJugada'])->name('ruleta.registrarJugada');
 
 
 // Route::get('/dashboard', function () {

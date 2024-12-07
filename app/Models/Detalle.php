@@ -16,13 +16,15 @@ class Detalle extends Model
 
     // Campos asignables masivamente
     protected $fillable = [
-        'fecha',
         'id_tienda',
         'tipo_documento',
         'nro_documento',
         'resultado',
-        'hora',
         'opcion',
+        'fecha',
+        'hora',
+        'latitud',
+        'longitud',
         'estado',
     ];
 
@@ -54,6 +56,11 @@ class Detalle extends Model
     public function tienda()
     {
         return $this->belongsTo(Tienda::class, 'id_tienda', 'id');
+    }
+
+    public function premio()
+    {
+        return $this->belongsTo(Premios::class, 'opcion', 'id');
     }
 }
 

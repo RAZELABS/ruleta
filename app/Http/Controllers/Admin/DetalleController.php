@@ -13,12 +13,17 @@ class DetalleController extends Controller
      */
     public function index()
     {
-        $detalles = Detalle::with('tienda','documento','parametro')->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','resultado')->get();
-        // $detalleData = $detalles->map(function($detalle){
-        //     return [$detalle->id, $detalle->fecha, $detalle->hora, $detalle->tienda->nombre, $detalle->documento->descripcion, $detalle->nro_documento, $detalle->parametro->descripcion, $detalle->estados->descripcion, $detalle->estado];
-        // });
+    $detalles = Detalle::with('tienda','documento','parametro','premio')
+    ->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','latitud','longitud','resultado','opcion')
+    ->get();
 
-        //dd($detalles);
+    foreach ($detalles as $detalle) {
+        $detalle->tienda_nombre = $detalle->tienda->nombre;
+        $detalle->nombrePremio= $detalle->premio->descripcion;
+        $detalle->enlaceMapa = "https://www.google.com/maps/search/?api=1&query=".$detalle->latitud.",".$detalle->longitud;
+    }
+
+    //dd($detalles);
         return view("admin.detalle.index", compact("detalles"));
     }
 

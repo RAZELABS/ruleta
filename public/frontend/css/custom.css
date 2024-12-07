@@ -45,6 +45,7 @@ body a {
     background-color: #fff;
     max-height: 200px;
     height: 200px;
+    margin-top: 64px;
 }
 
 .barra-colores {
@@ -129,7 +130,7 @@ body a {
 .girnalda-1 {
     position: absolute;
     width: 40px;
-    top: 230px;
+    top: 295px;
     left: 12%;
     height: auto;
     transform-origin: top center;
@@ -139,7 +140,7 @@ body a {
 .campana-1 {
     position: absolute;
     width: 60px;
-    top: 230px;
+    top: 295px;
     left: 7%;
     height: auto;
     transform-origin: top center;
@@ -150,7 +151,7 @@ body a {
 
 .campana-2 {
     position: absolute;
-    top: 230px;
+    top: 295px;
     width: 60px;
     right: 8%;
     height: auto;
@@ -160,7 +161,7 @@ body a {
 }
 .girnalda-3 {
     position: absolute;
-    top: 230px;
+    top: 295px;
     width: 40px;
     right: 5%;
     height: auto;
@@ -364,6 +365,52 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
     font-weight: bold;
 }
 
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: 64px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu-logo {
+    height: 50px;
+    margin: 7px 0;
+
+
+}
+.menu-logo >a {
+    font-size: 30px !important;
+}
+.btn-menu-fb{
+    color: var(--fab-verde-2);
+    background-color: #fff;
+    transition: ease 0.5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 16px;
+}
+
+.btn-menu-fb .home-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-menu-fb .home-text {
+
+    line-height: 1;
+}
+
+.btn-menu-fb:hover{
+    color: #fff;
+    background-color: var(--secondary)!important;
+
+}
 
 /* Mobile Portrait */
 @media only screen and (max-width: 576px) {
@@ -373,22 +420,22 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
     }
     .girnalda-1 {
         width: 40px;
-        top: 230px;
+        top: 295px;
         left: 20%;
     }
     .girnalda-3 {
-        top: 230px;
+        top: 295px;
         width: 40px;
         right: 25% !important;
     }
     .campana-1 {
         width: 60px;
-        top: 230px;
+        top: 295px;
         left: 7%;
     }
     .campana-1 {
         width: 60px;
-        top: 230px;
+        top: 295px;
         right: 7%;
     }
 
@@ -396,7 +443,12 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel) {
         font-size: 4em !important;
         margin-top: 10px;
     }
-
+    .titulo-sorry{
+        font-size: 4em;
+    }
+.tarjetas{
+    width:300px !important;
+}
 }
 
 /* Mobile Landscape */
