@@ -88,7 +88,11 @@
         var routeConfigurations = {
             'TABLE_1': {
                 'botones': 'Bfrtip',
-                // 'ordenar': [0, "asc"],
+                'ordenar': [0, "asc"],
+                'columnDefs': [{
+                    'targets': [2],
+                    'orderable': false
+                }]
             },
         }
     </script>

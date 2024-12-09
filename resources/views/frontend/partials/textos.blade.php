@@ -23,7 +23,7 @@
             <x-inputs.text-input name="nro_documento" label="Número de documento" :placeholder="'Introduce tu DNI'" :required="true"
                 :boxClass="'col-12 col-lg-8'" :labelClass="'fab-text-enfasis'" :inputClass="'form-control-lg'"
                 min-length=8 max-length=8 />
-            <input type="hidden" name="id_tienda" id="editor_content" value="{{$tiendaId}}">
+            <input type="hidden" name="codigo_tienda" id="editor_content" value="{{$codigo_tienda}}">
             <div class="mb-3 col-12">
                 <button id="participar" type="button"
                     class="btn btn-secondary fab-text-light font-weight-bold text-5 btn-py-3 px-5 mt-2 appear-animation"

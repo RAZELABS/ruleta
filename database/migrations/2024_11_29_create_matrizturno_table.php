@@ -39,6 +39,13 @@ return new class extends Migration
                 'inicio' => '17:00:01',
                 'fin' => '24:00:00',
                 'peso_turno' => 41.00
+            ],
+            [
+                'id' => 4,
+                'turno' => 'Madrugada',
+                'inicio' => '00:00:01',
+                'fin' => '06:00:00',
+                'peso_turno' => 41.00
             ]
         ];
 

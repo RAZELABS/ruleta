@@ -1,16 +1,17 @@
 @extends('frontend.layouts.app')
 @section('content')
 
-{{-- Add hidden form with user data --}}
+//Add hidden form with user data
 <form id="formJugada" action="{{ route('ruleta.registrarJugada') }}" method="POST">
     @csrf
     <input type="hidden" name="latitud" id="latitud" value="" readonly>
     <input type="hidden" name="longitud" id="longitud" value="" readonly>
-    <input type="hidden" name="id_tienda" value="{{ $id_tienda }}" readonly>
+    <input type="hidden" name="id_tienda" value="{{ $id_tienda->id }}" readonly>
     <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}" readonly>
     <input type="hidden" name="nro_documento" value="{{ $nro_documento }}" readonly>
     <input type="hidden" name="resultado" value="" readonly>
-    <input type="hidden" name="opcion" value="" readonly>
+    <input type="hidden" name="opcion" id="opcion" value="" readonly>
+    <input type="hidden" name="lol" value="{{$opcion_seleccionada}}" readonly>
 </form>
 
 
@@ -25,334 +26,15 @@
 
         </div>
         {{-- <div class="col-12">
-           <button onclick="spinner.spin()">perder</button>
-           <button onclick="spinner.spin(0)">Ganar</button>
-       </div> --}}
+            <button onclick="spinner.spin()">perder</button>
+            <button onclick="spinner.spin({{$opcion_seleccionada}})">Ganar</button>
+        </div> --}}
     </div>
-
 </div>
+
 @endsection
 @push('styles')
-<style>
-
-    body {
-        overflow: hidden;
-    }
-
-    .outer-border {
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        border: 10px solid #eecbb6;
-        /* Use your desired color */
-        border-radius: 50%;
-        z-index: -1;
-    }
-
-    .outer-glow {
-        position: absolute;
-        top: -15px;
-        left: -15px;
-        right: -15px;
-        bottom: -15px;
-        border-radius: 50%;
-        box-shadow: 0 0 15px rgba(0, 69, 39, 0.5);
-        /* Optional glow effect */
-        z-index: -2;
-    }
-
-    .roulette {
-        position: relative;
-        display: block;
-        width: 500px;
-        height: 500px;
-        transform: rotate(45deg);
-
-    }
-
-
-    .roulette .markers {
-        display: block;
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        right: -1px;
-        bottom: -1px;
-        overflow: hidden;
-        border-radius: 100%;
-    }
-
-    .roulette .markers .marker {
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: -250px;
-        left: 250px;
-        transform-origin: 0% 500px;
-        border: 0 solid transparent;
-    }
-
-    .roulette .markers .triangle {
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 3em 0 3em 3em;
-        border-color: transparent transparent transparent #007bff;
-        position: absolute;
-        border-left-color: #C7CF06;
-        top: 50%;
-        left: -1px;
-        margin-top: -3em;
-        filter: drop-shadow(0 0.25em 0 rgba(0, 0, 0, 0.25));
-    }
-
-    .roulette .spinner {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 50%;
-        overflow: hidden;
-        transform: rotateZ(1deg);
-        /*performance boost*/
-        backface-visibility: hidden;
-    }
-
-    .roulette .spinner .item {
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: -250px;
-        left: 250px;
-        transform-origin: 0% 500px;
-        border: 0 solid transparent;
-    }
-
-    .roulette .spinner .item .label {
-        display: block;
-        position: absolute;
-        color: #fff;
-        font-weight: 800;
-        top: 26px;
-        left: -18px;
-        white-space: nowrap;
-        transform-origin: 0 0;
-        font-size: 0.7em;
-        line-height: 11px;
-        height: 136px;
-    }
-
-    .roulette .spinner .item .label i,
-    .roulette .spinner .item .label .text {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1;
-        font-size: 1em;
-        text-indent: 0;
-    }
-
-    .roulette .spinner .item .label i {
-        margin-right: 0.1em;
-    }
-
-    .roulette .button {
-        width: 9em;
-        height: 9em;
-        line-height: 9em;
-        top: 50%;
-        left: 50%;
-        margin-left: -4.5em;
-        margin-top: -4.5em;
-        font-weight: 800;
-        z-index: 998;
-        position: absolute;
-        background: #fff;
-        border: none;
-        border-radius: 100%;
-        color: #999;
-        outline: none;
-        cursor: pointer;
-        user-select: none;
-        box-shadow: 0 0.4em 0 rgba(0, 0, 0, 0.25);
-        text-align: center;
-        transition: transform 0.15s;
-        transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        transform: rotate(-45deg);
-    }
-
-    .roulette .button:hover {
-        color: inherit;
-    }
-
-    .roulette .button span {
-        font-size: 1.6em;
-        letter-spacing: -0.05em;
-    }
-
-    .roulette.busy .button {
-        transform: scale(0.9);
-        box-shadow: 0 0.15em 0 rgba(0, 0, 0, 0.25);
-        color: #999;
-        background-color: #eecbb6;
-        cursor: default;
-        transform: rotate(-45deg);
-    }
-
-    /* CUSTOM LABELS */
-    .roulette .spinner .item[data-type="quiz"] .label {
-        font-size: 1.5em;
-    }
-
-    .roulette .spinner .item[data-type="question"] .label {
-        font-size: 1.3em;
-        font-weight: 600;
-    }
-
-    .roulette .spinner .item[data-type="replay"] .label .text {
-        font-size: 0.6em;
-        white-space: initial;
-        width: 1em;
-        text-align: center;
-        line-height: 1.2;
-    }
-
-    .roulette .spinner .item[data-type="premio1"] .label .text {
-        font-size: 1.9em;
-        text-align: center;
-    }
-
-    .roulette .spinner .item[data-type="premio2"] .label .text {
-        font-size: 1.8em;
-        text-align: center;
-    }
-
-    .roulette .spinner .item[data-type="perdedor"] .label .text {
-        font-size: 2.8em;
-        margin-left: 0.6em;
-        text-align: center;
-    }
-
-    .roulette .spinner .item[data-type="time"] .label i {
-        font-size: 1.5em;
-    }
-
-    .wheel-text {
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-
-    /* Add to existing styles */
-    text {
-        max-width: 80px;
-        word-wrap: break-word;
-    }
-
-    /* Add these styles */
-    .text-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 90%;
-        transform: rotate(-90deg);
-        width: 40%;
-    }
-
-    .main-text {
-        font-size: 1em;
-        font-weight: bold;
-        margin-bottom: 0px;
-        white-space: normal;
-    }
-
-    .label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-
-    /* Mobile Portrait */
-    @media only screen and (max-width: 576px) {
-
-        .roulette {
-            width: 380px;
-            height: 380px;
-        }
-
-        .roulette .spinner .item {
-            top: -190px;
-            left: 190px;
-            transform-origin: 0% 380px;
-        }
-
-        .roulette .spinner .item .label {
-            top: 20px;
-            left: -14px;
-            font-size: 0.77em;
-            height: 103px;
-        }
-
-        .roulette .button {
-            width: 6.84em;
-            height: 6.84em;
-            line-height: 6.84em;
-            margin-left: -3.42em;
-            margin-top: -3.42em;
-            font-size: 1.22em;
-        }
-
-        .roulette .spinner .item .label .text {
-            font-size: 0.76em;
-        }
-
-        .roulette .spinner .item[data-type="quiz"] .label {
-            font-size: 1.14em;
-        }
-
-        .roulette .spinner .item[data-type="question"] .label {
-            font-size: 0.99em;
-        }
-
-        .roulette .spinner .item[data-type="replay"] .label .text {
-            font-size: 0.46em;
-        }
-
-        .roulette .spinner .item[data-type="premio1"] .label .text {
-            font-size: 1.45em;
-        }
-
-        .roulette .spinner .item[data-type="premio2"] .label .text {
-            font-size: 1.37em;
-        }
-
-        .roulette .spinner .item[data-type="perdedor"] .label .text {
-            font-size: 2.13em;
-        }
-
-        .roulette .spinner .item[data-type="time"] .label i {
-            font-size: 1.14em;
-        }
-    }
-
-
-
-    /* Mobile Landscape */
-    @media only screen and (min-width: 577px) and (max-width: 932px) and (orientation: landscape) {}
-
-    /* Tablet Portrait */
-    @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {}
-
-    /* Tablet Landscape */
-    @media only screen and (min-width: 992px) and (max-width: 1366px) and (orientation: landscape) {}
-</style>
+<link rel="stylesheet" href="{{ asset('frontend/css/ruleta.css') }}">
 @endpush
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
@@ -361,43 +43,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-{{-- <script>
-    $(document).ready(function() {
-        Swal.fire({
-            title: 'We need your location',
-            text: 'To register your game, we need to access your location. Do you allow us to access your location?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, allow',
-            cancelButtonText: 'No, deny'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        sessionStorage.setItem('latitud', position.coords.latitude);
-                        sessionStorage.setItem('longitud', position.coords.longitude);
-                        updateFormCoordinates(position.coords.latitude, position.coords.longitude);
-                    }, function(error) {
-                        console.log('User denied geolocation request.');
-                    });
-                } else {
-                    console.log('Geolocation is not supported by this browser.');
-                }
-            } else {
-                updateFormCoordinates(null, null);
-            }
-
-            if (sessionStorage.getItem('latitud') && sessionStorage.getItem('longitud')) {
-                updateFormCoordinates(sessionStorage.getItem('latitud'), sessionStorage.getItem('longitud'));
-            }
-        });
-    });
-
-    function updateFormCoordinates(lat, long) {
-        $('#latitud').val(lat);
-        $('#longitud').val(long);
-    }
-</script> --}}
 
 @php
     function colorOpcionResaltada($color = null){
@@ -418,6 +63,7 @@
     ];
 
 const winSound = new Audio('{{asset('frontend/sounds/verde.wav')}}');
+  const opcionSeleccionada = {{$opcion_seleccionada}};
 let isSpinning = false;
 // Constructor para la clase RouletteWheel que maneja la ruleta
 function RouletteWheel(el, items) {
@@ -480,14 +126,14 @@ RouletteWheel.prototype.spin = function (_index) {
   );
 };
 
-// Add button click handler
-$(document).ready(function() {
-  $('#spin-button').on('click', function() {
-    if (!isSpinning) {
-      roulette.spin();
-    }
-  });
-});
+// // Add button click handler
+// $(document).ready(function() {
+//   $('#spin-button').on('click', function() {
+//     if (!isSpinning) {
+//       roulette.spin();
+//     }
+//   });
+// });
 
 // Método para renderizar la ruleta
 RouletteWheel.prototype.render = function () {
@@ -578,7 +224,10 @@ RouletteWheel.prototype.renderMarker = function () {
 
 // Método para asociar eventos
 RouletteWheel.prototype.bindEvents = function () {
-  this.$el.find('.button').on('click', this.spin.bind(this));
+  const self = this;
+  this.$el.find('.button').on('click', function() {
+    self.spin(opcionSeleccionada);
+  });
 };
 
 // Add text sizing and positioning function
@@ -617,6 +266,7 @@ $(window).ready(function () {
   spinner = new RouletteWheel($('.roulette'), data);
   spinner.render();
   spinner.bindEvents();
+
 
   spinner.on('spin:start', () => console.log('spin start!'));
   spinner.on('spin:end', (r) => console.log(`spin end! --> ${r._index}`));
@@ -697,4 +347,5 @@ function showResult(type) {
         $('#longitud').val(long);
     }
 </script>
+
 @endpush

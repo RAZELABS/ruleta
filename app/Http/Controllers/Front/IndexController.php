@@ -17,10 +17,10 @@ class IndexController extends Controller
     {
         try {
             // Get query parameter before validation
-            $tiendaId = $request->query('t');
+            $codigo_tienda = $request->query('t');
 
             $validated = Validator::make([
-                't' => $tiendaId
+                't' => $codigo_tienda
             ], [
                 't' => 'required|integer|exists:tienda,codigo'
             ])->validate();
@@ -32,7 +32,7 @@ class IndexController extends Controller
             })
             ->get();
 
-            return view('frontend.index', compact('tipo_documentos', 'tiendaId'));
+            return view('frontend.index', compact('tipo_documentos', 'codigo_tienda'));
 
         } catch (ValidationException $e) {
             return redirect()->route('error.tienda')
@@ -46,7 +46,7 @@ class IndexController extends Controller
         $request->validate([
             'latitud' => 'numeric',
             'longitud' => 'numeric',
-            'id_tienda' => 'required|integer|exists:tienda,codigo',
+            'codigo_tienda' => 'required|integer|exists:tienda,codigo',
             'tipo_documento' => 'required|integer|in:1,4',
             'nro_documento' => [
                 'required',
@@ -67,7 +67,7 @@ class IndexController extends Controller
 
         $latitud = $request->latitud;
         $longitud = $request->longitud;
-        $id_tienda = $request->id_tienda;
+        $codigo_tienda = $request->codigo_tienda;
         $tipo_documento = $request->tipo_documento;
         $nro_documento = $request->nro_documento;
 
@@ -90,7 +90,7 @@ class IndexController extends Controller
         session([
             'latitud' => $latitud,
             'longitud' => $longitud,
-            'id_tienda' => $id_tienda,
+            'codigo_tienda' => $codigo_tienda,
             'tipo_documento' => $tipo_documento,
             'nro_documento' => $nro_documento
         ]);
