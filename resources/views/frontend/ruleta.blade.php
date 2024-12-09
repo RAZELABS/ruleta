@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('content')
 
-//Add hidden form with user data
+
 <form id="formJugada" action="{{ route('ruleta.registrarJugada') }}" method="POST">
     @csrf
     <input type="hidden" name="latitud" id="latitud" value="" readonly>

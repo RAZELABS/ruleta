@@ -40,11 +40,14 @@
                                     <td scope="row">{{ $detalle->parametro->descripcion }}</td>
                                     <td scope="row">{{ $detalle->nombrePremio }}</td>
                                     @if($detalle->latitud && $detalle->longitud)
-                                    <td scope="row"><a href="{{$detalle->enlaceMapa}}" target="_blank" class="btn btn-falabella">Ver ubicación</td>
+                                    <td scope="row">
+                                        {{$detalle->latitud.','. $detalle->longitud}}
+                                    </td>
                                     @else
                                     <td scope="row">Rechazado / cliente</td>
                                     @endif
-                                            <td>
+                                    <td>
+                                        <a href="{{$detalle->enlaceMapa}}" target="_blank" class="btn btn-falabella-2"><i class="fa-solid fa-location-dot"></i></a>
                                         <div class="btn-group btn-group-toggle">
                                             @if ($detalle->estado == 1)
                                                 <form class=""
@@ -55,7 +58,7 @@
                                                         class="btn btn-falabella-2 btn-sm ">
                                                         <i
                                                             class="@if ($detalle->estado == 1) fa-solid fa-ban @else fa-solid fa-check @endif">
-                                                        </i> Deshabilitar
+                                                        </i>
                                                     </button>
                                                 </form>
                                             @else
@@ -66,7 +69,7 @@
                                                         class="btn btn-falabella-2 btn-sm ">
                                                         <i
                                                             class="@if ($detalle->estado == 2) fa-solid fa-check @else fa-solid fa-ban @endif">
-                                                        </i> Habilitar
+                                                        </i> 
                                                     </button>
                                                 </form>
                                             @endif
