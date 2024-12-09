@@ -319,7 +319,7 @@ function showResult(type) {
     } else {
         setTimeout(() => {
             form.submit();
-        }, 8000);
+        }, 5000);
     }
 }
 </script>
