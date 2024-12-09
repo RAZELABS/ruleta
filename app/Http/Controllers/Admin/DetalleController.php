@@ -14,7 +14,7 @@ class DetalleController extends Controller
     public function index()
     {
     $detalles = Detalle::with('tienda','documento','parametro','premio')
-    ->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','latitud','longitud','resultado','opcion')
+    ->select('id','fecha','hora','id_tienda','tipo_documento','nro_documento','latitud','longitud','resultado','opcion','estado')
     ->get();
 
     foreach ($detalles as $detalle) {
