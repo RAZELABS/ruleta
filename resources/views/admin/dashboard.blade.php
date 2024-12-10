@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="container-fluid p-0">
+{{-- <div class="container-fluid p-0">
     <div class="row counters counters-text-1 mb-2">
         <div class="col-sm-12 col-lg-4 mb-4 mb-lg-0">
             <div class="counter-1">
@@ -51,7 +51,7 @@
         </div>
     </div>
 </div>
-@endif
+@endif --}}
 @endsection
 
 @push('scripts-head')

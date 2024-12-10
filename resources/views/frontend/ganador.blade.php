@@ -27,43 +27,5 @@
 <button id="playSoundButton" style="display:none;">Play Sound</button>
 @endsection
 @push('scripts')
-
-<script>
-    $(document).ready(function() {
-        const audio = document.getElementById('sorryAudio');
-        const playButton = $('#playSoundButton');
-
-        function playAudio() {
-            audio.play().catch(function() {
-                // Handle autoplay restrictions by showing a play button
-                playButton.show();
-            });
-        }
-
-        playButton.on('click', function() {
-            audio.play();
-            playButton.hide();
-        });
-
-        // Trigger SweetAlert popup when the page finishes loading
-        $(window).on('load', function() {
-            Swal.fire({
-                title: '¡Felicidades!',
-                text: '',
-                icon: '',
-                color: '#004527',
-                background: '#AAD500',
-                showConfirmButton: false,
-                allowOutsideClick: true,
-                didOpen: () => {
-                    $(document).one('click', function() {
-                        playAudio();
-                        Swal.close();
-                    });
-                }
-            });
-        });
-    });
-</script>
-
+<script src="{{ asset('backend/js/modal-ganador.js') }}?v={{ time() }}"></script>
 @endpush
