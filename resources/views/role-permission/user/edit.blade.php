@@ -27,11 +27,11 @@
 
                             <div class="mb-3">
                                 <label for="">Tienda</label>
-                                <input type="text" name="id_tienda" readonly value="{{ $user->id_tienda }}" class="form-control" />
+                                <input type="text" name="id_tienda"  value="{{ $user->id_tienda }}" class="form-control" />
                             </div>
                             <div class="mb-3">
                                 <label for="">DNI</label>
-                                <input type="text" name="dni" readonly value="{{ $user->dni }}" class="form-control" />
+                                <input type="text" name="dni"  value="{{ $user->dni }}" class="form-control" />
                             </div>
                             <div class="mb-3">
                                 <label for="">Name</label>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="">Email</label>
-                                <input type="text" name="email" readonly value="{{ $user->email }}" class="form-control" />
+                                <input type="text" name="email"  value="{{ $user->email }}" class="form-control" />
                             </div>
                             <div class="mb-3">
                                 <label for="">Password</label>
