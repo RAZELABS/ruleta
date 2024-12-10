@@ -71,7 +71,8 @@ class RuletaController extends Controller
         $opcion_seleccionada = $ganador ?
             $opciones_ganadoras[array_rand($opciones_ganadoras)] :
             $opciones_perdedoras[array_rand($opciones_perdedoras)];
-
+       // dd($opcion_seleccionada);
+        $opcion_seleccionada= $opcion_seleccionada - 1;
         return view('frontend.ruleta', compact(
             'premios',
             'latitud',

@@ -21,21 +21,22 @@
 
     </div>
 </div>
-{{-- <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3"> --}}
-
+<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); z-index: 9999;"></div>
 <audio id="sorryAudio" loop>
     <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3">
 </audio>
 <button id="playSoundButton" style="display:none;">Play Sound</button>
+
 @endsection
 @push('scripts')
-
 <script>
     $(document).ready(function() {
         const audio = document.getElementById('sorryAudio');
         const playButton = $('#playSoundButton');
+        const overlay = $('#overlay');
 
         function playAudio() {
+            audio.currentTime = 0; // Reset audio to start
             audio.play().catch(function() {
                 // Handle autoplay restrictions by showing a play button
                 playButton.show();
@@ -47,25 +48,24 @@
             playButton.hide();
         });
 
-        // Trigger SweetAlert popup when the page finishes loading
-        $(window).on('load', function() {
-            Swal.fire({
-                title: '¡No te desanimes!',
-                text: 'Mañana es otro día.',
-                icon: '',
-                color: '#004527',
-                background: '#AAD500',
-                showConfirmButton: false,
-                allowOutsideClick: true,
-                didOpen: () => {
-                    $(document).one('click', function() {
-                        playAudio();
-                        Swal.close();
-                    });
-                }
+        // Clear cache
+        if ('serviceWorker' in navigator) {
+            caches.keys().then(function(names) {
+                for (let name of names) caches.delete(name);
             });
+        }
+
+        overlay.on('click touchstart', function() {
+            playAudio();
+            overlay.fadeOut();
+        });
+
+        // Ensure overlay fades out and audio plays on any interaction
+        $(document).one('click touchstart', function() {
+            playAudio();
+            overlay.fadeOut();
         });
     });
 </script>
-
 @endpush
+
