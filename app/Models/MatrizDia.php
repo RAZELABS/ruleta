@@ -18,6 +18,8 @@ class MatrizDia extends Model
     protected $fillable = [
         'fecha',
         'peso_dia',
+        'ganadores_dia',
+        'ganadores_dia'
     ];
 
     // Casts para convertir automáticamente valores al acceder

@@ -91,6 +91,8 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     Route::resource('kiosco', KioscoController::class);
     Route::delete('/kioscodelete/{id}', [KioscoDeleteController::class, 'destroy'])->name('kioscodelete.destroy');
     Route::resource('kioscodelete', KioscodeleteController::class);
+
+    Route::get('/dashboard/data', [DashboardController::class, 'getDashboardData'])->name('dashboard.data');
 });
 Route::middleware(['auth', 'role:superadmin|admin|user'])->group(function () {
     //?ROLES

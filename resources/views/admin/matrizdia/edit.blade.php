@@ -30,6 +30,11 @@
                         <input type="decimal" class="form-control" id="peso_dia" name="peso_dia"
                             value="{{ $matriz_dia->peso_dia }}">
                     </div>
+                    <div class="mb-3 col-12 col-md-6">
+                        <label for="ganadores_dia" class="form-label">Ganadores del día</label>
+                        <input type="number" class="form-control" id="ganadores_dia" name="ganadores_dia"
+                            value="{{ $matriz_dia->ganadores_dia }}">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
                 @if (session('message') ?? session('success'))

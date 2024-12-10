@@ -8,8 +8,7 @@
     --fab-verde-2: #004527 !important;
     --fab-verde-3: #35783C !important;
     --fab-gradient: linear-gradient(90deg, #668F00 0%, #8FCA00 100%);
-    --fab-gradient2: rounded-gradient;
-    --fab-gradient2: rounded-gradient(90deg, #004527 30%, #35783C 80%);
+    --fab-gradient2: linear-gradient(90deg, rgba(102,143,0,1) 0%, rgba(53,120,60,1) 100%);
     --fabtxt: #343E49;
     --fabtxt2: #FAFAFA;
     --fab-bg: #FAFAFA;

@@ -19,6 +19,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Peso (%)</th>
+                                <th scope="col">Cantidad Ganadores (und)</th>
                                 <th scope="col">Accion</th>
                             </tr>
                         </thead>
@@ -28,6 +29,7 @@
                                     <td scope="row">{{ $matrizdia->id }}</td>
                                     <td scope="row">{{ $matrizdia->fecha }}</td>
                                     <td scope="row">{{ $matrizdia->peso_dia }}</td>
+                                    <td scope="row">{{ $matrizdia->ganadores_dia }}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle">
                                                 <a href="{{ route('admin.matrizdia.edit', $matrizdia->id) }}"

@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app')
 @section('content')
+
 <div class="container justify-content-center my-5">
     <div class="row">
         <div class="col col-lg-12 w-100 text-align-center pt-5 mt-5 pt-lg-2 mpt-lg-2">
@@ -19,6 +20,52 @@
         </div>
 
     </div>
-
 </div>
+{{-- <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3"> --}}
+
+<audio id="sorryAudio" loop>
+    <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3">
+</audio>
+<button id="playSoundButton" style="display:none;">Play Sound</button>
 @endsection
+@push('scripts')
+
+<script>
+    $(document).ready(function() {
+        const audio = document.getElementById('sorryAudio');
+        const playButton = $('#playSoundButton');
+
+        function playAudio() {
+            audio.play().catch(function() {
+                // Handle autoplay restrictions by showing a play button
+                playButton.show();
+            });
+        }
+
+        playButton.on('click', function() {
+            audio.play();
+            playButton.hide();
+        });
+
+        // Trigger SweetAlert popup when the page finishes loading
+        $(window).on('load', function() {
+            Swal.fire({
+                title: '¡No te desanimes!',
+                text: 'Mañana es otro día.',
+                icon: '',
+                color: '#004527',
+                background: '#AAD500',
+                showConfirmButton: false,
+                allowOutsideClick: true,
+                didOpen: () => {
+                    $(document).one('click', function() {
+                        playAudio();
+                        Swal.close();
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+@endpush

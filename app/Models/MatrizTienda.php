@@ -18,6 +18,8 @@ class MatrizTienda extends Model
     protected $fillable = [
         'id_tienda',
         'peso_tienda',
+
+
     ];
 
     // Casts para convertir automáticamente valores al acceder

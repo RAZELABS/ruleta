@@ -18,22 +18,21 @@ return new class extends Migration
 
         // Seed initial data
         $data = [
-            ['id' => 1, 'fecha' => '2024-12-09', 'peso_dia' => 5.29],
-            ['id' => 2, 'fecha' => '2024-12-10', 'peso_dia' => 5.49],
-            ['id' => 3, 'fecha' => '2024-12-11', 'peso_dia' => 5.50],
-            ['id' => 4, 'fecha' => '2024-12-12', 'peso_dia' => 5.71],
-            ['id' => 5, 'fecha' => '2024-12-13', 'peso_dia' => 5.07],
-            ['id' => 6, 'fecha' => '2024-12-14', 'peso_dia' => 9.11],
-            ['id' => 7, 'fecha' => '2024-12-15', 'peso_dia' => 8.43],
-            ['id' => 8, 'fecha' => '2024-12-16', 'peso_dia' => 5.29],
-            ['id' => 9, 'fecha' => '2024-12-17', 'peso_dia' => 5.53],
-            ['id' => 10, 'fecha' => '2024-12-18', 'peso_dia' => 5.50],
-            ['id' => 11, 'fecha' => '2024-12-19', 'peso_dia' => 5.71],
-            ['id' => 12, 'fecha' => '2024-12-20', 'peso_dia' => 5.07],
-            ['id' => 13, 'fecha' => '2024-12-21', 'peso_dia' => 9.11],
-            ['id' => 14, 'fecha' => '2024-12-22', 'peso_dia' => 8.43],
-            ['id' => 15, 'fecha' => '2024-12-23', 'peso_dia' => 5.29],
-            ['id' => 16, 'fecha' => '2024-12-24', 'peso_dia' => 5.49],
+            ['id' => 2, 'fecha' => '2024-12-10', 'peso_dia' => 5.63,'ganadores_dia'=> 88],
+            ['id' => 3, 'fecha' => '2024-12-11', 'peso_dia' => 5.64,'ganadores_dia'=> 88],
+            ['id' => 4, 'fecha' => '2024-12-12', 'peso_dia' => 5.85,'ganadores_dia'=> 92],
+            ['id' => 5, 'fecha' => '2024-12-13', 'peso_dia' => 6.68,'ganadores_dia'=> 105],
+            ['id' => 6, 'fecha' => '2024-12-14', 'peso_dia' => 9.34,'ganadores_dia'=> 146],
+            ['id' => 7, 'fecha' => '2024-12-15', 'peso_dia' => 8.64,'ganadores_dia'=> 135],
+            ['id' => 8, 'fecha' => '2024-12-16', 'peso_dia' => 5.42,'ganadores_dia'=> 85],
+            ['id' => 9, 'fecha' => '2024-12-17', 'peso_dia' => 5.63,'ganadores_dia'=> 88],
+            ['id' => 10, 'fecha' => '2024-12-18', 'peso_dia' => 5.64,'ganadores_dia'=> 88],
+            ['id' => 11, 'fecha' => '2024-12-19', 'peso_dia' => 5.85,'ganadores_dia'=> 92],
+            ['id' => 12, 'fecha' => '2024-12-20', 'peso_dia' => 6.68,'ganadores_dia'=> 105],
+            ['id' => 13, 'fecha' => '2024-12-21', 'peso_dia' => 9.34,'ganadores_dia'=> 146],
+            ['id' => 14, 'fecha' => '2024-12-22', 'peso_dia' => 8.64,'ganadores_dia'=> 135],
+            ['id' => 15, 'fecha' => '2024-12-23', 'peso_dia' => 5.42,'ganadores_dia'=> 85],
+            ['id' => 16, 'fecha' => '2024-12-24', 'peso_dia' => 5.63,'ganadores_dia'=> 88],
         ];
 
         DB::table('matriz_dia')->insert($data);

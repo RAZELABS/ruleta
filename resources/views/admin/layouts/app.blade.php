@@ -12,6 +12,7 @@
         href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/fh-3.4.0/r-2.5.0/rg-1.4.1/datatables.min.css"
         rel="stylesheet">
         <script src="https://kit.fontawesome.com/37e49fa08b.js" crossorigin="anonymous"></script>
+    @stack('scripts-head')
     @stack('styles')
 
 

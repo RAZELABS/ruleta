@@ -13,7 +13,7 @@ class MatrizdiaController extends Controller
      */
     public function index()
     {
-        $matrizdias = MatrizDia::select('id','fecha','peso_dia')->get();
+        $matrizdias = MatrizDia::select('id','fecha','peso_dia','ganadores_dia')->get();
         // $matriz_diaData = $matrizdias->map(function($matriz_dia) {
         //     return [$matriz_dia->id, $matriz_dia->fecha, $matriz_dia->peso_dia];
         // });
@@ -50,7 +50,7 @@ class MatrizdiaController extends Controller
      */
     public function edit(string $id)
     {
-        $matriz_dia = MatrizDia::select('id','fecha','peso_dia')
+        $matriz_dia = MatrizDia::select('id','fecha','peso_dia','ganadores_dia')
         ->where('id','=', $id)->first();
 
         //dd($parametros, $premios);
@@ -66,6 +66,7 @@ class MatrizdiaController extends Controller
         //dd($request->all());
         $data = $request->validate([
             "peso_dia"=> "required|decimal:2",
+            "ganadores_dia"=> "required|numeric",
         ]);
 
         //dd($data);

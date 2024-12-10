@@ -17,9 +17,13 @@ class RuletaController extends Controller
 {
     public function index(Request $request)
     {
+        // Obtener datos de la sesión
+        $codigo_tienda = $request->session()->get('codigo_tienda');
+        if($codigo_tienda == null){
+            return redirect()->route('home');
+        }
         $latitud = $request->session()->get('latitud');
         $longitud = $request->session()->get('longitud');
-        $codigo_tienda = $request->session()->get('codigo_tienda');
         $tipo_documento = $request->session()->get('tipo_documento');
         $nro_documento = $request->session()->get('nro_documento');
         $fechaHoy = Carbon::now()->format('Y:m:d');
@@ -27,32 +31,32 @@ class RuletaController extends Controller
         $id_tienda = Tienda::where('codigo', '=', $codigo_tienda)->select('id')->first();
         $premios = Premios::all();
 
-        // valores del juego
-        $cantidad_ganadores = Parametros::where('flag', '=', 'ganadores')->select('valor')->first(); // valor = 1568 personas
-        $duracion_dias_juego = count(MatrizDia::all()); // valor = 16 dias
-        // valores ruleta
-        $cantidad_opciones_ruleta = count($premios); // valor = 8
-        $cantidad_opciones_ganadoras = count($premios->where('premio', '=', 1)); // valor = 1
-        $cantidad_opciones_perdedoras = count($premios->where('premio', '=', 2)); // valor = 2
-        // valores Matriz
-        $matriz_dia = MatrizDia::where('fecha', '=', $fechaHoy)->select('peso_dia')->first(); // valor ejemplo  = 5.29%
+        // Valores del juego
+        $cantidad_ganadores = Parametros::where('flag', '=', 'ganadores')->select('valor')->first(); // Ejemplo: 1568 personas
+        $duracion_dias_juego = count(MatrizDia::all()); // Ejemplo: 16 días
+
+        // Valores de la ruleta
+        $cantidad_opciones_ruleta = count($premios); // Ejemplo: 8 opciones
+        $cantidad_opciones_ganadoras = count($premios->where('premio', '=', 1)); // Ejemplo: 1 opción ganadora
+        $cantidad_opciones_perdedoras = count($premios->where('premio', '=', 2)); // Ejemplo: 2 opciones perdedoras
+
+        // Valores de la matriz
+        $matriz_dia = MatrizDia::where('fecha', '=', $fechaHoy)->select('peso_dia', 'ganadores_dia')->first(); // Ejemplo: 5.29%, 88 ganadores
         $matriz_turno = MatrizTurno::whereTime('inicio', '<=', $horaActual)
-            ->whereTime('fin', '>=', $horaActual)->select('peso_turno', 'inicio', 'fin')->first(); // valor ejemplo  = 21.00%
-        $matriz_tienda = MatrizTienda::where('id_tienda', '=', $id_tienda->id)->select('peso_tienda')->first(); // valor ejemplo = 2.04%
+            ->whereTime('fin', '>=', $horaActual)->select('peso_turno', 'inicio', 'fin')->first(); // Ejemplo: 21.00%
+        $matriz_tienda = MatrizTienda::where('id_tienda', '=', $id_tienda->id)->select('peso_tienda')->first(); // Ejemplo: 2.04%
 
         // Verificar si hay cupos disponibles para ganadores
         $hay_cupos = $this->verificarCuotaGanadores(
             $id_tienda->id,
-            $cantidad_ganadores,
-            $duracion_dias_juego,
-            $matriz_dia,
+            $matriz_dia->cantidad_ganadores,
             $matriz_turno,
             $matriz_tienda
         );
 
         if ($hay_cupos) {
             // Calcular probabilidad solo si hay cupos disponibles
-            $probabilidad = $this->calcularProbabilidadTotal($cantidad_ganadores, $duracion_dias_juego, $matriz_dia, $matriz_turno, $matriz_tienda);
+            $probabilidad = $this->calcularProbabilidadTotal($matriz_dia->cantidad_ganadores, $matriz_dia->peso_dia, $matriz_turno, $matriz_tienda);
             $random = mt_rand() / mt_getrandmax();
             $ganador = $random <= $probabilidad;
         } else {
@@ -68,8 +72,6 @@ class RuletaController extends Controller
             $opciones_ganadoras[array_rand($opciones_ganadoras)] :
             $opciones_perdedoras[array_rand($opciones_perdedoras)];
 
-        // dd($opcion_seleccionada);
-     
         return view('frontend.ruleta', compact(
             'premios',
             'latitud',
@@ -151,9 +153,9 @@ class RuletaController extends Controller
                 //dd($codigo_tienda);
                 switch ($request->resultado) {
                     case 1:
-                        return redirect()->route('ganador')->with('codigo_tienda', $codigo_tienda);
+                        return redirect()->route('ruleta.ganador')->with('codigo_tienda', $codigo_tienda);
                     case 2:
-                        return redirect()->route('sorry')->with('codigo_tienda', $codigo_tienda);
+                        return redirect()->route('ruleta.sorry')->with('codigo_tienda', $codigo_tienda);
                     default:
                         return redirect()->back()->with('error', 'Resultado inválido.');
                 }
@@ -161,7 +163,7 @@ class RuletaController extends Controller
                 \DB::rollBack();
                 return redirect()->back()
                     ->with('error', 'Ocurrió un error al registrar la jugada. Inténtalo nuevamente.')
-                    // ->with('error', $e->getMessage())
+                    ->with('error', $e->getMessage())
                     ->with('titulo', 'Error');
             }
         }
@@ -177,72 +179,70 @@ class RuletaController extends Controller
 
     /**
      * Calcula la probabilidad total basada en los pesos de día, turno y tienda
+     * Ejemplo de cálculo:
+     * - id_tienda: 18
+     * - Día: 2024-12-10
+     * - Turno: Mañana
+     * - Cantidad de ganadores por día: 88
+     * - Cantidad de ganadores tienda: 6
+     * - Cantidad de ganadores turno: 1
+     * - Peso del día: 5.63%
+     * - Peso del turno: 21.00%
+     * - Peso de la tienda: 2.04%
+     *
+     * Paso 1: Calcular probabilidad base por día
+     * probabilidad_dia = 88 * (5.63 / 100) = 4.9544
+     *
+     * Paso 2: Aplicar peso del turno
+     * probabilidad_turno = (21.00 / 100) * 4.9544 = 1.040424
+     *
+     * Paso 3: Aplicar peso de la tienda
+     * probabilidad_final = (2.04 / 100) * 1.040424 = 0.021027
+     *
+     * Resultado: probabilidad_final = 0.021027 (aproximadamente 2.10%)
      */
-    private function calcularProbabilidadTotal($cantidad_ganadores, $duracion_dias, $peso_dia, $peso_turno, $peso_tienda)
+    private function calcularProbabilidadTotal($cantidad_ganadores, $peso_dia, $peso_turno, $peso_tienda)
     {
-        // Cantidad promedio de ganadores por día
-        $ganadores_por_dia = $cantidad_ganadores->valor / $duracion_dias;
-
         // Probabilidad base por día (peso del día)
-        $probabilidad_dia = ($peso_dia->peso_dia / 100) * $ganadores_por_dia;
+        $probabilidad_dia = $cantidad_ganadores * ($peso_dia / 100);
 
         // Aplicar peso del turno
         $probabilidad_turno = ($peso_turno->peso_turno / 100) * $probabilidad_dia;
 
         // Aplicar peso de la tienda
         $probabilidad_final = ($peso_tienda->peso_tienda / 100) * $probabilidad_turno;
-        //dd('ganadores dia: '.$ganadores_por_dia, 'probabilidad dia: '.$probabilidad_dia, 'probabilidad turno: '.$probabilidad_turno);
+
         return $probabilidad_final;
     }
 
-    private function verificarCuotaGanadores($id_tienda, $cantidad_ganadores, $duracion_dias, $matriz_dia, $matriz_turno, $matriz_tienda)
+    private function verificarCuotaGanadores($id_tienda, $cantidad_ganadores, $matriz_turno, $matriz_tienda)
     {
-        // 1. Calcular cuota de ganadores por día
-        $ganadores_por_dia = ceil($cantidad_ganadores->valor / $duracion_dias);
+        // 1. Calcular cuota de ganadores para la tienda actual en este día
+        $cuota_tienda = ceil(($matriz_tienda->peso_tienda / 100) * $cantidad_ganadores);
 
-        // 2. Calcular cuota de ganadores para la tienda actual en este día
-        $cuota_tienda = ceil(($matriz_tienda->peso_tienda / 100) * $ganadores_por_dia);
-
-        // 3. Calcular cuota de ganadores para el turno actual
+        // 2. Calcular cuota de ganadores para el turno actual
         $cuota_turno = ceil(($matriz_turno->peso_turno / 100) * $cuota_tienda);
 
-        // 4. Obtener ganadores actuales
+        // 3. Obtener ganadores actuales
         $fecha_actual = Carbon::now()->format('Y-m-d');
 
-        // Contar ganadores del día para esta tienda - cambiando 'resultado' por 'valor'
+        // Contar ganadores del día para esta tienda
         $ganadores_tienda_hoy = Detalle::where('id_tienda', $id_tienda)
-            ->where('resultado', 1) // Cambio de 'resultado' a 'valor'
+            ->where('resultado', 1)
             ->whereDate('fecha', $fecha_actual)
             ->count();
 
-
         // Contar ganadores del turno actual
         $ganadores_turno_actual = Detalle::where('id_tienda', $id_tienda)
-            ->where('resultado', 1) // Cambio de 'resultado' a 'valor'
+            ->where('resultado', 1)
             ->whereDate('fecha', $fecha_actual)
             ->whereTime('hora', '>=', $matriz_turno->inicio)
             ->whereTime('hora', '<=', $matriz_turno->fin)
             ->count();
 
-
-        // 5. Verificar si hay cupos disponibles
+        // 4. Verificar si hay cupos disponibles
         $hay_cupo_tienda = $ganadores_tienda_hoy < $cuota_tienda;
         $hay_cupo_turno = $ganadores_turno_actual < $cuota_turno;
-
-        //Agregar logs para depuración
-        // dd( [
-        //     'id_tienda' => $id_tienda,
-        //     'fecha' => $fecha_actual,
-        //     'cuota_tienda' => $cuota_tienda,
-        //     'cuota_turno' => $cuota_turno,
-        //     'ganadores_tienda_hoy' => $ganadores_tienda_hoy,
-        //     'ganadores_turno_actual' => $ganadores_turno_actual,
-        //     'turno_inicio' => $matriz_turno->inicio,
-
-        //     'turno_fin' => $matriz_turno->fin,
-        //     'hay_cupo_tienda' => $hay_cupo_tienda,
-        //     'hay_cupo_turno' => $hay_cupo_turno
-        // ]);
 
         return $hay_cupo_tienda && $hay_cupo_turno;
     }
@@ -257,11 +257,11 @@ class RuletaController extends Controller
         $days = MatrizDia::pluck('fecha')->toArray();
         $winnersPerDay = [];
         $remainingWinners = [];
-        $winningPlays = Detalle::where('valor', 1)->count();
-        $losingPlays = Detalle::where('valor', 2)->count();
+        $winningPlays = Detalle::where('resultado', 1)->count();
+        $losingPlays = Detalle::where('resultado', 2)->count();
 
         foreach ($days as $day) {
-            $winnersPerDay[] = Detalle::whereDate('fecha', $day)->where('valor', 1)->count();
+            $winnersPerDay[] = Detalle::whereDate('fecha', $day)->where('resultado', 1)->count();
             $remainingWinners[] = $this->calculateRemainingWinners($day);
         }
 
