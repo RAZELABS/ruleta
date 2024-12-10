@@ -21,11 +21,52 @@
 
 </div>
 
+<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); z-index: 9999;"></div>
 <audio id="sorryAudio" loop>
     <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3">
 </audio>
 <button id="playSoundButton" style="display:none;">Play Sound</button>
+
 @endsection
 @push('scripts')
-<script src="{{ asset('backend/js/modal-ganador.js') }}?v={{ time() }}"></script>
+<script>
+    $(document).ready(function() {
+        const audio = document.getElementById('sorryAudio');
+        const playButton = $('#playSoundButton');
+        const overlay = $('#overlay');
+
+        function playAudio() {
+            audio.currentTime = 0; // Reset audio to start
+            audio.play().catch(function() {
+                // Handle autoplay restrictions by showing a play button
+                playButton.show();
+            });
+        }
+
+        playButton.on('click', function() {
+            audio.play();
+            playButton.hide();
+        });
+
+        // Clear cache
+        if ('serviceWorker' in navigator) {
+            caches.keys().then(function(names) {
+                for (let name of names) caches.delete(name);
+            });
+        }
+
+        overlay.on('click touchstart', function() {
+            playAudio();
+            overlay.fadeOut();
+        });
+
+        // Ensure overlay fades out and audio plays on any interaction
+        $(document).one('click touchstart', function() {
+            playAudio();
+            overlay.fadeOut();
+        });
+    });
+</script>
 @endpush
+
+
