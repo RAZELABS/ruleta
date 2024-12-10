@@ -17,10 +17,8 @@ class MatrizTienda extends Model
     // Campos asignables masivamente
     protected $fillable = [
         'id_tienda',
-        'peso_tienda',
-
-
-    ];
+        'peso_tienda'
+     ];
 
     // Casts para convertir automáticamente valores al acceder
     protected $casts = [

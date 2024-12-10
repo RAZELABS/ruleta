@@ -30,7 +30,7 @@ class RuletaController extends Controller
         $horaActual = Carbon::now()->format('H:i:s');
         $id_tienda = Tienda::where('codigo', '=', $codigo_tienda)->select('id')->first();
         $premios = Premios::all();
-
+//dd($id_tienda);
         // Valores del juego
         $cantidad_ganadores = Parametros::where('flag', '=', 'ganadores')->select('valor')->first(); // Ejemplo: 1568 personas
         $duracion_dias_juego = count(MatrizDia::all()); // Ejemplo: 16 días

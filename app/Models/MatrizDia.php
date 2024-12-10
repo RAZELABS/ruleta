@@ -19,7 +19,6 @@ class MatrizDia extends Model
         'fecha',
         'peso_dia',
         'ganadores_dia',
-        'ganadores_dia'
     ];
 
     // Casts para convertir automáticamente valores al acceder

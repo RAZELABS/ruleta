@@ -46,9 +46,9 @@
                                     @else
                                     <td scope="row">Rechazado / cliente</td>
                                     @endif
-                                    <td>
+                                    <td class="d-flex">
                                         <a href="{{$detalle->enlaceMapa}}" target="_blank" class="btn btn-falabella-2"><i class="fa-solid fa-location-dot"></i></a>
-                                        <div class="btn-group btn-group-toggle">
+                                        <div class="btn-group btn-group-toggle ">
                                             @if ($detalle->estado == 1)
                                                 <form class=""
                                                     action="{{ route('admin.detalle.disabled', [$detalle->id]) }}" @csrf
@@ -68,8 +68,8 @@
                                                     <button type="submit" id="btn-submit"
                                                         class="btn btn-falabella-2 btn-sm ">
                                                         <i
-                                                            class="@if ($detalle->estado == 2) fa-solid fa-check @else fa-solid fa-ban @endif">
-                                                        </i> 
+                                                            class="@if ($detalle->estado == 2) fa-solid fa-check @else fa-solid fa-ban @endif ">
+                                                        </i>
                                                     </button>
                                                 </form>
                                             @endif
