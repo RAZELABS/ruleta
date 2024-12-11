@@ -135,7 +135,7 @@ class RuletaController extends Controller
             ->first();
 
         if ($registro) {
-            $this->clearSessionData($request);
+            // $this->clearSessionData($request);
             return redirect()->back()
                 ->with('error', 'Ya haz hecho una jugada hoy, solo se permite una jugada por día.')
                 ->with('titulo', '=(');
@@ -158,15 +158,15 @@ class RuletaController extends Controller
 
                 \DB::commit();
 
-                $this->clearSessionData($request);
+                // $this->clearSessionData($request);
 
                 $codigo_tienda = $tienda->where('id', '=', $request->id_tienda)->first()->codigo;
                 //dd($codigo_tienda);
                 switch ($request->resultado) {
                     case 1:
-                        return redirect()->route('ruleta.ganador')->with('codigo_tienda', $codigo_tienda);
+                        return redirect()->route('ruleta.ganador')->with(['codigo_tienda'=> $codigo_tienda]);
                     case 2:
-                        return redirect()->route('ruleta.sorry')->with('codigo_tienda', $codigo_tienda);
+                        return redirect()->route('ruleta.sorry')->with(['codigo_tienda'=> $codigo_tienda]);
                     default:
                         return redirect()->back()->with('error', 'Resultado inválido.');
                 }

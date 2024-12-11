@@ -95,6 +95,7 @@ class IndexController extends Controller
             'nro_documento' => $nro_documento
         ]);
 
+
         return redirect()->route('ruleta.index');
     }
 }

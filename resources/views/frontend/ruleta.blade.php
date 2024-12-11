@@ -4,14 +4,14 @@
 
 <form id="formJugada" action="{{ route('ruleta.registrarJugada') }}" method="POST">
     @csrf
-    <input type="hidden" name="latitud" id="latitud" value="" readonly>
-    <input type="hidden" name="longitud" id="longitud" value="" readonly>
-    <input type="hidden" name="id_tienda" value="{{ $id_tienda->id }}" readonly>
-    <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}" readonly>
-    <input type="hidden" name="nro_documento" value="{{ $nro_documento }}" readonly>
-    <input type="hidden" name="resultado" value="" readonly>
-    <input type="hidden" name="opcion" id="opcion" value="" readonly>
-    <input type="hidden" name="lol" value="{{$opcion_seleccionada}}" readonly>
+    <input type="text" name="latitud" id="latitud" value="" readonly>
+    <input type="text" name="longitud" id="longitud" value="" readonly>
+    <input type="text" name="id_tienda" value="{{ $id_tienda->id }}" readonly>
+    <input type="text" name="tipo_documento" value="{{ $tipo_documento }}" readonly>
+    <input type="text" name="nro_documento" value="{{ $nro_documento }}" readonly>
+    <input type="text" name="resultado" value="" readonly>
+    <input type="text" name="opcion" id="opcion" value="" readonly>
+    <input type="text" name="lol" value="{{$opcion_seleccionada}}" readonly>
 </form>
 
 

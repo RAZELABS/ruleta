@@ -48,6 +48,17 @@ body a {
     margin-top: 64px;
 }
 
+.btn-outline-secondary{
+    color:var(--secondary) !important;
+    border-color: var(--secondary);
+    border-radius: 10px;
+    z-index: 9999;
+}
+.btn-outline-secondary:hover{
+    color:var(--fab-verde-3) !important;
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
 .barra-colores {
     background: url(../img/elementos/franja.png);
     height: 30px;

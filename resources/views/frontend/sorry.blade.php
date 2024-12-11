@@ -21,12 +21,6 @@
 
     </div>
 </div>
-<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); z-index: 9999;"></div>
-<audio id="sorryAudio" loop>
-    <source src="{{asset('frontend/sounds/verde.mp3')}}" type="audio/mp3">
-</audio>
-<button id="playSoundButton" style="display:none;">Play Sound</button>
-
 @endsection
 {{-- @push('scripts')
 <script>
