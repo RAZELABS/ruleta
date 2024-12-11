@@ -65,7 +65,33 @@
         padding: 10px;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
+        max-height: 60vh; /* Ensure the container has a max height */
+        overflow-y: scroll; /* Enable vertical scrolling */
+        -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: #888 #e0e0e0; /* Firefox */
+    }
 
+    /* Webkit browsers */
+    .terms-container::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .terms-container::-webkit-scrollbar-track {
+        background: #e0e0e0;
+    }
+
+    .terms-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+        border: 3px solid #e0e0e0;
+    }
+
+    /* Ensure scrollbars are always visible on iOS */
+    @media (hover: none) and (pointer: coarse) {
+        .terms-container {
+            -webkit-overflow-scrolling: auto;
+        }
     }
 
     .terms-container p {

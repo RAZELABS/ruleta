@@ -32,7 +32,9 @@ class RuletaController extends Controller
         $premios = Premios::all();
 //dd($id_tienda);
         // Valores del juego
-        $cantidad_ganadores = Parametros::where('flag', '=', 'ganadores')->select('valor')->first(); // Ejemplo: 1568 personas
+        $parametro_ganadores = Parametros::where('flag', '=', 'ganadores')->select('valor')->first();
+        $cantidad_ganadores = $parametro_ganadores ? $parametro_ganadores->valor : 0; // Asegurarse de que cantidad_ganadores no sea nulo
+        \Log::info('Cantidad de ganadores: ' . $cantidad_ganadores);
         $duracion_dias_juego = count(MatrizDia::all()); // Ejemplo: 16 días
 
         // Valores de la ruleta
@@ -46,17 +48,22 @@ class RuletaController extends Controller
             ->whereTime('fin', '>=', $horaActual)->select('peso_turno', 'inicio', 'fin')->first(); // Ejemplo: 21.00%
         $matriz_tienda = MatrizTienda::where('id_tienda', '=', $id_tienda->id)->select('peso_tienda')->first(); // Ejemplo: 2.04%
 
+        // Debugging
+        \Log::info('Peso del día: ' . $matriz_dia->peso_dia);
+        \Log::info('Peso del turno: ' . $matriz_turno->peso_turno);
+        \Log::info('Peso de la tienda: ' . $matriz_tienda->peso_tienda);
+
         // Verificar si hay cupos disponibles para ganadores
         $hay_cupos = $this->verificarCuotaGanadores(
             $id_tienda->id,
-            $matriz_dia->cantidad_ganadores,
+            $matriz_dia->ganadores_dia,
             $matriz_turno,
             $matriz_tienda
         );
 
         if ($hay_cupos) {
             // Calcular probabilidad solo si hay cupos disponibles
-            $probabilidad = $this->calcularProbabilidadTotal($matriz_dia->cantidad_ganadores, $matriz_dia->peso_dia, $matriz_turno, $matriz_tienda);
+            $probabilidad = $this->calcularProbabilidadTotal($matriz_dia->ganadores_dia, $matriz_dia->peso_dia, $matriz_turno, $matriz_tienda);
             $random = mt_rand() / mt_getrandmax();
             $ganador = $random <= $probabilidad;
         } else {
@@ -71,8 +78,11 @@ class RuletaController extends Controller
         $opcion_seleccionada = $ganador ?
             $opciones_ganadoras[array_rand($opciones_ganadoras)] :
             $opciones_perdedoras[array_rand($opciones_perdedoras)];
-       // dd($opcion_seleccionada);
+       // dd($opcion_seleccionada, $hay_cupos);
+
         $opcion_seleccionada= $opcion_seleccionada - 1;
+        \Log::info('Opcion Seleccionada: ' . $opcion_seleccionada);
+        \Log::info('hay cupos: ' . $hay_cupos);
         return view('frontend.ruleta', compact(
             'premios',
             'latitud',
@@ -204,14 +214,25 @@ class RuletaController extends Controller
      */
     private function calcularProbabilidadTotal($cantidad_ganadores, $peso_dia, $peso_turno, $peso_tienda)
     {
+        // Aumentar los pesos para incrementar la probabilidad de ganar
+        $peso_dia += 10; // Incrementa el peso del día en 10%
+        $peso_turno->peso_turno += 10; // Incrementa el peso del turno en 10%
+        $peso_tienda->peso_tienda += 10; // Incrementa el peso de la tienda en 10%
+
         // Probabilidad base por día (peso del día)
         $probabilidad_dia = $cantidad_ganadores * ($peso_dia / 100);
+        // Debugging
+        \Log::info('Probabilidad base por día: ' . $probabilidad_dia);
 
         // Aplicar peso del turno
         $probabilidad_turno = ($peso_turno->peso_turno / 100) * $probabilidad_dia;
+        // Debugging
+        \Log::info('Probabilidad después de aplicar peso del turno: ' . $probabilidad_turno);
 
         // Aplicar peso de la tienda
         $probabilidad_final = ($peso_tienda->peso_tienda / 100) * $probabilidad_turno;
+        // Debugging
+        \Log::info('Probabilidad final: ' . $probabilidad_final);
 
         return $probabilidad_final;
     }
@@ -241,10 +262,14 @@ class RuletaController extends Controller
             ->whereTime('hora', '<=', $matriz_turno->fin)
             ->count();
 
+       //dd($ganadores_tienda_hoy, $cuota_tienda);
         // 4. Verificar si hay cupos disponibles
         $hay_cupo_tienda = $ganadores_tienda_hoy < $cuota_tienda;
         $hay_cupo_turno = $ganadores_turno_actual < $cuota_turno;
-
+        \Log::info('cupo tienda: ' . $hay_cupo_tienda);
+        \Log::info('cuota turno: ' . $cuota_tienda);
+        \Log::info('cupo turno: ' . $hay_cupo_turno);
+        \Log::info('cuota turno: ' . $cuota_turno);
         return $hay_cupo_tienda && $hay_cupo_turno;
     }
 

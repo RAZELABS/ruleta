@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MatrizTienda;
 use Illuminate\Http\Request;
 use App\Models\MatrizDia;
 use App\Models\Detalle;
@@ -19,6 +20,8 @@ class DashboardController extends Controller
 
         // Obtener datos para los contadores
         $countersData = $this->getCountersData();
+
+
 
         // Obtener datos adicionales para los contadores
         $totalParticipantes = Detalle::count();
@@ -40,7 +43,7 @@ class DashboardController extends Controller
         $today = Carbon::today()->format('Y-m-d');
         $stores = Tienda::pluck('nombre')->toArray();
         $winnersPerStore = [];
-        $losersPerStore = [];
+        $expectedWinnersPerStore = [];
 
         foreach ($stores as $store) {
             $storeId = Tienda::where('nombre', $store)->value('id');
@@ -48,13 +51,42 @@ class DashboardController extends Controller
                 ->where('resultado', 1)
                 ->whereDate('fecha', $today)
                 ->count();
-            $losersPerStore[] = Detalle::where('id_tienda', $storeId)
-                ->where('resultado', 2)
-                ->whereDate('fecha', $today)
-                ->count();
+            $expectedWinnersPerStore[] = $this->calculateExpectedWinners($storeId);
         }
 
-        return compact('stores', 'winnersPerStore', 'losersPerStore');
+        return compact('stores', 'winnersPerStore', 'expectedWinnersPerStore');
+    }
+
+    /**
+     * Calcular los ganadores esperados para una tienda dada
+     *
+     * @param int $storeId
+     * @return int
+     */
+    private function calculateExpectedWinners($storeId)
+    {
+        $today = Carbon::today()->format('Y-m-d');
+
+        // Obtener el peso de la tienda
+        $storeWeight = MatrizTienda::where('id', $storeId)->value('peso_tienda');
+
+        // Obtener la cantidad de ganadores del día de la tabla MatrizDia
+        $winnersToday = MatrizDia::where('fecha', $today)->value('ganadores_dia');
+
+        // Obtener la cantidad de ganadores actuales para la tienda
+        $currentWinners = Detalle::where('id_tienda', $storeId)
+            ->where('resultado', 1)
+            ->whereDate('fecha', $today)
+            ->count();
+
+        // Calcular los ganadores esperados para la tienda
+        if ($storeWeight && $winnersToday) {
+            $expectedWinners = round(($winnersToday * $storeWeight) / 100);
+            $remainingExpectedWinners = max(0, $expectedWinners - $currentWinners);
+            return $remainingExpectedWinners;
+        }
+
+        return 0; // Si no hay peso o ganadores del día, devolver 0
     }
 
     /**

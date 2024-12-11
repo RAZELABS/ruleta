@@ -28,7 +28,7 @@
 <button id="playSoundButton" style="display:none;">Play Sound</button>
 
 @endsection
-@push('scripts')
+{{-- @push('scripts')
 <script>
     $(document).ready(function() {
         const audio = document.getElementById('sorryAudio');
@@ -67,5 +67,5 @@
         });
     });
 </script>
-@endpush
+@endpush --}}
 

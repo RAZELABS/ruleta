@@ -45,9 +45,9 @@
 </div>
 @if ($totalParticipantes >=1)
 <div class="container">
-    <div class="row">
+    <div class="row h-100">
         <div class="col-md-12">
-            <div id="winnersChart" style="width: 100%; height: 500px;"></div>
+            <div id="winnersChart" style="width: 100%; height: 1200px;"></div>
         </div>
     </div>
 </div>
@@ -66,36 +66,52 @@
             method: 'GET',
             success: function(response) {
                 var data = google.visualization.arrayToDataTable([
-                    ['Tienda', 'Ganadores', 'Perdedores'],
+                    ['Tienda', 'Ganadores Actuales', 'Ganadores Esperados'],
                     ...response.stores.map((store, index) => {
-                        if (response.winnersPerStore[index] > 0 || response.losersPerStore[index] > 0) {
-                            return [store, response.winnersPerStore[index], response.losersPerStore[index]];
-                        }
-                    }).filter(item => item !== undefined)
+                        return [store, response.winnersPerStore[index], response.expectedWinnersPerStore[index]];
+                    })
                 ]);
 
                 var options = {
-                    title: 'Ganadores y Perdedores por Tienda (Hoy)',
-                    titleTextStyle: {
-                        fontSize: 18,
-                        bold: true,
-                        color: '#343E49'
-                    },
-                    bars: 'horizontal',
-                    hAxis: {
-                        title: 'Cantidad',
-                        minValue: 0
-                    },
-                    vAxis: {
-                        title: 'Tienda'
-                    },
-                    colors: ['#AAD500', '#343E49'],
-                    height: '100%',
-                    width: '100%',
-                    responsive: true,
-                    backgroundColor: 'transparent'
-                };
-
+    title: 'Ganadores vs Ganadores Esperados por Tienda (Hoy)',
+    titleTextStyle: {
+        fontSize: 18,
+        bold: true,
+        color: '#343E49'
+    },
+    bars: 'vertical',
+    isStacked: true,
+    groupHeight: '100%', // Aumenta el espacio entre grupos de barras
+    bar: {
+        height: 55, // Reduce la altura de las barras
+        width: 25   // Puedes ajustar el ancho de las barras
+    },
+    hAxis: {
+        title: 'Cantidad',
+        minValue: 0,
+        textStyle: {
+            fontSize: 14 // Reduce el tamaño de la fuente de los ejes
+        }
+    },
+    vAxis: {
+        title: 'Tienda',
+        textStyle: {
+            fontSize: 14,
+            color: '#fff'// Evita que el texto se desborde
+        },
+        slantedText: false, // Ensure text is not slanted
+        textPosition: 'in' // Ensure text is inside the chart area
+    },
+    legend: { position: 'bottom' }, // Place the legend at the bottom
+    colors: ['#AAD500', '#343E49'],
+    width: '100%',
+    height: '100%', // Ajusta la altura total del gráfico
+    backgroundColor: 'transparent',
+    chartArea: {
+        width: '80%', // Deja más espacio para los ejes
+        height: '80%'
+    }
+};
                 var chart = new google.visualization.BarChart(document.getElementById('winnersChart'));
                 chart.draw(data, options);
 
