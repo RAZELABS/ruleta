@@ -4,12 +4,12 @@
 <div class="container">
 
         <div class="row">
-            <div class="p-4 col-12 col-md-12 offset-md-1">
+            <div class="p-4 col-12 col-md-11 offset-md-1">
                 <div class="row">
-                    <div class="col-12 col-md-6 d-flex justify-content-start">
+                    <div class="col-12 col-md-11 d-flex justify-content-start">
                         <h1 class="text-secondary fw-bold">Importar movimientos en kioscos</h1>
                     </div>
-                    <div class="col-12 col-md-6 d-flex justify-content-start">
+                    <div class="col-12 col-md-11 d-flex justify-content-start">
                         <form action="{{ route('admin.kiosco.import') }}" method="POST" enctype="multipart/form-data"
                             class="d-flex align-items-center">
                             @csrf
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-2 col-12 col-md-10 offset-md-1">
+            <div class="p-2 col-12 col-md-11 offset-md-1">
                 <div class="p-4 position-relative">
                     <div class="loading-spinner">
                         <div class="spinner-border text-primary" role="status">
@@ -36,6 +36,7 @@
                     <table class="table table-striped" id="TABLE_1">
                         <thead>
                             <tr>
+                                <th>Fecha carga</th>
                                 <th>Fecha</th>
                                 <th>Hora</th>
                                 <th>Tipo Doc</th>
@@ -49,6 +50,7 @@
                         <tbody>
                             @foreach ($kioscos as $kiosco)
                                 <tr>
+                                    <td>{{ $kiosco->fecha_carga }}</td>
                                     <td>{{ $kiosco->fecha }}</td>
                                     <td>{{ $kiosco->hora }}</td>
                                     <td>{{ $kiosco->tipo_documento }}</td>
