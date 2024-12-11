@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\TiendapremioController;
 use App\Http\Controllers\Admin\MatrizdiaController;
 use App\Http\Controllers\Admin\MatriztiendaController;
 use App\Http\Controllers\Admin\MatrizturnoController;
+use App\Http\Controllers\Admin\MatrizglobalController;
 use App\Http\Controllers\Admin\PremiosController;
 use App\Http\Controllers\Admin\KioscoController;
 use App\Http\Controllers\Admin\KioscodeleteController;
@@ -73,7 +74,10 @@ Route::middleware(['auth', 'role:superadmin|admin|user'])->prefix('admin')->name
     //? MATRIZ TURNO
     Route::post('/matrizturno/{id}/update', [MatrizturnoController::class, 'update'])->name('matrizturno.update');
     Route::resource('matrizturno', MatrizturnoController::class);
-    //? MATRIZ PREMIOS
+    //? MATRIZ GLOBAL
+    Route::post('/matrizglobal/{id}/update', [MatrizglobalController::class, 'update'])->name('matrizglobal.update');
+        Route::resource('matrizglobal', MatrizglobalController::class);
+    //?  PREMIOS
     Route::get('/premios/{id}/disabled', [PremiosController::class, 'disabled'])->name('premios.disabled');
     Route::post('/premios/store', [PremiosController::class, 'store'])->name('premios.store');
     Route::post('/premios/{id}/update', [PremiosController::class, 'update'])->name('premios.update');
