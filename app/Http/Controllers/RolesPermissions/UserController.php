@@ -62,6 +62,7 @@ public function edit(User $user)
 {
 $roles = Role::pluck('name','name')->all();
 $userRoles = $user->roles->pluck('name','name')->all();
+//dd($user);
 return view('role-permission.user.edit', [
 'user' => $user,
 'roles' => $roles,
@@ -71,13 +72,18 @@ return view('role-permission.user.edit', [
 
 public function update(Request $request, User $user)
 {
+    //dd($request);
     $request->validate([
+        'dni' => 'required|string|max:8',
+        'id_tienda' => 'required|integer',
         'name' => 'required|string|max:255',
         'password' => 'nullable|string|min:8|max:20',
         'roles' => 'required'
     ]);
 
     $data = [
+        'dni' => $request->dni,
+        'id_tienda' => $request->id_tienda,
         'name' => $request->name,
         'email' => $request->email,
     ];
